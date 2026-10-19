@@ -106,28 +106,35 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 body[data-view="dark"] .chip { border-color: rgba(168,50,46,.7); }
 
-/* ===== 視角拉桿（左側） ===== */
+/* ===== 視角開關（左側，老式電燈開關） ===== */
 #lever {
-  position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 22;
-  width: 48px; height: 300px; padding: 0; border: 0; background: none;
-  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  position: fixed; left: 18px; top: 50%; transform: translateY(-50%); z-index: 22;
+  width: 64px; padding: 0; border: 0; background: none;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
 }
-#lever .label { writing-mode: vertical-rl; font-size: 14px; letter-spacing: .3em; color: var(--ink-soft); transition: color .4s; }
-#lever .label.on { color: var(--ink); text-shadow: 0 0 10px var(--gold); }
-#lever .track {
-  position: relative; flex: 1; width: 10px; margin: 10px 0; border-radius: 5px;
-  background: linear-gradient(#e2c27a, #6b5332 45%, #3b1010 55%, #7a1f1f);
-  box-shadow: inset 0 0 4px rgba(0,0,0,.8), 0 0 0 1px rgba(201,162,77,.35);
+#lever .label { writing-mode: vertical-rl; font-size: 14px; letter-spacing: .3em; color: var(--ink-soft); text-shadow: 0 1px 2px rgba(0,0,0,.9); transition: color .3s, text-shadow .3s; }
+#lever .label.on { color: var(--ink); text-shadow: 0 0 10px var(--gold), 0 1px 2px #000; }
+#lever .plate {
+  position: relative; width: 58px; height: 108px; border-radius: 9px;
+  box-shadow: inset 0 1px 0 rgba(255,245,210,.8), inset 0 -2px 3px rgba(0,0,0,.45), inset 0 0 0 1px rgba(60,40,10,.6), 0 6px 14px rgba(0,0,0,.75), 0 0 0 3px rgba(0,0,0,.3);
+  transition: box-shadow .3s;
 }
-#lever .knob {
-  position: absolute; left: 50%; top: 4%; width: 32px; height: 32px; margin-left: -16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff3cf, #c9a24d 55%, #6b5332);
-  box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 18px rgba(255,190,90,.45);
-  transition: top .6s cubic-bezier(.5,1.6,.5,1), background .6s, box-shadow .6s;
+#lever:hover .plate { box-shadow: inset 0 1px 0 rgba(255,245,210,.8), inset 0 -2px 3px rgba(0,0,0,.45), inset 0 0 0 1px rgba(60,40,10,.6), 0 6px 14px rgba(0,0,0,.75), 0 0 22px rgba(255,190,90,.45); }
+#lever .screw { position: absolute; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff1c0, #8a6422 60%, #3a2808); box-shadow: inset 0 0 1px #000, 0 1px 0 rgba(255,240,200,.4); }
+#lever .screw::after { content: ''; position: absolute; left: 1px; right: 1px; top: 4px; height: 1px; background: rgba(40,25,5,.85); transform: rotate(35deg); }
+#lever .screw.top { top: 8px; }
+#lever .screw.bottom { bottom: 8px; }
+#lever .slot { position: absolute; left: 50%; top: 50%; width: 16px; height: 32px; margin: -16px 0 0 -8px; border-radius: 8px; background: linear-gradient(#120c04, #3a2a12); box-shadow: inset 0 2px 5px rgba(0,0,0,.95), 0 1px 0 rgba(255,240,200,.5); }
+#lever .bat {
+  position: absolute; left: 50%; bottom: 50%; width: 12px; height: 28px; margin-left: -6px;
+  border-radius: 6px 6px 3px 3px; transform-origin: 50% 100%;
+  background: linear-gradient(90deg, #5a4220, #f6e3a1 40%, #b8913f 62%, #4d360f);
+  box-shadow: 0 4px 5px rgba(0,0,0,.65);
+  transition: transform .14s cubic-bezier(.6,1.9,.5,1);
 }
-body[data-view="dark"] #lever .knob { top: calc(96% - 32px); background: radial-gradient(circle at 35% 30%, #e0857d, #8c1d18 55%, #3b0808); box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 18px rgba(192,70,60,.6); }
-#lever:hover .knob { box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 26px rgba(255,190,90,.8); }
+#lever .bat::after { content: ''; position: absolute; top: -5px; left: -2px; width: 16px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff6d6, #c9a24d 55%, #6b5332); }
+body[data-view="dark"] #lever .bat { transform: rotate(180deg); }
+body[data-view="dark"] #lever .bat, body[data-view="dark"] #lever .screw { filter: grayscale(1) brightness(.85); }
 
 /* ===== 舞台 ===== */
 #stage { position: fixed; top: 52px; bottom: 96px; left: 0; right: 0; overflow: hidden; }
@@ -324,79 +331,86 @@ body[data-view="dark"] .seal, body[data-view="dark"] .inkblot { display: flex; }
 #creditLayer a { color: #d9b866; }
 #creditLayer h3 { margin: 0 0 8px; font-weight: normal; }
 
-/* ===== 材質（v3）：灰泥牆、鍍金畫框、畫布、皮革、木頭、黃銅、鐵 ===== */
-/* 灰泥牆：斑駁＋細顆粒＋四角暗角，疊在背景色上 */
+/* ===== 材質（v4）：用 SVG 打光濾鏡（feDiffuseLighting／feSpecularLighting）做出真的凹凸 ===== */
+body { background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 30%, rgba(0,0,0,.62) 100%), var(--bg); }
+/* 灰泥牆：大塊起伏＋細砂顆粒，以 overlay 疊在牆色上 */
 body::before {
   content: ''; position: fixed; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='4' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 -.35'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .08  0 0 0 0 .05  0 0 0 .45 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='460' height='460'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.016' numOctaves='5' seed='11' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='4.5' diffuseConstant='0.81'><feDistantLight azimuth='235' elevation='38'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.22' numOctaves='2' seed='3' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.2' diffuseConstant='0.65'><feDistantLight azimuth='235' elevation='50'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  background-blend-mode: multiply;
+  mix-blend-mode: overlay; opacity: .75;
 }
-/* 鍍金雕花框：多段金色漸層做出凹凸，外圈深色木頭、內圈暗唇 */
+/* 鍍金雕花框（暗巷視角換成鐵框）：金箔上的點點反光＋五道雕刻線 */
 .zoomwrap {
-  border: 16px solid transparent;
-  border-image: linear-gradient(135deg, #4d360f, #e9cd7a 14%, #8a6422 26%, #f6e3a1 40%, #9c7426 52%, #e2c06a 66%, #6e4f17 80%, #d9b863 90%, #3f2c0c) 1;
-  box-shadow: 0 0 0 3px #24190a, 0 0 0 5px #8f6c2c, 0 0 0 7px #1a1207, 0 24px 70px rgba(0,0,0,.75), 0 0 120px rgba(255,190,90,.08);
+  border: 20px solid transparent;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%235a3f12'/><stop offset='.22' stop-color='%23e8c66a'/><stop offset='.45' stop-color='%23946c22'/><stop offset='.62' stop-color='%23f3dc8c'/><stop offset='.82' stop-color='%23a07c35'/><stop offset='1' stop-color='%234a330d'/></linearGradient><filter id='h' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.12' numOctaves='3' seed='4' result='n'/><feSpecularLighting in='n' surfaceScale='2.5' specularConstant='1' specularExponent='22' lighting-color='%23fff3c4' result='s'><feDistantLight azimuth='225' elevation='48'/></feSpecularLighting><feComposite in='s' in2='SourceGraphic' operator='in' result='sc'/><feBlend in='SourceGraphic' in2='sc' mode='screen'/></filter></defs><rect width='120' height='120' fill='url(%23g)' filter='url(%23h)'/><rect x='1' y='1' width='118' height='118' fill='none' stroke='%232a1c06' stroke-width='2'/><rect x='4.5' y='4.5' width='111' height='111' fill='none' stroke='%23fff0b8' stroke-opacity='.75' stroke-width='1.5'/><rect x='9' y='9' width='102' height='102' fill='none' stroke='%232a1c06' stroke-opacity='.5' stroke-width='5'/><rect x='13.5' y='13.5' width='93' height='93' fill='none' stroke='%23fff0b8' stroke-opacity='.8' stroke-width='1.2'/><rect x='17.5' y='17.5' width='85' height='85' fill='none' stroke='%231a1004' stroke-width='3'/></svg>") 20 stretch;
+  box-shadow: 0 0 0 2px #1a1207, 0 26px 70px rgba(0,0,0,.8), 0 0 140px rgba(255,190,90,.07);
 }
-body[data-view="dark"] .zoomwrap { border-image: linear-gradient(135deg, #2a2a2a, #8a8a86 16%, #3c3c3a 30%, #b5b2aa 44%, #4a4846 58%, #8f8b84 72%, #262626) 1; box-shadow: 0 0 0 3px #111, 0 0 0 5px #5a1614, 0 0 0 7px #0a0a0a, 0 24px 70px rgba(0,0,0,.8); }
+body[data-view="dark"] .zoomwrap { border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%232a2a2a'/><stop offset='.22' stop-color='%23a8a6a0'/><stop offset='.45' stop-color='%23484846'/><stop offset='.62' stop-color='%23c8c4bc'/><stop offset='.82' stop-color='%23605e5c'/><stop offset='1' stop-color='%231e1e1e'/></linearGradient><filter id='h' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.12' numOctaves='3' seed='4' result='n'/><feSpecularLighting in='n' surfaceScale='2.5' specularConstant='1' specularExponent='22' lighting-color='%23f0f0f0' result='s'><feDistantLight azimuth='225' elevation='48'/></feSpecularLighting><feComposite in='s' in2='SourceGraphic' operator='in' result='sc'/><feBlend in='SourceGraphic' in2='sc' mode='screen'/></filter></defs><rect width='120' height='120' fill='url(%23g)' filter='url(%23h)'/><rect x='1' y='1' width='118' height='118' fill='none' stroke='%23101010' stroke-width='2'/><rect x='4.5' y='4.5' width='111' height='111' fill='none' stroke='%23d8d4cc' stroke-opacity='.75' stroke-width='1.5'/><rect x='9' y='9' width='102' height='102' fill='none' stroke='%23101010' stroke-opacity='.5' stroke-width='5'/><rect x='13.5' y='13.5' width='93' height='93' fill='none' stroke='%23d8d4cc' stroke-opacity='.8' stroke-width='1.2'/><rect x='17.5' y='17.5' width='85' height='85' fill='none' stroke='%235a1614' stroke-width='3'/></svg>") 20 stretch; box-shadow: 0 0 0 2px #080808, 0 26px 70px rgba(0,0,0,.85); }
 /* 畫布織紋＋亮光漆反光＋框內陰影 */
 .frame::after {
   content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
   background:
     linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,245,220,.07) 42%, rgba(255,255,255,0) 54%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><rect width='6' height='6' fill='none'/><path d='M0 1.5h6M0 4.5h6' stroke='rgba(0,0,0,.07)' stroke-width='.8'/><path d='M1.5 0v6M4.5 0v6' stroke='rgba(255,240,210,.035)' stroke-width='.8'/></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='c'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .15  0 0 0 0 .1  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>");
-  box-shadow: inset 0 0 22px rgba(0,0,0,.75), inset 0 0 3px rgba(0,0,0,.9);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><path d='M0 1.5h6M0 4.5h6' stroke='rgba(0,0,0,.07)' stroke-width='.8'/><path d='M1.5 0v6M4.5 0v6' stroke='rgba(255,240,210,.035)' stroke-width='.8'/></svg>");
+  box-shadow: inset 0 0 24px rgba(0,0,0,.75), inset 0 0 3px rgba(0,0,0,.9);
 }
 .mask { z-index: 1; }
 .hotspot { z-index: 2; }
-/* 舊皮革：介紹小卡、導覽泡泡 */
+/* 舊皮革：顆粒＋摺痕，縫線 */
 .intro, #tour {
-  background:
-    radial-gradient(ellipse at 25% 15%, rgba(255,220,160,.08), transparent 55%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.06' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 -.12'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .35  0 0 0 0 .2  0 0 0 .12 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
-    linear-gradient(160deg, #3a2716, #241709 60%, #1a1007);
-  border-left: 0;
-  box-shadow: inset 0 0 0 1px rgba(255,220,160,.12), inset 0 0 30px rgba(0,0,0,.6), 0 10px 30px rgba(0,0,0,.55);
-  outline: 1px dashed rgba(201,162,77,.45); outline-offset: -8px;
-  border-radius: 3px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.34' numOctaves='3' seed='7' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.8' diffuseConstant='0.61'><feDistantLight azimuth='225' elevation='55'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='turbulence' baseFrequency='.03' numOctaves='4' seed='9' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='3' diffuseConstant='0.71'><feDistantLight azimuth='225' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), radial-gradient(ellipse at 25% 15%, rgba(255,220,160,.12), transparent 55%), linear-gradient(160deg, #4a3119, #2c1c0d 60%, #1d1208);
+  background-blend-mode: overlay, overlay, normal, normal;
+  border: 0; border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255,220,160,.14), inset 0 0 34px rgba(0,0,0,.65), 0 12px 30px rgba(0,0,0,.6);
+  outline: 1.5px dashed rgba(214,180,110,.5); outline-offset: -9px;
 }
 body[data-view="dark"] .intro, body[data-view="dark"] #tour {
-  background:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.06' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 -.12'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>"),
-    linear-gradient(160deg, #2a1312, #160a0a 60%, #0d0606);
-  outline-color: rgba(168,50,46,.55);
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.34' numOctaves='3' seed='7' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.8' diffuseConstant='0.61'><feDistantLight azimuth='225' elevation='55'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='turbulence' baseFrequency='.03' numOctaves='4' seed='9' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='3' diffuseConstant='0.71'><feDistantLight azimuth='225' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), linear-gradient(160deg, #3a1614, #1e0b0a 60%, #120606);
+  background-blend-mode: overlay, overlay, normal;
+  outline-color: rgba(190,70,60,.5);
 }
-/* 時間軸：深色木條＋黃銅銘牌 */
+/* 卷宗紙條：紙面凹凸 */
+.paper::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(70,40,15,.25) 50%, rgba(255,248,225,.35) 50.5%, transparent 51.2%),
+    linear-gradient(0deg, transparent 33%, rgba(70,40,15,.2) 33.4%, rgba(255,248,225,.3) 33.8%, transparent 34.4%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='5' seed='13' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='2.4' diffuseConstant='0.65'><feDistantLight azimuth='225' elevation='50'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  mix-blend-mode: overlay; opacity: .85;
+}
+/* 時間軸：深色木頭 */
 #timeline {
-  background:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='120'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.004 .18' numOctaves='3' seed='2'/><feColorMatrix values='0 0 0 0 .05  0 0 0 0 .03  0 0 0 0 .01  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
-    linear-gradient(#2a1c0e, #1a1108 60%, #120b05);
-  box-shadow: inset 0 1px 0 rgba(255,210,140,.18), inset 0 2px 0 rgba(0,0,0,.6), 0 -10px 30px rgba(0,0,0,.6);
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='140'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.0022 .085' numOctaves='4' seed='5' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='3.2' diffuseConstant='0.94'><feDistantLight azimuth='90' elevation='32'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), linear-gradient(#3e2815, #24170a 60%, #170e06);
+  background-blend-mode: overlay, normal;
+  box-shadow: inset 0 1px 0 rgba(255,210,140,.22), inset 0 2px 0 rgba(0,0,0,.6), 0 -10px 30px rgba(0,0,0,.6);
 }
+/* 黃銅銘牌（暗巷視角換成鐵牌） */
 .chapter-buttons button, .chip {
+  position: relative;
   background: linear-gradient(#8a6a2e, #5c4318 45%, #4a3410 55%, #6e5222);
   border: 1px solid #2a1d08; color: #f3e2b4;
   text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 1px 0 rgba(255,230,170,.15);
   box-shadow: inset 0 1px 0 rgba(255,235,180,.45), inset 0 -1px 0 rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.6);
   border-radius: 2px;
 }
-.chapter-buttons button { color: #d8c38e; opacity: .78; }
+.chapter-buttons button::before, .chip::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='60'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.002 .9' numOctaves='2' seed='2' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1' diffuseConstant='0.71'><feDistantLight azimuth='90' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); mix-blend-mode: overlay; opacity: .7;
+}
+.chapter-buttons button { color: #d8c38e; opacity: .8; }
 .chapter-buttons button.on { opacity: 1; color: #fff1c9; background: linear-gradient(#c9a24d, #8a6422 45%, #74521a 55%, #a07c35); border-color: #3a2a0c; box-shadow: inset 0 1px 0 rgba(255,245,210,.7), 0 0 14px rgba(255,190,90,.35); }
 body[data-view="dark"] .chapter-buttons button, body[data-view="dark"] .chip { background: linear-gradient(#5a5a58, #343432 45%, #262624 55%, #424240); color: #ddd6d0; border-color: #111; }
 body[data-view="dark"] .chapter-buttons button.on { background: linear-gradient(#8c2420, #5a1210 50%, #6e1a16); color: #ffe1dc; }
 #year::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(#f1d98f, #a07c35 50%, #5c4318); box-shadow: inset 0 1px 2px rgba(0,0,0,.6); }
 #year::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(#f1d98f, #a07c35 50%, #5c4318); }
 #year::-webkit-slider-thumb { margin-top: -6px; }
-/* 鐵製拉桿軌道 */
-#lever .track {
-  width: 14px;
-  background: linear-gradient(90deg, #1b1b1b, #6a6a68 35%, #2c2c2b 55%, #4a4a48 80%, #121212);
-  box-shadow: inset 0 0 6px rgba(0,0,0,.9), 0 0 0 2px #2a1d08, 0 0 0 3px rgba(201,162,77,.5);
+/* 老式黃銅電燈開關的面板 */
+#lever .plate {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='60'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.002 .9' numOctaves='2' seed='2' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1' diffuseConstant='0.71'><feDistantLight azimuth='90' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), linear-gradient(145deg, #f0d690, #b8913f 35%, #7a5a1e 70%, #c9a24d);
+  background-blend-mode: overlay, normal;
 }
-#lever .label { text-shadow: 0 1px 2px rgba(0,0,0,.9); }
+body[data-view="dark"] #lever .plate { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='60'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.002 .9' numOctaves='2' seed='2' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1' diffuseConstant='0.71'><feDistantLight azimuth='90' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), linear-gradient(145deg, #c8c4bc, #6a6866 40%, #3a3a38 75%, #8a8884); background-blend-mode: overlay, normal; }
 
 /* ===== 手機 ===== */
 @media (max-width: 800px) {
@@ -411,7 +425,7 @@ body[data-view="dark"] .chapter-buttons button.on { background: linear-gradient(
   .frame img { max-width: calc(100vw - 80px); max-height: none; }
   .thumbs { position: static; transform: none; flex-direction: row; }
   .map-box { position: static; width: auto; margin: 10px 12px 0 64px; }
-  #lever { left: 8px; height: 220px; width: 40px; top: 45%; }
+  #lever { left: 4px; top: 45%; transform: translateY(-50%) scale(.78); }
   #timeline { grid-template-columns: 70px 1fr; padding: 8px 12px 10px; height: auto; }
   #yearLabel { font-size: 28px; }
   .chapter-buttons button { font-size: 13px; }
@@ -451,7 +465,7 @@ body[data-view="dark"] .chapter-buttons button.on { background: linear-gradient(
 
 <button id="lever" class="reveal tour-hide" aria-label="切換視角：教廷表面／暗巷真實">
   <span class="label on" id="leverTop">教廷表面</span>
-  <span class="track"><span class="knob"></span></span>
+  <span class="plate"><span class="screw top"></span><span class="slot"><span class="bat"></span></span><span class="screw bottom"></span></span>
   <span class="label" id="leverBottom">暗巷真實</span>
 </button>
 
@@ -578,7 +592,7 @@ const TOUR_STEPS = [
   { target: '#timeline', reveal: ['#timeline', '#soundBtn'], text: '這條線是他的一生。往右拖，人生往前走，畫面也會一路變暗。', place: 'above' },
   { target: '#flashBtn', reveal: ['#flashBtn'], text: '他的畫都藏在黑暗裡。移動滑鼠，你就是那盞燈；想看清整幅畫，可以在這裡關掉手電筒。', place: 'below' },
   { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
-  { target: '#lever', reveal: ['#lever', '#creditBtn'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。拉下這根桿子，換一面看。', place: 'right' }
+  { target: '#lever', reveal: ['#lever', '#creditBtn'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。扳下這個開關，換一面看。', place: 'right' }
 ];
 
 const CREDITS = [
@@ -667,14 +681,26 @@ const Sound = {
     source.start(); source.stop(this.ctx.currentTime + 0.06);
   },
   lever() {
+    // 電燈開關的「喀噠」：兩下短促的雜訊加一點低頻的撞擊
     if (!this.ready()) return;
-    const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(state.view === 'dark' ? 330 : 165, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(state.view === 'dark' ? 110 : 330, this.ctx.currentTime + 0.5);
-    this.envelope(gain, 0.12, 0.02, 0.6);
-    osc.connect(gain).connect(this.master);
-    osc.start(); osc.stop(this.ctx.currentTime + 0.7);
+    const t = this.ctx.currentTime;
+    [[0, 1300, 0.55], [0.03, 2600, 0.3]].forEach(([delay, frequency, level]) => {
+      const source = this.ctx.createBufferSource(), filter = this.ctx.createBiquadFilter(), gain = this.ctx.createGain();
+      source.buffer = this.noise;
+      filter.type = 'bandpass'; filter.frequency.value = frequency; filter.Q.value = 1.3;
+      gain.gain.setValueAtTime(0.0001, t + delay);
+      gain.gain.exponentialRampToValueAtTime(level, t + delay + 0.002);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + delay + 0.045);
+      source.connect(filter).connect(gain).connect(this.master);
+      source.start(t + delay); source.stop(t + delay + 0.07);
+    });
+    const thump = this.ctx.createOscillator(), thumpGain = this.ctx.createGain();
+    thump.frequency.value = 110;
+    thumpGain.gain.setValueAtTime(0.0001, t);
+    thumpGain.gain.exponentialRampToValueAtTime(0.18, t + 0.004);
+    thumpGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+    thump.connect(thumpGain).connect(this.master);
+    thump.start(t); thump.stop(t + 0.1);
   }
 };
 
@@ -922,7 +948,7 @@ function renderNote() {
     <div class="body">${dark ? data.dark : data.surface}</div>
     <div class="where">《${painting.title}》${painting.year}｜${painting.where}</div>
     ${dark ? `<div class="stamp">${data.tag}</div>` : ''}
-    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '拉下左邊的桿子切到「暗巷真實」，看這幅畫背後的事。'}</div>
+    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '扳下左邊的開關切到「暗巷真實」，看這幅畫背後的事。'}</div>
     <div class="inkblot"></div><div class="seal">G</div>`;
   $('paper').querySelector('.close').addEventListener('click', closeNote);
 }
@@ -1109,6 +1135,8 @@ document.addEventListener('keydown', (event) => {
 });
 $('creditBtn').addEventListener('click', () => { credits(); $('creditLayer').classList.add('open'); });
 $('creditLayer').addEventListener('click', (event) => { if (event.target === $('creditLayer')) $('creditLayer').classList.remove('open'); });
+
+$('musicSurface').addEventListener('timeupdate', (event) => { if (event.target.currentTime > 132.5) event.target.currentTime = 0; });
 
 buildTimeline();
 setYear(1571);
