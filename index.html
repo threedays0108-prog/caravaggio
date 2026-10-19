@@ -699,6 +699,10 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 #lever:active .plate { transform: scale(.96); }
 .chip, .btn-light { transition: transform .2s, box-shadow .25s, background .25s, border-color .25s; }
 .chip:hover, #toolsMenu .chip:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,.55), 0 0 14px rgba(255,190,100,.25); }
+
+/* v11.1：「工具」選單關著時，隱形區塊不能擋住底下的縮圖 */
+#tools { pointer-events: none; }
+#tools #toolsBtn, #tools.open #toolsMenu { pointer-events: auto; }
 </style>
 </head>
 <body data-view="surface">
