@@ -703,6 +703,15 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 /* v11.1：「工具」選單關著時，隱形區塊不能擋住底下的縮圖 */
 #tools { pointer-events: none; }
 #tools #toolsBtn, #tools.open #toolsMenu { pointer-events: auto; }
+
+/* v11.2：畫要清楚——光暈放到畫的後面、取消 3D 圖層（會讓圖變糊）、手電筒邊緣收緊、熱點光暈縮小 */
+#halo { z-index: 0; }
+#stage { z-index: 1; }
+.zoomwrap { transform-style: flat; will-change: auto; }
+.mask { background: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 45%), rgba(0,0,0,0) 0%, rgba(0,0,0,0) 66%, rgba(6,4,3,var(--mask)) 100%); }
+.gloss { background: radial-gradient(circle at var(--gx, 50%) var(--gy, 40%), rgba(255,244,214,.12), rgba(255,244,214,0) 40%); }
+.hotspot::before { inset: 11px; box-shadow: 0 0 7px 2px var(--gold); }
+.hotspot::after { border-width: 1px; }
 </style>
 </head>
 <body data-view="surface">
