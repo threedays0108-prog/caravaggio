@@ -712,6 +712,27 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 .gloss { background: radial-gradient(circle at var(--gx, 50%) var(--gy, 40%), rgba(255,244,214,.12), rgba(255,244,214,0) 40%); }
 .hotspot::before { inset: 11px; box-shadow: 0 0 7px 2px var(--gold); }
 .hotspot::after { border-width: 1px; }
+
+/* ===== v12：左欄的節奏（上標題、中內文、下留白）、放大字級、補小字對比 ===== */
+#leftScrim { position: fixed; left: 0; top: 0; bottom: 0; width: calc(var(--left-w) + 30px); z-index: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(8,5,3,.62) 0%, rgba(8,5,3,.5) 62%, rgba(8,5,3,0) 100%); }
+.walltext { display: flex; flex-direction: column; }
+.wt-body { margin-block: auto; padding: 3vh 0 5vh; }
+.wt-head { align-items: flex-end; }
+.intro .no { font-size: 92px; line-height: .78; color: rgba(226,214,188,.26); }
+.intro .sc { font-size: 13px; letter-spacing: .36em; color: #d3c3a0; margin: 16px 0 10px; }
+.intro h2 { font-size: 58px; line-height: 1.12; letter-spacing: .14em; margin: 0 0 18px; font-weight: normal; }
+.intro .rule { width: 72px; background: #d3c3a0; margin: 0 0 6px; }
+.intro p { font-size: 18px; line-height: 2.1; color: #ebe0c6; }
+.intro .style-tag { font-size: 13px; letter-spacing: .14em; color: #cdbd98; }
+.intro .hint { font-size: 14px; color: #cdbd98; }
+#toolsBtn { font-size: 13px; color: #d3c3a0; }
+#lever .label { font-size: 13px; }
+.hangwrap .museum-label { padding: 7px 10px 6px; }
+.hangwrap .museum-label .inv { font-size: 10px; padding: 0 0 3px 12px; margin-bottom: 3px; }
+.hangwrap .museum-label .t { font-size: 13.5px; }
+.hangwrap .museum-label .l { font-size: 11px; line-height: 1.25; }
+.hangwrap .museum-label .m { font-size: 11px; margin-top: 2px; line-height: 1.35; }
 </style>
 </head>
 <body data-view="surface">
@@ -752,6 +773,7 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 
 <div id="orb"></div>
 <div id="halo"></div>
+<div id="leftScrim"></div>
 <div class="wallfx peel"></div><div class="wallfx stain"></div><div class="wallfx drip"></div>
 
 <main id="stage"><section class="chapter" id="chapter"></section></main>
@@ -1178,12 +1200,12 @@ function introHtml(extra) {
     <div class="sc">${toRoman(chapter.start)} – ${toRoman(endYear)}　·　${chapter.place}</div>
     <h2>${chapter.name}</h2>
     <div class="rule"></div>
-    <p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
+    <div class="wt-body"><p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
     <div class="style-tag">畫風：${chapter.style}</div>`;
   if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
   if (chapter.extra === 'exile') html += bandoHtml() + mapHtml();
   if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
-  return html + `</div></div>`;
+  return html + `</div></div></div>`;
 }
 
 function renderChapter() {
