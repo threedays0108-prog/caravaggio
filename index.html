@@ -29,7 +29,6 @@ body[data-view="dark"] {
   --gold: #a8322e;
   --panel: rgba(8, 6, 6, 0.9);
 }
-body.intro-closed { --gallery-left: 90px; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
@@ -154,9 +153,6 @@ body[data-view="dark"] #lever .bat, body[data-view="dark"] #lever .screw { filte
 .intro p { line-height: 1.85; font-size: 15px; margin: 0 0 10px; }
 .intro .hint { color: var(--ink-soft); font-size: 13px; border-top: 1px dashed rgba(201,162,77,.3); padding-top: 8px; margin-top: 10px; }
 .intro .style-tag { display: inline-block; font-size: 12.5px; border: 1px solid rgba(201,162,77,.4); padding: 2px 8px; color: var(--ink-soft); }
-body.intro-closed .intro { width: auto; padding: 10px 14px; }
-body.intro-closed .intro .body-wrap { display: none; }
-body.intro-closed .intro h2 { font-size: 17px; margin: 2px 0 0; }
 
 .gallery {
   position: absolute; top: 0; bottom: 0; right: var(--gallery-right, 16px); left: var(--gallery-left);
@@ -351,15 +347,14 @@ body[data-view="dark"] .zoomwrap { border-image: url("data:image/svg+xml;utf8,<s
 .frame::after {
   content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
   background:
-    linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,245,220,.07) 42%, rgba(255,255,255,0) 54%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><path d='M0 1.5h6M0 4.5h6' stroke='rgba(0,0,0,.07)' stroke-width='.8'/><path d='M1.5 0v6M4.5 0v6' stroke='rgba(255,240,210,.035)' stroke-width='.8'/></svg>");
+    linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,245,220,.07) 42%, rgba(255,255,255,0) 54%);
   box-shadow: inset 0 0 24px rgba(0,0,0,.75), inset 0 0 3px rgba(0,0,0,.9);
 }
 .mask { z-index: 1; }
 .hotspot { z-index: 2; }
 /* 舊皮革：顆粒＋摺痕，縫線 */
 .intro, #tour {
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.34' numOctaves='3' seed='7' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.8' diffuseConstant='0.61'><feDistantLight azimuth='225' elevation='55'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='turbulence' baseFrequency='.03' numOctaves='4' seed='9' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='3' diffuseConstant='0.71'><feDistantLight azimuth='225' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), radial-gradient(ellipse at 25% 15%, rgba(255,220,160,.12), transparent 55%), linear-gradient(160deg, #4a3119, #2c1c0d 60%, #1d1208);
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.34' numOctaves='3' seed='7' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.8' diffuseConstant='0.61'><feDistantLight azimuth='225' elevation='55'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='turbulence' baseFrequency='.03' numOctaves='4' seed='9' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='3' diffuseConstant='0.71'><feDistantLight azimuth='225' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), radial-gradient(ellipse at 25% 15%, rgba(255,220,160,.12), transparent 55%), linear-gradient(160deg, #2e1d0e, #1c1208 60%, #120b05);
   background-blend-mode: overlay, overlay, normal, normal;
   border: 0; border-radius: 4px;
   box-shadow: inset 0 0 0 1px rgba(255,220,160,.14), inset 0 0 34px rgba(0,0,0,.65), 0 12px 30px rgba(0,0,0,.6);
@@ -412,25 +407,55 @@ body[data-view="dark"] .chapter-buttons button.on { background: linear-gradient(
 }
 body[data-view="dark"] #lever .plate { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='60'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.002 .9' numOctaves='2' seed='2' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1' diffuseConstant='0.71'><feDistantLight azimuth='90' elevation='45'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"), linear-gradient(145deg, #c8c4bc, #6a6866 40%, #3a3a38 75%, #8a8884); background-blend-mode: overlay, normal; }
 
+/* ===== 版面 C：畫撐滿畫面高度，文字收進左側抽屜，工具收進右上角，時間軸縮成底部膠囊 ===== */
+:root { --gallery-right: 90px; }
+#stage { top: 0; bottom: 0; }
+.gallery { left: 90px; right: var(--gallery-right); }
+.frame img { max-height: calc(100vh - 40px); max-width: calc(100vw - 90px - var(--gallery-right) - 40px); }
+.caption { position: fixed; right: 18px; top: 62px; text-align: right; max-width: 280px; z-index: 21; text-shadow: 0 1px 3px #000; pointer-events: none; }
+.thumbs img { width: 54px; }
+#storyBtn { position: fixed; top: 14px; left: 18px; z-index: 31; }
+#storyBtn.pulse { animation: storyPulse 1.2s 3; }
+@keyframes storyPulse { 50% { box-shadow: 0 0 24px rgba(255,190,90,.95); } }
+#tools { position: fixed; top: 14px; right: 18px; z-index: 31; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+#toolsMenu { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .25s, transform .25s; }
+#tools.open #toolsMenu { opacity: 1; transform: none; pointer-events: auto; }
+.intro {
+  position: fixed; left: 0; top: 0; bottom: 0; width: min(400px, 88vw); max-height: none; z-index: 30;
+  padding: 64px 26px 28px; border-radius: 0 6px 6px 0; overflow: auto; outline-offset: -10px;
+  transform: translateX(-108%); transition: transform .45s cubic-bezier(.3,.8,.3,1);
+}
+body.drawer-open .intro { transform: none; }
+body.drawer-open #stage { z-index: 26; }
+.intro .site-title { font-size: 14px; color: var(--ink-soft); margin-bottom: 14px; letter-spacing: .05em; }
+.intro .site-title small { display: block; font-family: var(--fell); font-style: italic; font-size: 12px; margin-top: 2px; }
+.intro .map-box { position: static; width: auto; margin-top: 16px; background: rgba(0,0,0,.35); }
+#timeline {
+  left: 50%; right: auto; bottom: 14px; transform: translateX(-50%);
+  width: min(640px, calc(100vw - 200px)); height: auto; padding: 8px 18px 10px; border-radius: 30px;
+  grid-template-columns: 64px 1fr; gap: 4px 14px;
+}
+#yearLabel { font-size: 26px; }
+#yearLabel small { font-size: 10px; margin-top: 2px; }
+.chapter-buttons button { padding: 3px 4px; font-size: 12.5px; }
+.slider-wrap, .ticks, #year { height: 20px; }
+.ticks span { height: 14px; }
+.finale-float { position: fixed; right: 18px; bottom: 74px; z-index: 21; }
+
 /* ===== 手機 ===== */
 @media (max-width: 800px) {
-  body { overflow: auto; }
-  #topbar { position: sticky; flex-wrap: wrap; height: auto; padding: 8px 12px; background: rgba(0,0,0,.8); }
-  #topbar h1 { font-size: 15px; }
-  #stage { position: static; overflow: visible; padding-bottom: 130px; }
-  .chapter { position: static; }
-  .intro { position: static; width: auto; margin: 10px 12px 10px 64px; }
-  body.intro-closed .intro { width: auto; }
-  .gallery { position: static; padding: 0 12px 0 64px; }
-  .frame img { max-width: calc(100vw - 80px); max-height: none; }
-  .thumbs { position: static; transform: none; flex-direction: row; }
-  .map-box { position: static; width: auto; margin: 10px 12px 0 64px; }
-  #lever { left: 4px; top: 45%; transform: translateY(-50%) scale(.78); }
-  #timeline { grid-template-columns: 70px 1fr; padding: 8px 12px 10px; height: auto; }
-  #yearLabel { font-size: 28px; }
-  .chapter-buttons button { font-size: 13px; }
-  .chapter-buttons .cname { display: none; }
+  .gallery { left: 56px; right: 8px; }
+  .frame img { max-width: calc(100vw - 104px); max-height: calc(100vh - 150px); }
+  .thumbs { top: 64px; right: 6px; transform: none; }
+  .thumbs img { width: 40px; }
+  #lever { left: 2px; top: 45%; transform: translateY(-50%) scale(.72); }
+  #timeline { width: calc(100vw - 16px); bottom: 8px; grid-template-columns: 52px 1fr; padding: 6px 12px 8px; border-radius: 18px; }
+  #yearLabel { font-size: 20px; }
   #yearLabel small { font-size: 9px; letter-spacing: 0; }
+  .chapter-buttons .cname { display: none; }
+  .caption { top: 56px; right: 10px; max-width: 60vw; }
+  .caption .s { display: none; }
+  .finale-float { bottom: 140px; }
   #tour { width: min(290px, calc(100vw - 24px)); }
 }
 </style>
@@ -454,14 +479,16 @@ body[data-view="dark"] #lever .plate { background: url("data:image/svg+xml;utf8,
   <button id="skipPrelude">跳過開場 ›</button>
 </div>
 
-<header id="topbar">
-  <h1>卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></h1>
-  <div class="controls">
-    <button class="chip reveal tour-hide" id="flashBtn" aria-pressed="true">手電筒：開</button>
-    <button class="chip reveal tour-hide" id="soundBtn" aria-pressed="false">開聲音</button>
-    <button class="chip reveal tour-hide" id="creditBtn">出處</button>
+<h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">卡拉瓦喬：天才，也是通緝犯</h1>
+<button class="chip reveal tour-hide" id="storyBtn" aria-label="打開章節故事">章節故事 ▸</button>
+<div id="tools" class="reveal tour-hide">
+  <button class="chip" id="toolsBtn" aria-expanded="false">工具 ▾</button>
+  <div id="toolsMenu">
+    <button class="chip" id="flashBtn" aria-pressed="true">手電筒：開</button>
+    <button class="chip" id="soundBtn" aria-pressed="false">開聲音</button>
+    <button class="chip" id="creditBtn">出處</button>
   </div>
-</header>
+</div>
 
 <button id="lever" class="reveal tour-hide" aria-label="切換視角：教廷表面／暗巷真實">
   <span class="label on" id="leverTop">教廷表面</span>
@@ -579,7 +606,7 @@ const HOTSPOTS = [
     dark: '據說他晚期的畫越來越暗，筆觸也越來越快。有人說這是風格的轉變，也有人說他已經沒時間、沒心情慢慢畫了，這件事沒有答案。' },
   { painting: 'goliath', x: 80, y: 70, title: '那顆頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
     surface: '歌利亞的頭被大衛抓著頭髮提起來，嘴巴微微張開，眼睛半睜，脖子還在滴血。',
-    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點左邊的「最後一眼」，看清楚一點。' }
+    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點右下角的「最後一眼」，看清楚一點。' }
 ];
 
 const FINALE = {
@@ -589,10 +616,10 @@ const FINALE = {
 };
 
 const TOUR_STEPS = [
-  { target: '#timeline', reveal: ['#timeline', '#soundBtn'], text: '這條線是他的一生。往右拖，人生往前走，畫面也會一路變暗。', place: 'above' },
-  { target: '#flashBtn', reveal: ['#flashBtn'], text: '他的畫都藏在黑暗裡。移動滑鼠，你就是那盞燈；想看清整幅畫，可以在這裡關掉手電筒。', place: 'below' },
+  { target: '#timeline', reveal: ['#timeline'], text: '這條線是他的一生。往右拖，人生往前走，畫面也會一路變暗。', place: 'above' },
+  { target: '#tools', reveal: ['#tools', '#storyBtn'], text: '他的畫都藏在黑暗裡，移動滑鼠，你就是那盞燈。手電筒、聲音和出處收在右上角的「工具」；故事文字收在左上角的「章節故事」，平常畫面只留給畫。', place: 'below' },
   { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
-  { target: '#lever', reveal: ['#lever', '#creditBtn'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。扳下這個開關，換一面看。', place: 'right' }
+  { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。扳下這個開關，換一面看。', place: 'right' }
 ];
 
 const CREDITS = [
@@ -770,22 +797,25 @@ function goToChapter(index) {
   section.classList.remove('show');
   setTimeout(() => { renderChapter(); section.classList.add('show'); }, 220);
   Sound.swell();
+  // 換章時讓「章節故事」亮一下，提醒有新的故事可以看
+  const story = $('storyBtn');
+  story.classList.remove('pulse'); void story.offsetWidth; story.classList.add('pulse');
   if (state.tour === 0) endTourStep();
 }
 
 function introHtml() {
   const chapter = CHAPTERS[state.chapter];
-  const closed = document.body.classList.contains('intro-closed');
   let html = `<div class="intro" id="intro">
-    <div class="head"><span class="num">CAPITOLO ${chapter.roman}</span><button class="toggle" id="introToggle">${closed ? '展開 ▸' : '收起 ◂'}</button></div>
+    <div class="site-title">卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></div>
+    <div class="head"><span class="num">CAPITOLO ${chapter.roman}</span><button class="toggle" id="introToggle">收起 ◂</button></div>
     <h2>${chapter.name}</h2>
     <div class="body-wrap">
       <div class="meta">${chapter.years}｜${chapter.place}</div>
       <p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
       <span class="style-tag">畫風：${chapter.style}</span>`;
   if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
-  if (chapter.extra === 'exile') html += bandoHtml();
-  if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
+  if (chapter.extra === 'exile') html += bandoHtml() + mapHtml();
+  if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按右下角的「最後一眼」。</div>`;
   return html + `</div></div>`;
 }
 
@@ -801,8 +831,7 @@ function renderChapter() {
     const key = chapter.paintings[current];
     const painting = PAINTINGS[key];
     const spots = HOTSPOTS.map((spot, i) => ({ spot, i })).filter(item => item.spot.painting === key);
-    const rightSpace = chapter.extra === 'exile' ? '362px' : (chapter.paintings.length > 1 ? '96px' : '16px');
-    right = `<div class="gallery" style="--gallery-right:${rightSpace}">
+    right = `<div class="gallery">
         <div class="zoomwrap"><div class="frame" id="frame">
           <img src="${painting.src}" alt="${painting.title}" draggable="false">
           <div class="mask"></div>
@@ -811,15 +840,11 @@ function renderChapter() {
         <div class="caption"><div class="t">《${painting.title}》${painting.year}</div><div class="s">${painting.latin} · ${painting.where}</div></div>
       </div>
       ${chapter.paintings.length > 1 ? `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>` : ''}
-      ${chapter.extra === 'exile' ? mapHtml() : ''}`;
+      ${chapter.extra === 'finale' ? '<button class="btn-light finale-float" id="finaleBtn">最後一眼</button>' : ''}`;
   }
   section.innerHTML = introHtml() + right;
   bindFrame();
-  $('introToggle').addEventListener('click', () => {
-    document.body.classList.toggle('intro-closed');
-    $('introToggle').textContent = document.body.classList.contains('intro-closed') ? '展開 ▸' : '收起 ◂';
-    Sound.click();
-  });
+  $('introToggle').addEventListener('click', () => { document.body.classList.remove('drawer-open'); Sound.click(); });
   section.querySelectorAll('[data-thumb]').forEach(button => button.addEventListener('click', () => {
     state.paintingIndex[state.chapter] = Number(button.dataset.thumb);
     Sound.click();
@@ -1013,7 +1038,7 @@ function showTourStep(index) {
     <div class="row"><button class="skip" id="tourSkip">略過導覽</button><button class="next" id="tourNext">${index === TOUR_STEPS.length - 1 ? '開始看' : '知道了'}</button></div>`;
   const rect = target.getBoundingClientRect();
   let left = rect.left, top = rect.bottom + 12;
-  if (step.place === 'above') { left = Math.max(12, rect.left + 150); top = rect.top - 150; }
+  if (step.place === 'above') { left = rect.left + rect.width / 2 - 145; top = rect.top - 180; }
   if (step.place === 'right') { left = rect.right + 18; top = Math.max(12, rect.top + rect.height / 2 - 70); }
   if (step.place === 'below') left = Math.min(rect.right - 290, window.innerWidth - 302);
   bubble.style.left = Math.max(12, Math.min(left, window.innerWidth - 302)) + 'px';
@@ -1129,9 +1154,17 @@ $('flashBtn').addEventListener('click', () => {
   Sound.click();
 });
 $('soundBtn').addEventListener('click', () => { Sound.setOn(!Sound.on); updateSoundButton(); });
+$('storyBtn').addEventListener('click', () => { document.body.classList.toggle('drawer-open'); Sound.click(); });
+$('toolsBtn').addEventListener('click', (event) => {
+  event.stopPropagation();
+  const open = $('tools').classList.toggle('open');
+  $('toolsBtn').setAttribute('aria-expanded', String(open));
+  Sound.click();
+});
+document.addEventListener('click', (event) => { if (!$('tools').contains(event.target)) $('tools').classList.remove('open'); });
 $('noteLayer').addEventListener('click', (event) => { if (event.target === $('noteLayer')) closeNote(); });
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') { closeNote(); $('creditLayer').classList.remove('open'); }
+  if (event.key === 'Escape') { closeNote(); $('creditLayer').classList.remove('open'); document.body.classList.remove('drawer-open'); }
 });
 $('creditBtn').addEventListener('click', () => { credits(); $('creditLayer').classList.add('open'); });
 $('creditLayer').addEventListener('click', (event) => { if (event.target === $('creditLayer')) $('creditLayer').classList.remove('open'); });
