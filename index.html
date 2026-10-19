@@ -769,6 +769,13 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 .paper .fake { color: #4a2f14; font-size: 12px; }
 .paper .where { color: #4a2f14; }
 .paper .dateline { color: #4a2f14; }
+
+/* v13.2：文字欄寬度貼著每一幅畫（從時間軸右邊一路到畫框左邊） */
+@media (min-width: 801px) {
+  .intro { width: calc(var(--left-w) - 64px - 22px); }
+  .intro .bando { max-width: 560px; margin-left: 0; }
+  #tools { right: calc(100vw - var(--left-w) + 22px); }
+}
 </style>
 </head>
 <body data-view="surface">
@@ -1351,7 +1358,8 @@ function mapHtml() {
 // ================= 手電筒與熱點 =================
 function updateLeftWidth() {
   const wrap = document.querySelector('.zoomwrap');
-  const left = wrap ? Math.max(340, window.innerWidth - wrap.getBoundingClientRect().width) : window.innerWidth * 0.45;
+  // 文字欄一路延伸到畫框左邊（畫越窄，文字欄越寬）
+  const left = wrap ? Math.max(340, wrap.getBoundingClientRect().left) : window.innerWidth * 0.45;
   document.body.style.setProperty('--left-w', Math.round(left) + 'px');
 }
 window.addEventListener('resize', updateLeftWidth);
