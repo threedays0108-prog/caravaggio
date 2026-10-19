@@ -187,7 +187,7 @@ body.flash-off .mask { display: none; }
 .hotspot {
   position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px;
   border-radius: 50%; border: 0; padding: 0; background: transparent;
-  opacity: .3; transition: opacity .2s, transform .2s;
+  opacity: .3; transition: opacity .2s;
 }
 .hotspot::before, .hotspot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; }
 .hotspot::before { inset: 9px; background: var(--gold); box-shadow: 0 0 12px 4px var(--gold); }
@@ -666,6 +666,39 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
 .route.g { animation: none; }
 .city.g { animation: none; }
 #routeDot { fill: #ffe7a8; filter: drop-shadow(0 0 6px #ffb84d) drop-shadow(0 0 14px #ff9a3c); opacity: 0; }
+
+/* ===== v11：滑鼠互動 ===== */
+/* 游標光暈：整個牆面都有一盞跟著滑鼠走的燈 */
+#halo { position: fixed; left: 0; top: 0; width: 460px; height: 460px; margin: -230px 0 0 -230px; border-radius: 50%; pointer-events: none; z-index: 1; opacity: 0; transition: opacity .5s;
+  background: radial-gradient(circle, rgba(255,214,150,.17) 0, rgba(255,190,110,.07) 38%, transparent 68%); mix-blend-mode: screen; }
+#halo.on { opacity: 1; }
+body[data-view="dark"] #halo { background: radial-gradient(circle, rgba(220,90,80,.15) 0, rgba(200,70,60,.06) 38%, transparent 68%); }
+body.flash-off #halo { display: none; }
+@media (hover: none) { #halo { display: none; } }
+/* 畫：跟著滑鼠微微傾斜，玻璃反光掃過 */
+.zoomwrap { transform-style: preserve-3d; will-change: transform; }
+.gloss { position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 40%), rgba(255,244,214,.22), rgba(255,244,214,0) 46%); mix-blend-mode: screen; }
+.frame:hover .gloss { opacity: 1; }
+/* 熱點：靠近時被吸過去，停在上面會浮出名稱 */
+.hotspot .tip { position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%) translateY(4px); white-space: nowrap; pointer-events: none;
+  font-family: var(--serif); font-size: 13px; line-height: 1; letter-spacing: .08em; color: #f3dfa6; background: rgba(14,10,6,.92); padding: 6px 10px; border: 1px solid rgba(201,162,77,.55);
+  box-shadow: 0 6px 14px rgba(0,0,0,.6); opacity: 0; transition: opacity .2s, transform .2s; }
+.hotspot:hover .tip, .hotspot:focus-visible .tip { opacity: 1; transform: translateX(-50%); }
+.hotspot { cursor: pointer; }
+/* 其他：縮圖、展籤、章節點、開關、按鈕，滑上去都有回應 */
+.intro .thumbs button { transition: opacity .3s, transform .25s cubic-bezier(.3,1.6,.5,1), box-shadow .25s; }
+.intro .thumbs button:hover { opacity: 1; transform: translateY(-4px) scale(1.08); box-shadow: 0 12px 18px rgba(0,0,0,.65), 0 0 16px rgba(255,200,120,.35); }
+.hangwrap .museum-label { transition: transform .35s cubic-bezier(.3,1.5,.5,1), box-shadow .35s, filter .6s; transform-origin: right bottom; }
+.hangwrap .museum-label:hover { transform: translateY(-5px) rotate(-1.5deg); box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 14px 22px rgba(0,0,0,.6); }
+.chapter-buttons button { transition: transform .25s cubic-bezier(.3,1.8,.5,1), background .3s, box-shadow .3s; }
+.chapter-buttons button:hover { transform: translate(-50%, -50%) scale(1.7); }
+#lever .bat { transition: transform .14s cubic-bezier(.6,1.9,.5,1); }
+#lever:hover .bat { transform: rotate(-90deg) translateX(2px); }
+body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2px); }
+#lever:active .plate { transform: scale(.96); }
+.chip, .btn-light { transition: transform .2s, box-shadow .25s, background .25s, border-color .25s; }
+.chip:hover, #toolsMenu .chip:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,.55), 0 0 14px rgba(255,190,100,.25); }
 </style>
 </head>
 <body data-view="surface">
@@ -705,6 +738,7 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
 </button>
 
 <div id="orb"></div>
+<div id="halo"></div>
 <div class="wallfx peel"></div><div class="wallfx stain"></div><div class="wallfx drip"></div>
 
 <main id="stage"><section class="chapter" id="chapter"></section></main>
@@ -1107,6 +1141,21 @@ function animateRoute() {
   timeline.to(dot, { opacity: 0, duration: 0.6 });
 }
 
+
+// ================= 游標光暈：牆面上跟著滑鼠走的一盞燈 =================
+(function setupHalo() {
+  const halo = $('halo');
+  if (!halo) return;
+  document.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch') return;
+    if (!motionOK()) { halo.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`; halo.classList.add('on'); return; }
+    if (!halo._x) { halo._x = gsap.quickTo(halo, 'x', { duration: 0.7, ease: 'power3' }); halo._y = gsap.quickTo(halo, 'y', { duration: 0.7, ease: 'power3' }); }
+    halo._x(event.clientX); halo._y(event.clientY);
+    halo.classList.add('on');
+  });
+  document.addEventListener('pointerleave', () => halo.classList.remove('on'));
+})();
+
 function introHtml(extra) {
   const chapter = CHAPTERS[state.chapter];
   const next = CHAPTERS[state.chapter + 1];
@@ -1141,8 +1190,8 @@ function renderChapter() {
         <div class="lamp"></div>
         <div class="hangwrap"><div class="zoomwrap"><div class="frame" id="frame">
           <img src="${painting.src}" alt="${painting.title}" draggable="false">
-          <div class="mask"></div>
-          ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"></button>`).join('')}
+          <div class="mask"></div><div class="gloss"></div>
+          ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"><span class="tip">${spot.title}</span></button>`).join('')}
         </div></div>LABEL_SLOT</div>
       </div>`;
     if (chapter.paintings.length > 1) {
@@ -1242,7 +1291,11 @@ function bindFrame() {
     if (frame.classList.contains('zoomed')) return;
     frame.style.setProperty('--mx', '50%'); frame.style.setProperty('--my', '42%');
     frame.style.setProperty('--r', Math.round(frame.offsetWidth * 0.16) + 'px');
-    spots.forEach(spot => { spot.style.opacity = ''; spot.style.transform = ''; });
+    spots.forEach(spot => { spot.style.opacity = ''; });
+    if (motionOK()) {
+      gsap.to(spots, { x: 0, y: 0, scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+      gsap.to(frame.closest('.zoomwrap'), { rotationX: 0, rotationY: 0, duration: 0.8, ease: 'power3.out', overwrite: 'auto' });
+    } else spots.forEach(spot => { spot.style.transform = ''; });
   };
   const move = (event) => {
     if (frame.classList.contains('zoomed')) return;
@@ -1255,8 +1308,19 @@ function bindFrame() {
       const sx = rect.width * parseFloat(spot.style.left) / 100, sy = rect.height * parseFloat(spot.style.top) / 100;
       const near = Math.max(0, Math.min(1, 1 - (Math.hypot(sx - x, sy - y) - radius * 0.4) / (radius * 0.7)));
       spot.style.opacity = (0.3 + near * 0.7).toFixed(2);
-      spot.style.transform = `scale(${(1 + near * 0.35).toFixed(2)})`;
+      if (motionOK()) {
+        // 磁吸：靠近的熱點會被游標拉過去一小段
+        const pull = near * 0.4, clamp = (v) => Math.max(-14, Math.min(14, v));
+        gsap.to(spot, { x: clamp((x - sx) * pull), y: clamp((y - sy) * pull), scale: 1 + near * 0.4, duration: 0.3, ease: 'power3.out', overwrite: 'auto' });
+      } else spot.style.transform = `scale(${(1 + near * 0.35).toFixed(2)})`;
     });
+    if (motionOK()) {
+      // 畫框跟著滑鼠傾斜，玻璃反光掃過
+      const nx = x / rect.width - 0.5, ny = y / rect.height - 0.5;
+      gsap.to(frame.closest('.zoomwrap'), { rotationY: nx * 4, rotationX: -ny * 4, transformPerspective: 1400, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+      frame.style.setProperty('--gx', (x / rect.width * 100).toFixed(1) + '%');
+      frame.style.setProperty('--gy', (y / rect.height * 100).toFixed(1) + '%');
+    }
   };
   frame.addEventListener('pointermove', move);
   frame.addEventListener('pointerdown', move);
