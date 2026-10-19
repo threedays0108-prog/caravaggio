@@ -733,6 +733,42 @@ body[data-view="dark"] #lever:hover .bat { transform: rotate(90deg) translateX(2
 .hangwrap .museum-label .t { font-size: 13.5px; }
 .hangwrap .museum-label .l { font-size: 11px; line-height: 1.25; }
 .hangwrap .museum-label .m { font-size: 11px; margin-top: 2px; line-height: 1.35; }
+
+/* ===== v13.1：通緝令——深色墨字、老紙質感（纖維、霉斑、水漬、折痕、燒焦邊、墨暈） ===== */
+.intro .bando {
+  position: relative; margin: 22px 4px 6px; padding: 22px 24px 18px; color: #2a190b; text-align: center;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><filter id='m' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.05' numOctaves='3' seed='44'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .2  0 0 0 0 .07  0 0 0 4.5 -3.55'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='s' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.007' numOctaves='4' seed='17'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .2  0 0 0 0 .07  0 0 0 3.6 -1.75'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='520' height='520'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.02' numOctaves='5' seed='8' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='2.6' diffuseConstant='0.78'><feDistantLight azimuth='225' elevation='40'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.012 .45' numOctaves='3' seed='31' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.6' diffuseConstant='0.65'><feDistantLight azimuth='200' elevation='50'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='12' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23ffffff' surfaceScale='0.9' diffuseConstant='0.61'><feDistantLight azimuth='225' elevation='55'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),
+    radial-gradient(ellipse at 48% 40%, #d9c18a 0%, #c8aa6e 52%, #9c7a45 100%);
+  background-blend-mode: multiply, multiply, overlay, overlay, overlay, normal;
+  box-shadow: inset 0 0 46px 12px rgba(70,38,10,.7), inset 0 0 8px rgba(40,20,5,.7), 0 14px 26px rgba(0,0,0,.55);
+  transform: rotate(-.7deg);
+  clip-path: polygon(0 1.2%, 4% 0, 9% 1%, 15% .2%, 23% 1.1%, 31% 0, 40% .9%, 49% .1%, 58% 1%, 67% 0, 76% 1.2%, 85% .2%, 93% 1%, 100% 0, 99.3% 8%, 100% 17%, 99.2% 27%, 100% 38%, 99.4% 49%, 100% 61%, 99.3% 72%, 100% 83%, 99.4% 92%, 100% 100%, 94% 99.2%, 86% 100%, 77% 99%, 68% 100%, 58% 99.2%, 49% 100%, 40% 99%, 31% 100%, 22% 99.1%, 13% 100%, 6% 99%, 0 100%, .7% 92%, 0 83%, .8% 71%, 0 60%, .6% 49%, 0 37%, .7% 26%, 0 14%, .6% 6%);
+}
+/* 折痕：一條橫、一條直，帶陰影與高光 */
+.intro .bando::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 49.4%, rgba(60,32,8,.28) 49.9%, rgba(255,244,214,.38) 50.4%, transparent 51.2%),
+    linear-gradient(0deg, transparent 52%, rgba(60,32,8,.22) 52.4%, rgba(255,244,214,.3) 52.9%, transparent 53.6%); }
+/* 邊角磨損與焦痕 */
+.intro .bando::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 0 0, rgba(35,16,4,.55), transparent 22%), radial-gradient(circle at 100% 100%, rgba(35,16,4,.5), transparent 20%), radial-gradient(circle at 100% 0, rgba(35,16,4,.3), transparent 14%); }
+.intro .bando > * { position: relative; z-index: 1; }
+.intro .bando .title { font-family: var(--fell-sc); font-size: 29px; letter-spacing: .12em; line-height: 1.1; color: #1c0f05; text-shadow: 0 0 1.2px rgba(40,20,5,.75), 1px 1px 0 rgba(40,20,5,.2); }
+.intro .bando .sub { font-family: var(--fell); font-style: italic; font-size: 14.5px; color: #4a2f14; margin: 4px 0 10px; }
+.intro .bando p { font-family: var(--fell), var(--serif); font-size: 15px; line-height: 1.8; margin: 6px 0; color: #2a190b; text-shadow: 0 0 .9px rgba(40,20,5,.6); }
+.intro .bando p b { color: #1c0f05; font-weight: bold; letter-spacing: .06em; }
+.intro .bando .rule { width: auto; height: 1px; margin: 8px 16%; background: rgba(42,25,11,.55); }
+.intro .bando .fake { font-size: 12px; color: #4a2f14; text-shadow: 0 0 .6px rgba(40,20,5,.4); margin-top: 8px; }
+
+/* v13.1：紙條底部小字調深，淺紙配深字 */
+.paper .fake { color: #4a2f14; font-size: 12px; }
+.paper .where { color: #4a2f14; }
+.paper .dateline { color: #4a2f14; }
 </style>
 </head>
 <body data-view="surface">
