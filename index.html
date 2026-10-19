@@ -6,6 +6,7 @@
 <title>卡拉瓦喬：天才，也是通緝犯</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 <style>
 @property --r { syntax: '<length>'; inherits: true; initial-value: 90px; }
@@ -658,6 +659,13 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
 @media (max-width: 800px) {
   .hangwrap .museum-label { right: auto; left: 0; bottom: auto; top: 100%; }
 }
+
+/* ===== v10：GSAP 動效 ===== */
+#orb { position: fixed; left: 0; top: 0; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; z-index: 38; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle, #fff8e0 0 25%, #ffd58a 55%, rgba(255,170,70,0) 75%); box-shadow: 0 0 26px 10px rgba(255,190,90,.55), 0 0 90px 30px rgba(255,150,50,.2); }
+.route.g { animation: none; }
+.city.g { animation: none; }
+#routeDot { fill: #ffe7a8; filter: drop-shadow(0 0 6px #ffb84d) drop-shadow(0 0 14px #ff9a3c); opacity: 0; }
 </style>
 </head>
 <body data-view="surface">
@@ -696,6 +704,7 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
   <span class="label" id="leverBottom">卷宗</span>
 </button>
 
+<div id="orb"></div>
 <div class="wallfx peel"></div><div class="wallfx stain"></div><div class="wallfx drip"></div>
 
 <main id="stage"><section class="chapter" id="chapter"></section></main>
@@ -997,12 +1006,105 @@ function goToChapter(index) {
   state.chapter = index;
   const section = $('chapter');
   section.classList.remove('show');
-  setTimeout(() => { renderChapter(); section.classList.add('show'); }, 220);
+  const fromDot = document.querySelector('.chapter-buttons button.on');
+  const fromBox = fromDot ? fromDot.getBoundingClientRect() : null;
+  setTimeout(() => { renderChapter(); section.classList.add('show'); chapterIntro(fromBox); }, 220);
   Sound.swell();
   // 換章時讓「章節故事」亮一下，提醒有新的故事可以看
   const story = $('storyBtn');
   story.classList.remove('pulse'); void story.offsetWidth; story.classList.add('pulse');
   if (state.tour === 0) endTourStep();
+}
+
+
+// ================= GSAP 動效（沒有載入 GSAP 或使用者要求減少動態時，直接略過） =================
+const motionOK = () => typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// 把文字拆成一字一格（連續的英數字維持一整個詞，避免英文被斷在字母中間）
+function splitForMotion(element) {
+  const original = element.textContent;
+  element.textContent = '';
+  const pieces = original.match(/[A-Za-z0-9.,'\-()À-ɏ]+|[\s\S]/g) || [];
+  const spans = pieces.map(piece => {
+    const span = document.createElement('span');
+    span.textContent = piece;
+    span.style.display = 'inline-block';
+    span.style.whiteSpace = 'pre';
+    element.appendChild(span);
+    return span;
+  });
+  return { spans, restore: () => { element.textContent = original; } };
+}
+
+function chapterIntro(fromBox) {
+  if (!motionOK()) return;
+  const chapter = CHAPTERS[state.chapter];
+  const timeline = gsap.timeline();
+
+  // 標題與內文逐字浮現
+  const headline = document.querySelector('.intro h2');
+  const body = $('introText');
+  [headline, body].filter(Boolean).forEach((element, i) => {
+    const { spans, restore } = splitForMotion(element);
+    gsap.set(spans, { autoAlpha: 0, y: 10 });
+    timeline.to(spans, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: { amount: i === 0 ? 0.5 : 1.3 }, onComplete: restore }, i === 0 ? 0.15 : 0.45);
+  });
+
+  const frame = $('frame');
+  if (!frame) return;
+  const wrap = frame.closest('.zoomwrap');
+  const mask = frame.querySelector('.mask');
+
+  // 畫：從暗處浮出來，手電筒的光圈從 0 慢慢張開（等圖片載入，才量得到畫寬）
+  gsap.fromTo(wrap, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
+  const image = frame.querySelector('img');
+  const openLight = () => {
+    mask.style.transition = 'none';
+    gsap.fromTo(frame, { '--r': '0px' }, { '--r': Math.round(frame.offsetWidth * 0.16) + 'px', duration: 1.7, delay: 0.35, ease: 'power2.out', onComplete: () => { mask.style.transition = ''; } });
+  };
+  if (image.complete && frame.offsetWidth > 0) openLight(); else image.addEventListener('load', openLight, { once: true });
+
+  // 光點：從時間軸上舊的章節點飛到新的畫中央，再散開
+  const orb = $('orb');
+  const toBox = wrap.getBoundingClientRect();
+  const startX = fromBox ? fromBox.left + fromBox.width / 2 : 20;
+  const startY = fromBox ? fromBox.top + fromBox.height / 2 : window.innerHeight / 2;
+  const endX = toBox.left + toBox.width / 2;
+  const endY = toBox.top + toBox.height * 0.42;
+  gsap.timeline()
+    .set(orb, { x: startX, y: startY, scale: 0.4, opacity: 0 })
+    .to(orb, { opacity: 1, scale: 1, duration: 0.2 })
+    .to(orb, { x: endX, y: endY, duration: 1.0, ease: 'power3.inOut' }, '<')
+    .to(orb, { scale: 7, opacity: 0, duration: 0.7, ease: 'power2.out' });
+
+  if (chapter.extra === 'exile') animateRoute();
+}
+
+// 逃亡路線：一段一段畫出來，一顆光點沿著路徑走，到站時城市名浮現
+function animateRoute() {
+  const paths = [...document.querySelectorAll('.map-box .route')];
+  const cities = [...document.querySelectorAll('.map-box .city')];
+  const dot = $('routeDot');
+  if (!paths.length || !dot) return;
+  paths.forEach(path => path.classList.add('g'));
+  cities.forEach(city => city.classList.add('g'));
+  gsap.set(paths, { strokeDashoffset: 100 });
+  gsap.set(cities, { opacity: 0 });
+  gsap.set(dot, { opacity: 0 });
+  const timeline = gsap.timeline({ delay: 0.9 });
+  timeline.to(cities[0], { opacity: 1, duration: 0.4 }).set(dot, { opacity: 1 });
+  paths.forEach((path, i) => {
+    const length = path.getTotalLength();
+    timeline.to(path, {
+      strokeDashoffset: 0, duration: 1.0, ease: 'power1.inOut',
+      onUpdate() {
+        const point = path.getPointAtLength(this.progress() * length);
+        dot.setAttribute('cx', point.x); dot.setAttribute('cy', point.y);
+      }
+    });
+    timeline.to(cities[i + 1], { opacity: 1, duration: 0.4 }, '>-0.1');
+  });
+  timeline.to(dot, { opacity: 0, duration: 0.6 });
 }
 
 function introHtml(extra) {
@@ -1118,6 +1220,7 @@ function mapHtml() {
       <ellipse cx="${project([14.45, 35.9])[0]}" cy="${project([14.45, 35.9])[1]}" rx="5" ry="3" fill="#3a3126" stroke="#6e5a3a"/>
       <text x="300" y="40" font-size="13" fill="#8e7c5c" font-style="italic" font-family="IM Fell English, serif">Itinerarium fugae</text>
       ${paths}${cities}
+      <circle id="routeDot" r="5" cx="0" cy="0"></circle>
     </svg>
     <div class="note">逃亡路線示意圖（不是精確地圖）。順序依維基百科〈Exile of Caravaggio〉；馬爾他期間是否曾回那不勒斯、離開西西里的原因都有不同說法。</div>
   </div>`;
