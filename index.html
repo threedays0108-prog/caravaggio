@@ -631,6 +631,33 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
   #tools { right: 8px; top: 8px; }
   #lever { top: auto; bottom: 8px; left: 56px; transform: scale(.85); transform-origin: left bottom; }
 }
+
+/* ===== v8.1：展籤緊貼畫框左下（約 240×90）；捲軸改成細黃銅線＋底部淡出 ===== */
+.hangwrap { position: relative; line-height: 0; }
+.hangwrap .museum-label {
+  position: absolute; right: calc(100% + 2px); bottom: 0; width: 240px; line-height: 1.35;
+  padding: 7px 10px 7px; align-self: auto; transform: none;
+}
+.hangwrap .museum-label::before, .hangwrap .museum-label::after { top: 5px; width: 6px; height: 6px; }
+.hangwrap .museum-label::before { left: 6px; } .hangwrap .museum-label::after { right: 6px; }
+.hangwrap .museum-label .inv { font-size: 9px; padding: 0 0 3px 10px; margin-bottom: 4px; }
+.hangwrap .museum-label .t { font-size: 13px; }
+.hangwrap .museum-label .l { font-size: 10.5px; }
+.hangwrap .museum-label .m { font-size: 10.5px; margin-top: 2px; line-height: 1.4; }
+.intro { bottom: 124px; }
+.walltext {
+  scrollbar-width: thin; scrollbar-color: rgba(201,162,77,.35) transparent;
+  -webkit-mask-image: linear-gradient(#000 calc(100% - 46px), transparent);
+  mask-image: linear-gradient(#000 calc(100% - 46px), transparent);
+  padding-bottom: 40px;
+}
+.walltext::-webkit-scrollbar { width: 3px; }
+.walltext::-webkit-scrollbar-track { background: transparent; }
+.walltext::-webkit-scrollbar-thumb { background: rgba(201,162,77,.35); border-radius: 2px; }
+.walltext::-webkit-scrollbar-button { display: none; height: 0; }
+@media (max-width: 800px) {
+  .hangwrap .museum-label { right: auto; left: 0; bottom: auto; top: 100%; }
+}
 </style>
 </head>
 <body data-view="surface">
@@ -992,7 +1019,7 @@ function introHtml(extra) {
   if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
   if (chapter.extra === 'exile') html += bandoHtml() + mapHtml();
   if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
-  return html + `</div>${extra.label}</div>`;
+  return html + `</div></div>`;
 }
 
 function renderChapter() {
@@ -1010,11 +1037,11 @@ function renderChapter() {
     const spots = HOTSPOTS.map((spot, i) => ({ spot, i })).filter(item => item.spot.painting === key);
     right = `<div class="gallery">
         <div class="lamp"></div>
-        <div class="zoomwrap"><div class="frame" id="frame">
+        <div class="hangwrap"><div class="zoomwrap"><div class="frame" id="frame">
           <img src="${painting.src}" alt="${painting.title}" draggable="false">
           <div class="mask"></div>
           ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"></button>`).join('')}
-        </div></div>
+        </div></div>LABEL_SLOT</div>
       </div>`;
     if (chapter.paintings.length > 1) {
       extra.thumbs = `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>`;
@@ -1026,8 +1053,8 @@ function renderChapter() {
       <div class="t">${painting.title}</div>
       <div class="l">${painting.latin}</div>
       <div class="m">油彩、畫布　${painting.year}<br>${painting.where}</div>
-      <span class="pencil">在畫上找找發光的點 →</span>
     </div>`;
+    right = right.replace('LABEL_SLOT', extra.label);
   }
   section.innerHTML = introHtml(extra) + right;
   bindFrame();
