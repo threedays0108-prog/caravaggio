@@ -336,7 +336,7 @@ body::before {
   background-blend-mode: multiply;
   mix-blend-mode: overlay; opacity: .75;
 }
-/* 鍍金雕花框（暗巷視角換成鐵框）：金箔上的點點反光＋五道雕刻線 */
+/* 鍍金雕花框（卷宗視角換成鐵框）：金箔上的點點反光＋五道雕刻線 */
 .zoomwrap {
   border: 20px solid transparent;
   border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%235a3f12'/><stop offset='.22' stop-color='%23e8c66a'/><stop offset='.45' stop-color='%23946c22'/><stop offset='.62' stop-color='%23f3dc8c'/><stop offset='.82' stop-color='%23a07c35'/><stop offset='1' stop-color='%234a330d'/></linearGradient><filter id='h' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.12' numOctaves='3' seed='4' result='n'/><feSpecularLighting in='n' surfaceScale='2.5' specularConstant='1' specularExponent='22' lighting-color='%23fff3c4' result='s'><feDistantLight azimuth='225' elevation='48'/></feSpecularLighting><feComposite in='s' in2='SourceGraphic' operator='in' result='sc'/><feBlend in='SourceGraphic' in2='sc' mode='screen'/></filter></defs><rect width='120' height='120' fill='url(%23g)' filter='url(%23h)'/><rect x='1' y='1' width='118' height='118' fill='none' stroke='%232a1c06' stroke-width='2'/><rect x='4.5' y='4.5' width='111' height='111' fill='none' stroke='%23fff0b8' stroke-opacity='.75' stroke-width='1.5'/><rect x='9' y='9' width='102' height='102' fill='none' stroke='%232a1c06' stroke-opacity='.5' stroke-width='5'/><rect x='13.5' y='13.5' width='93' height='93' fill='none' stroke='%23fff0b8' stroke-opacity='.8' stroke-width='1.2'/><rect x='17.5' y='17.5' width='85' height='85' fill='none' stroke='%231a1004' stroke-width='3'/></svg>") 20 stretch;
@@ -380,7 +380,7 @@ body[data-view="dark"] .intro, body[data-view="dark"] #tour {
   background-blend-mode: overlay, normal;
   box-shadow: inset 0 1px 0 rgba(255,210,140,.22), inset 0 2px 0 rgba(0,0,0,.6), 0 -10px 30px rgba(0,0,0,.6);
 }
-/* 黃銅銘牌（暗巷視角換成鐵牌） */
+/* 黃銅銘牌（卷宗視角換成鐵牌） */
 .chapter-buttons button, .chip {
   position: relative;
   background: linear-gradient(#8a6a2e, #5c4318 45%, #4a3410 55%, #6e5222);
@@ -666,11 +666,11 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
   <div class="candle" id="preludeCandle"></div>
   <p class="latin" id="preludeLatin">Mediolani · Anno Domini MDLXXI</p>
   <div class="stagebox">
-    <p class="line">1571 年，米蘭，一個窮人家的孩子出生了。</p>
-    <p class="line">長大後，他畫的光亮得像有人在黑暗裡點了一盞燈。</p>
-    <p class="line">他的人生卻越走越暗，羅馬的法庭卷宗一頁一頁記下他的名字。</p>
-    <p class="line">最後，他成了一個任何人都可以殺掉的通緝犯。</p>
-    <p class="line">點亮這盞燈，一起翻開他的卷宗。</p>
+    <p class="line">1571 年，生在米蘭的一個叫卡拉瓦喬的小鎮</p>
+    <p class="line">他是文藝復興的最後一道光，也是下一個時代的第一道。</p>
+    <p class="line">他的畫大半都沉在黑暗裡，只留一道光，指引著觀眾的目光。</p>
+    <p class="line">他的日子不是在畫畫，就是在打架，最後打出了人命。</p>
+    <p class="line">這次換你拿著光，進去找。點亮這盞燈，翻開他的卷宗。</p>
   </div>
   <div class="prelude-buttons" id="preludeButtons">
     <button class="btn-light" id="startSound">點燈，開聲音</button>
@@ -690,10 +690,10 @@ body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
   </div>
 </div>
 
-<button id="lever" class="reveal tour-hide" aria-label="切換視角：教廷表面／暗巷真實">
-  <span class="label on" id="leverTop">教廷表面</span>
+<button id="lever" class="reveal tour-hide" aria-label="切換視角：展間／卷宗">
+  <span class="label on" id="leverTop">展間</span>
   <span class="plate"><span class="screw top"></span><span class="slot"><span class="bat"></span></span><span class="screw bottom"></span></span>
-  <span class="label" id="leverBottom">暗巷真實</span>
+  <span class="label" id="leverBottom">卷宗</span>
 </button>
 
 <div class="wallfx peel"></div><div class="wallfx stain"></div><div class="wallfx drip"></div>
@@ -728,34 +728,34 @@ const LIGHT_POINTS = [[1571, 12], [1592, 90], [1599, 65], [1606, 38], [1609, 10]
 const CHAPTERS = [
   {
     start: 1571, name: '米蘭學徒', years: '1571–約1592', place: '米蘭、卡拉瓦喬鎮', roman: 'I', style: '倫巴底寫實',
-    surface: '他 1571 年生在米蘭（也有一說是卡拉瓦喬鎮，外號就是這樣來的）。1577 年爸爸和祖父同一天過世，1584 年媽媽也走了，同年 13 歲的他去跟畫家 Simone Peterzano 當了四年學徒。這段時期沒有確定是他畫的作品留下來。',
-    dark: '約 1592 年他離開米蘭，原因說法不一：有一說是吵架時傷了一名警察，傳記作者 Bellori 甚至寫他是犯了殺人案才跑的。真假沒人說得準，但他的人生從這裡開始，就和「逃」分不開了。',
+    surface: '他 1571 年生在米蘭，家境普通，甚至算小康。1576 年瘟疫逼得全家離開，隔年父親和祖父又在同一天過世，日子才一路往下掉。13 歲，他去 Peterzano 的畫室當學徒，這段時期沒有確定是他畫的作品留下來。',
+    dark: '約 1592 年，他離開了家鄉。據說是牽扯進一樁命案。他一路逃進羅馬，日子比原來更苦。從這一刻起，他的人生就和「逃」分不開了。',
     hint: '往右拖動下方的年份，進入下一章。',
     paintings: []
   },
   {
     start: 1592, name: '羅馬打拚', years: '約1592–1599', place: '羅馬', roman: 'II', style: '小幅生活題材，明暗法萌芽',
-    surface: '約 1592 年他到了羅馬。約 1595 年，樞機主教 del Monte 買了他的畫，乾脆把他接進家裡住。這時的畫小小的、亮亮的，畫的是少年、水果、酒杯，是他一生裡最亮的一段。',
-    dark: '剛到羅馬時他很窮，借住別人家，三年內搬了大約十次家。他替前輩畫水果和花，據說還被要求一天畫三顆頭。大病一場後他離開雇主，直到 del Monte 出現，才終於有地方住。',
+    surface: '到了羅馬，他先替小有名氣的畫家 Cesari 打下手，專畫鮮花和水果，名聲就這樣一點一點冒出來。後來紅衣主教 del Monte 買下他的畫，還把他接進家裡住。這是他一生裡最明亮的一段日子。',
+    dark: '剛到羅馬的他窮得很實在：借住別人家，三年搬了大約十次。據說還被要求一天畫三顆頭。後來大病一場、離開雇主，直到 del Monte 出現，才終於有了落腳的地方。',
     paintings: ['basket', 'bacchus']
   },
   {
     start: 1599, name: '羅馬成名', years: '1599–1606', place: '羅馬', roman: 'III', style: '強烈明暗，一道光束打進黑暗',
-    surface: '1599 年他接下聖路易堂一座禮拜堂的委託，1600 年聖馬太的畫一掛出來就轟動全城。他的招牌是在一片黑暗裡打進一道光，聖人的模特兒直接找街上的人。有人愛死了，也有教會把畫退回來。',
-    dark: '成名的同時，羅馬法庭的卷宗也越寫越厚：1600 年用棍棒打貴族，1603 年因為誹謗畫家 Baglione 被捕，據檔案記載還把一盤朝鮮薊砸向酒館侍者、朝房東的窗戶丟石頭。這些紀錄，羅馬國立檔案館到今天都還留著。',
+    surface: '聖馬太三部曲，讓他在羅馬一戰成名。他的招牌是一整片的陰影，只准一絲光線擠進來，用最強的明暗對比，把光襯得更亮。在他之前，畫裡的場景多半放在明亮的地方，他偏不。',
+    dark: '成名的同時，法庭卷宗也一頁一頁變厚：1600 年用棍棒打貴族，1603 年因為誹謗畫家 Baglione 被捕，據檔案記載，還把一盤朝鮮薊砸向酒館侍者。越紅越放肆，日子不是在畫畫，就是在打架。',
     paintings: ['calling', 'martyrdom', 'inspiration']
   },
   {
     start: 1606, name: '亡命天涯', years: '1606–1609', place: '那不勒斯、馬爾他、西西里', roman: 'IV', style: '大型祭壇畫，孤單的人物站在巨大的黑暗裡',
-    surface: '1606 年他離開羅馬，先到西班牙管的那不勒斯，再到馬爾他、西西里。他走到哪裡都有人找他畫畫：那不勒斯的大祭壇畫、馬爾他騎士團的委託，畫越畫越大，畫裡的人卻越來越孤單。',
-    dark: '1606 年 5 月底，他在羅馬殺了 Ranuccio Tomassoni（日期和經過都有不同說法），從此成了任何人都可以殺的人。在馬爾他他當上騎士，沒多久又跟騎士打架被關，從聖安傑洛堡逃出去，被騎士團開除，罵他是「腐臭的肢體」。',
+    surface: '三幅畫讓他名聲大噪，他也越畫越大膽：神話與宗教人物都畫得太真實，真實到你感覺不到神性，連基督的遺體也是。1606 年，他離開羅馬，到那不勒斯、馬爾他、西西里，走到哪裡，都有人等著他的畫。',
+    dark: '他越來越肆意妄為，終於在 1606 年 5 月底，於羅馬殺了 Ranuccio Tomassoni（日期和經過有不同說法），成了通緝犯，只好一路逃。在馬爾他他當上騎士，沒多久又和騎士鬥毆被關，越獄逃出後被開除。',
     paintings: ['seven'],
     extra: 'exile'
   },
   {
     start: 1609, name: '最後一年', years: '1609–1610', place: '那不勒斯、Porto Ercole', roman: 'V', style: '筆觸更快更自由，畫面幾乎全黑',
-    surface: '1609 年秋天他回到那不勒斯，等教宗赦免。1610 年 7 月，他坐船北上要回羅馬，卻在托斯卡尼海岸的 Porto Ercole 過世，大約 38 歲。他是怎麼死的，到今天都沒有定論。',
-    dark: '1609 年 10 月底，有人在那不勒斯的一家酒館襲擊他，把他的臉砍傷，一度傳出他已經死了，主使者是誰到今天沒有定論。他帶著要去求情的畫上船，人死在半路，畫卻跟著船回到了那不勒斯。事後的報導說：赦免其實已經下來了。',
+    surface: '1609 年秋天，他回到那不勒斯，等教宗赦免。1610 年 7 月，他搭船北上想回羅馬，卻在 Porto Ercole 一帶過世，大約 38 歲。他究竟怎麼死的，至今沒有定論。',
+    dark: '1609 年 10 月，有人在那不勒斯的酒館襲擊他，把他的臉砍傷，主使者至今沒有定論。他帶著要用來求情的畫上了船，人死在半路，畫卻回到了那不勒斯。事後的報導說，赦免其實已經下來了。',
     paintings: ['goliath'],
     extra: 'finale'
   }
@@ -771,57 +771,57 @@ const PAINTINGS = {
   goliath: { src: 'assets/david-goliath.jpg', title: '大衛提著歌利亞的頭', latin: 'Davide con la testa di Golia', year: '1610', where: '羅馬，Borghese 美術館' }
 };
 
-// 熱點：x、y 是畫面上的百分比位置；surface＝教廷表面，dark＝暗巷真實
+// 熱點：x、y 是畫面上的百分比位置；surface＝展間，dark＝卷宗
 const HOTSPOTS = [
   { painting: 'basket', x: 48, y: 32, title: '回頭看你的少年', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
-    surface: '少年扭頭看向畫外，肩膀露在外面，光從側面打過來，臉一半亮、一半落在陰影裡。他直接找真人當模特兒，所以畫出來的人有血有肉，不像畫冊裡的天使。',
-    dark: '據說他剛到羅馬時窮到借住別人家，靠替別的畫家畫水果和花賺錢，後來大病一場才離開。這位少年和他手上那籃水果，看起來就是那段打工日子練出來的功力。' },
+    surface: '少年回過頭，望向畫外，光從側面斜斜打來，臉一半亮、一半沉在陰影裡。他找的是街上的真人當模特兒，所以畫裡的人有溫度、有血肉，不是畫冊裡那種飄在雲上的天使。',
+    dark: '據說他初到羅馬時，就靠替別人畫水果和花餬口。看這個少年和他懷裡那籃水果，大概就是打工打出來的功夫。' },
   { painting: 'basket', x: 56, y: 63, title: '連枯葉都照畫', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
-    surface: '葡萄、桃子、蘋果、石榴，一顆一顆畫得像標本。右下角那片葉子已經枯黃了，他也沒有把它畫得好看一點。',
-    dark: '據說他畫畫不先打草稿，直接對著眼前的東西畫。水果不會抱怨，但他的模特兒大概要很有耐心。' },
+    surface: '葡萄、桃子、蘋果、石榴，一顆顆真實得像剛摘下來。右下角那片葉子已經枯黃，他沒有替它補妝，連腐敗的地方也一起畫了進去。',
+    dark: '在羅馬討生活的日子，讓他比起華麗好看的東西，更愛畫不完美卻真實的模樣。後來歐洲的畫家漸漸也開始畫有缺陷的日常，他算是替大家開了路。' },
   { painting: 'bacchus', x: 50, y: 28, title: '有點喝茫的酒神', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
-    surface: '少年扮成酒神，頭上戴著葡萄葉，半躺著把酒杯遞向你，臉頰泛紅，眼神有點茫，好像在說：來，喝一杯。',
-    dark: '據說他畫神話人物也不畫理想化的臉，而是找街上的真人來當模特兒。所以他的酒神看起來不像神，比較像隔壁那個喝多了的朋友。' },
-  { painting: 'bacchus', x: 73, y: 54, title: '那一杯紅酒', dateline: 'Roma · Anno MDXCVI', tag: '有紀錄',
-    surface: '酒杯舉在畫面中央，杯裡的酒面還在晃，玻璃透明到連反光都畫了出來。前面的水果有的熟透，有的石榴已經裂開。',
-    dark: '這段時間，樞機主教 del Monte 買了他的畫，後來乾脆讓他住進自己家裡。窮畫家有了貴人，羅馬的上流圈子從此知道了他的名字。' },
+    surface: '少年扮成酒神，頭戴葡萄葉，半靠著把酒杯遞向你。臉頰泛紅，眼神微醺，像在說：來，喝一杯。',
+    dark: '據說這位模特兒家境並不富裕，因為他的指縫裡還有黑泥。所以這位酒神一點也不像神，比較像隔壁喝多了的朋友。' },
+  { painting: 'bacchus', x: 73, y: 54, title: '酒壺裡的反光', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
+    surface: '杯裡的酒面還在輕輕晃動，玻璃透明到連反光都畫了出來。',
+    dark: '有一說，仔細看酒壺上的反光，裡面藏著畫家本人的臉。' },
   { painting: 'calling', x: 65, y: 41, title: '一道光，點名了一個人', dateline: 'Roma · Anno MDC', tag: '有說法',
-    surface: '右上方的窗口打進一道斜光，順著那隻伸出的手，照到桌邊正在數錢的人。收稅官馬太就這樣被點名：「跟我來」。這幅畫裡，光不是背景，是主角。',
-    dark: '這幅畫一掛出來就轟動，他一夕成名。成名後他也沒有收斂：據記載，同一年 11 月他就用棍棒打了一位貴族 Girolamo Stampa。' },
+    surface: '照理說，耶穌在畫裡該是絕對的中心，所有的光都該打在祂身上。這幅偏偏把祂藏進陰影，光順著祂伸出的手，落到馬太身上。',
+    dark: '畫裡到底哪一位是馬太，至今沒有定論。他成名後也沒收斂，據記載同年 11 月，就用棍棒打了貴族 Girolamo Stampa。' },
   { painting: 'martyrdom', x: 34, y: 29, title: '人群裡有個人回頭', dateline: 'Roma · Anno MDC', tag: '有說法',
-    surface: '殺手站在畫面中央，聖馬太倒在地上，旁邊的人嚇得四散逃開。一片混亂裡，左後方有個留鬍子的男人回過頭來，看著畫外的我們。',
-    dark: '有一說，這個回頭的男人就是畫家自己，他把自己畫進了殺人現場。要是真的，這比他自己真的成為殺人犯，早了六年。' },
+    surface: '這幅畫的重心不是馬太，是殺他的殺手（據說是國王不高興，派人動手）。馬太倒在地上，旁邊的人嚇得四散。',
+    dark: '有一說，左後方回頭看的那個男人，就是畫家自己。他把自己畫進了殺人現場，比自己真的殺人，早了六年。' },
   { painting: 'inspiration', x: 40, y: 16, title: '被退貨的第一版', dateline: 'Roma · Anno MDCII', tag: '有說法',
-    surface: '天使從上方飛下來，掰著手指一條一條教馬太寫福音。馬太抬頭看著天使，表情像被老師點到名的學生。',
-    dark: '據說你現在看到的是第二版：他第一次畫的《聖馬太與天使》被退了回來，只好重畫，退畫的原因有好幾種說法。換成今天的說法，就是客戶回信：「麻煩重做。」' },
+    surface: '天使掰著手指，一條一條教馬太寫福音，馬太抬頭望著祂，像被老師點到名的學生。',
+    dark: '你現在看到的是第二版。據說第一版被退了貨，因為天使和馬太靠得太近，近到讓人想歪。退畫的原因有好幾種說法。' },
   { painting: 'seven', x: 80, y: 58, title: '窗邊的那位女子', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
-    surface: '畫面右邊，一位年輕女子在牢房的窗口邊餵一位被關的老人，旁邊有人舉著火把。這幅畫把基督教的七件善事，像是探望囚犯、給飢餓的人食物，全部擠在同一條那不勒斯街頭上演。',
-    dark: '畫這幅畫時，他剛被判了死刑，在羅馬是任何人都可以殺的人。一個逃犯畫的卻是「慈悲」，這個諷刺，他自己大概也感覺得到。' },
+    surface: '這幅畫把基督教的七件善事，全擠進同一條那不勒斯的街頭。比起他以前一張畫只講一件事，這次更擁擠，也更淒美。',
+    dark: '畫這幅畫時，他是被判了死刑的逃犯，畫的卻是「慈悲」。這個諷刺，他自己大概也感覺得到。' },
   { painting: 'seven', x: 33, y: 22, title: '倒著俯衝的天使', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
-    surface: '最上方兩位天使張開翅膀往下俯衝，聖母抱著孩子在更高處往下看。上面是天堂，下面是髒兮兮的街頭，中間沒有任何隔開的東西。',
-    dark: '他在羅馬常被退畫，逃到那不勒斯之後，卻很快成了當地最有名的畫家。通緝犯的職涯，在這裡意外地往上爬了一段。' },
+    surface: '兩位天使往下俯衝，聖母在更高的地方俯看。上面是天堂，下面是髒兮兮的街頭，中間什麼也沒隔。',
+    dark: '他在羅馬常被退畫，逃到那不勒斯卻很快成了當地最有名的畫家。通緝犯的職涯，意外往上爬了一段。' },
   { painting: 'goliath', x: 43, y: 31, title: '大衛沒有笑', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
-    surface: '大衛提著歌利亞的頭，眉頭微微皺著，眼神裡沒有打贏的得意，反而有點不忍心。',
-    dark: '這是他生命最後那一年的畫。當時他躲在那不勒斯，等教宗赦免他的死刑。畫裡沒有一個人是贏家的表情。' },
+    surface: '大衛看著手裡的頭，眼裡沒有打贏的得意，是不忍，是悲憫，好幾種情緒糊在一起。',
+    dark: '這是他最後一年的畫，那時他躲在那不勒斯，等著赦免。畫裡沒有一個人，露出贏家的表情。' },
   { painting: 'goliath', x: 22, y: 80, title: '那把劍', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
     surface: '劍從畫面左下角斜斜地伸出來，幾乎要刺出畫框。光只照亮大衛的上半身，其他地方全部沉進黑暗。',
     dark: '據說他晚期的畫越來越暗，筆觸也越來越快。有人說這是風格的轉變，也有人說他已經沒時間、沒心情慢慢畫了，這件事沒有答案。' },
   { painting: 'goliath', x: 80, y: 70, title: '那顆頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
-    surface: '歌利亞的頭被大衛抓著頭髮提起來，嘴巴微微張開，眼睛半睜，脖子還在滴血。',
-    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點左邊的「最後一眼」，看清楚一點。' }
+    surface: '一般認為，被大衛提在手裡的歌利亞，畫的就是卡拉瓦喬自己的臉。',
+    dark: '有一說，這幅畫是他送給樞機主教 Scipione Borghese 的禮物，想靠它向教宗求情、討一個赦免。一個被判「任何人都能拿你的頭領賞」的人，把自己的頭畫了出來，親手交上去。有人把它叫作他的「認罪書」，但這是後人的詮釋，不是定論。' }
 ];
 
 const FINALE = {
   title: '最後一眼', dateline: 'Neapoli · Anno MDCX', tag: '通行看法＋有說法',
-  surface: '一般認為，被砍下的歌利亞，畫的是卡拉瓦喬自己的臉。有一說，這幅畫是他送給樞機主教 Scipione Borghese 的禮物，希望對方幫忙向教宗求情、赦免他的死刑。',
-  dark: '一個被判「任何人都可以拿你的頭領賞」的人，把自己的頭畫了出來，交了出去。有人把這幅畫叫作他的「認罪書」，但這是後人的詮釋，不是定論。'
+  surface: '一般認為，被大衛提在手裡的歌利亞，畫的就是卡拉瓦喬自己的臉。',
+  dark: '有一說，這幅畫是他送給樞機主教 Scipione Borghese 的禮物，想靠它向教宗求情、討一個赦免。一個被判「任何人都能拿你的頭領賞」的人，把自己的頭畫了出來，親手交上去。有人把它叫作他的「認罪書」，但這是後人的詮釋，不是定論。'
 };
 
 const TOUR_STEPS = [
   { target: '#timeline', reveal: ['#timeline'], text: '這條線是他的一生。往下拖，人生往前走，畫面也會一路變暗。', place: 'right' },
-  { target: '#tools', reveal: ['#tools'], text: '他的畫都藏在黑暗裡，移動滑鼠，你就是那盞燈。想看清整幅畫，可以在「工具」裡關掉手電筒，聲音和出處也在這裡。', place: 'below' },
-  { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
-  { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。把這個開關扳到右邊，換一面看。', place: 'below' }
+  { target: '#tools', reveal: ['#tools'], text: '他的畫都藏在黑暗裡，你移動滑鼠，就是那道光。想看清整幅畫，可以在「工具」裡關掉手電筒，聲音和出處也在這裡。', place: 'below' },
+  { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開紙條。', place: 'right' },
+  { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有展間裡看到的樣子，也有卷宗裡記下的事。把這個開關扳到右邊，換一面看。', place: 'below' }
 ];
 
 const CREDITS = [
@@ -1185,7 +1185,7 @@ function renderNote() {
   const data = note.kind === 'finale' ? FINALE : HOTSPOTS[note.index];
   const painting = note.kind === 'finale' ? PAINTINGS.goliath : PAINTINGS[data.painting];
   const dark = state.view === 'dark';
-  const kind = dark ? 'ATTI CRIMINALI · 暗巷卷宗' : 'DESCRIPTIO · 作品說明';
+  const kind = dark ? 'ATTI CRIMINALI · 卷宗' : 'DESCRIPTIO · 展間';
   $('paper').innerHTML = `
     <button class="close" aria-label="關閉">×</button>
     <div class="dateline"><span>${data.dateline}</span><span class="kind">${kind}</span></div>
@@ -1193,7 +1193,7 @@ function renderNote() {
     <div class="body">${dark ? data.dark : data.surface}</div>
     <div class="where">《${painting.title}》${painting.year}｜${painting.where}</div>
     ${dark ? `<div class="stamp">${data.tag}</div>` : ''}
-    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '把左上角的開關扳到「暗巷真實」，看這幅畫背後的事。'}</div>
+    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '把左上角的開關扳到「卷宗」，看這幅畫背後的事。'}</div>
     <div class="inkblot"></div><div class="seal">G</div>`;
   $('paper').querySelector('.close').addEventListener('click', closeNote);
 }
@@ -1299,8 +1299,8 @@ function credits() {
     <ul>${CREDITS.map(([name, title]) => `<li>《${name}》：<a href="${link(title)}" target="_blank" rel="noopener">${title.replace('File:', '')}</a></li>`).join('')}</ul>
     <h3>音樂出處</h3>
     <ul>
-      <li>教廷表面：Palestrina〈Agnus Dei〉（Missa Sicut lilium inter spinas），The Tudor Consort 演唱，<a href="${link('File:The Tudor Consort - 06 - Palestrina - Agnus dei - Missa Sicut lilium inter spinas.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY 3.0</li>
-      <li>暗巷真實：Kapsberger〈Capona〉（1640 年出版），Y. Nagai、K. Mieno 以長頸魯特琴與管風琴演奏，<a href="${link('File:Capona.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY-SA 3.0。作曲家 Kapsberger 1605 年前後就在羅馬活動，曲子本身比卡拉瓦喬晚出版</li>
+      <li>展間：Palestrina〈Agnus Dei〉（Missa Sicut lilium inter spinas），The Tudor Consort 演唱，<a href="${link('File:The Tudor Consort - 06 - Palestrina - Agnus dei - Missa Sicut lilium inter spinas.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY 3.0</li>
+      <li>卷宗：Kapsberger〈Capona〉（1640 年出版），Y. Nagai、K. Mieno 以長頸魯特琴與管風琴演奏，<a href="${link('File:Capona.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY-SA 3.0。作曲家 Kapsberger 1605 年前後就在羅馬活動，曲子本身比卡拉瓦喬晚出版</li>
     </ul>
     <h3>資料來源</h3>
     <ul>
