@@ -458,6 +458,57 @@ body.drawer-open #stage { z-index: 26; }
   .finale-float { bottom: 140px; }
   #tour { width: min(290px, calc(100vw - 24px)); }
 }
+
+/* ===== 版面 C2：畫靠右撐滿高度；左邊放直立時間軸＋所有控制 ===== */
+:root { --left-w: 45vw; --col: 206px; }
+.gallery { left: auto; right: 0; top: 0; bottom: 0; align-items: flex-end; justify-content: center; }
+.gallery.empty { left: var(--left-w); align-items: center; }
+.frame img { max-height: calc(100vh - 40px); max-width: calc(100vw - 420px); }
+/* 直立時間軸（最左側） */
+#timeline {
+  left: 16px; top: 16px; bottom: 16px; right: auto; transform: none;
+  width: 174px; height: auto; padding: 16px 10px 18px; border-radius: 26px;
+  display: flex; flex-direction: column; align-items: stretch; gap: 10px;
+}
+#yearLabel { grid-row: auto; text-align: center; font-size: 30px; }
+.slider-wrap { position: relative; flex: 1; width: 100%; height: auto; }
+.ticks { left: 10px; top: 0; bottom: 0; right: auto; width: 26px; height: auto; }
+.ticks span { left: 0; width: 26px; height: 1px; }
+#year {
+  position: absolute; left: 10px; top: 0; width: 26px; height: 100%;
+  writing-mode: vertical-lr;
+}
+#year::-webkit-slider-runnable-track { width: 6px; height: 100%; background: linear-gradient(90deg, #f1d98f, #a07c35 50%, #5c4318); }
+#year::-webkit-slider-thumb { margin-top: 0; margin-left: -6px; }
+#year::-moz-range-track { width: 6px; height: 100%; background: linear-gradient(90deg, #f1d98f, #a07c35 50%, #5c4318); }
+.chapter-buttons { position: absolute; left: 44px; right: 0; top: 0; bottom: 0; display: block; }
+.chapter-buttons button { position: absolute; left: 0; transform: translateY(-50%); flex: none; max-width: 100%; padding: 3px 7px; font-size: 12.5px; }
+/* 控制區（時間軸右邊那一欄） */
+#storyBtn { left: var(--col); top: 16px; }
+#tools { left: calc(var(--col) + 112px); right: auto; top: 16px; align-items: flex-start; }
+#toolsMenu { align-items: flex-start; }
+.caption { left: var(--col); right: auto; top: 72px; text-align: left; max-width: calc(var(--left-w) - var(--col) - 20px); }
+.thumbs { position: fixed; left: var(--col); right: auto; top: 150px; transform: none; flex-direction: row; flex-wrap: wrap; max-width: calc(var(--left-w) - var(--col) - 20px); }
+.thumbs img { width: 64px; }
+#lever { left: var(--col); top: auto; bottom: 24px; transform: none; }
+.finale-float { left: calc(var(--col) + 84px); right: auto; bottom: 40px; }
+@media (max-width: 800px) {
+  :root { --col: 66px; }
+  .frame img { max-width: calc(100vw - 70px); max-height: calc(100vh - 20px); }
+  #timeline { left: 4px; top: 8px; bottom: 8px; width: 56px; padding: 10px 4px; }
+  #yearLabel { font-size: 15px; }
+  .chapter-buttons { left: 30px; }
+  .chapter-buttons button { padding: 2px 4px; font-size: 11px; }
+  .ticks, #year { left: 2px; }
+  #storyBtn { left: auto; right: 8px; top: 8px; }
+  #tools { left: auto; right: 8px; top: 48px; align-items: flex-end; }
+  #toolsMenu { align-items: flex-end; }
+  .caption { display: none; }
+  .thumbs { left: auto; right: 8px; top: auto; bottom: 8px; }
+  .thumbs img { width: 40px; }
+  #lever { left: 62px; bottom: 6px; transform: scale(.65); transform-origin: left bottom; }
+  .finale-float { left: auto; right: 8px; bottom: 120px; }
+}
 </style>
 </head>
 <body data-view="surface">
@@ -500,8 +551,8 @@ body.drawer-open #stage { z-index: 26; }
 
 <footer id="timeline" class="reveal tour-hide">
   <div id="yearLabel">1571<small>Anno</small></div>
-  <div class="chapter-buttons" id="chapterButtons"></div>
   <div class="slider-wrap">
+    <div class="chapter-buttons" id="chapterButtons"></div>
     <div class="ticks" id="ticks"></div>
     <input type="range" id="year" min="1571" max="1610" step="1" value="1571" aria-label="年份">
   </div>
@@ -616,7 +667,7 @@ const FINALE = {
 };
 
 const TOUR_STEPS = [
-  { target: '#timeline', reveal: ['#timeline'], text: '這條線是他的一生。往右拖，人生往前走，畫面也會一路變暗。', place: 'above' },
+  { target: '#timeline', reveal: ['#timeline'], text: '這條線是他的一生。往下拖，人生往前走，畫面也會一路變暗。', place: 'right' },
   { target: '#tools', reveal: ['#tools', '#storyBtn'], text: '他的畫都藏在黑暗裡，移動滑鼠，你就是那盞燈。手電筒、聲音和出處收在右上角的「工具」；故事文字收在左上角的「章節故事」，平常畫面只留給畫。', place: 'below' },
   { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
   { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。扳下這個開關，換一面看。', place: 'right' }
@@ -824,7 +875,7 @@ function renderChapter() {
   const section = $('chapter');
   let right = '';
   if (!chapter.paintings.length) {
-    right = `<div class="gallery"><div class="candle"></div>
+    right = `<div class="gallery empty"><div class="candle"></div>
       <p style="color:var(--ink-soft);font-style:italic;font-family:var(--fell);margin-top:30px">Nessuna opera certa</p></div>`;
   } else {
     const current = state.paintingIndex[state.chapter] || 0;
@@ -843,6 +894,7 @@ function renderChapter() {
       ${chapter.extra === 'finale' ? '<button class="btn-light finale-float" id="finaleBtn">最後一眼</button>' : ''}`;
   }
   section.innerHTML = introHtml() + right;
+  updateLeftWidth();
   bindFrame();
   $('introToggle').addEventListener('click', () => { document.body.classList.remove('drawer-open'); Sound.click(); });
   section.querySelectorAll('[data-thumb]').forEach(button => button.addEventListener('click', () => {
@@ -911,6 +963,13 @@ function mapHtml() {
 }
 
 // ================= 手電筒與熱點 =================
+function updateLeftWidth() {
+  const wrap = document.querySelector('.zoomwrap');
+  const left = wrap ? Math.max(340, window.innerWidth - wrap.getBoundingClientRect().width) : window.innerWidth * 0.45;
+  document.body.style.setProperty('--left-w', Math.round(left) + 'px');
+}
+window.addEventListener('resize', updateLeftWidth);
+
 function bindFrame() {
   const frame = $('frame');
   if (!frame) return;
@@ -938,7 +997,7 @@ function bindFrame() {
   frame.addEventListener('pointermove', move);
   frame.addEventListener('pointerdown', move);
   frame.addEventListener('pointerleave', idle);
-  frame.querySelector('img').addEventListener('load', idle);
+  frame.querySelector('img').addEventListener('load', () => { idle(); updateLeftWidth(); });
   idle();
   spots.forEach(spot => spot.addEventListener('click', (event) => {
     event.stopPropagation();
@@ -1095,7 +1154,9 @@ function credits() {
 // ================= 啟動 =================
 function buildTimeline() {
   $('chapterButtons').innerHTML = CHAPTERS.map((chapter, i) => `<button data-chapter="${i}" aria-label="${chapter.name}">${chapter.roman}<span class="cname">　${chapter.name}</span></button>`).join('');
-  $('ticks').innerHTML = CHAPTERS.slice(1).map(chapter => `<span style="left:calc(9px + (100% - 18px) * ${(chapter.start - 1571) / 39})"></span>`).join('');
+  const at = (year) => `calc(9px + (100% - 18px) * ${(year - 1571) / 39})`;
+  $('ticks').innerHTML = CHAPTERS.slice(1).map(chapter => `<span style="top:${at(chapter.start)}"></span>`).join('');
+  document.querySelectorAll('#chapterButtons button').forEach((button, i) => { button.style.top = at(CHAPTERS[i].start); });
   document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click', () => {
     const index = Number(button.dataset.chapter);
     tweenTo(CHAPTERS[index].start, () => { if (index !== state.chapter) goToChapter(index); });
