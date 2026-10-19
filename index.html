@@ -550,6 +550,87 @@ body[data-view="dark"] #lever .bat { transform: rotate(90deg); }
   #tools { right: 8px; }
   #lever { transform: scale(.8); transform-origin: left top; }
 }
+
+/* ===== 博物館版（v8）：畫 60%、左欄是印在牆上的文字＋右下角小展籤、最左一條細掛畫軌 ===== */
+:root { --left-w: 40vw; }
+body { background: radial-gradient(ellipse 30% 55% at 70% 0%, rgba(255,214,150,.2), rgba(255,214,150,0) 70%), radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0) 30%, rgba(0,0,0,.7) 100%), var(--bg); }
+.wallfx { position: fixed; inset: 0; pointer-events: none; }
+.wallfx.peel { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='5' seed='21'/><feColorMatrix values='0 0 0 0 .78  0 0 0 0 .7  0 0 0 0 .56  0 0 0 9 -5.6'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>"); mix-blend-mode: soft-light; opacity: .7; }
+.wallfx.stain { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='s' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='4' seed='5'/><feColorMatrix values='0 0 0 0 .12  0 0 0 0 .08  0 0 0 0 .03  0 0 0 4 -2.3'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>"); mix-blend-mode: multiply; opacity: .55; }
+.wallfx.drip { background: linear-gradient(180deg, rgba(20,12,4,.35), transparent 18%), repeating-linear-gradient(90deg, transparent 0 140px, rgba(25,16,6,.12) 141px, transparent 150px, transparent 330px); mix-blend-mode: multiply; }
+/* 畫：右邊 60%、撐滿高度、上方黃銅畫燈 */
+.gallery, .gallery.empty { left: auto; right: 0; width: 60vw; top: 0; bottom: 0; padding: 1vh 1.2vw 1.5vh; flex-direction: column; align-items: center; justify-content: center; gap: 0; }
+.lamp { width: 40%; height: 14px; flex: none; position: relative; z-index: 2; border-radius: 0 0 40px 40px / 0 0 14px 14px; background: linear-gradient(#f2d98e, #9c7426 60%, #4a330d); box-shadow: 0 3px 6px rgba(0,0,0,.6); }
+.lamp::after { content: ''; position: absolute; left: -10%; right: -10%; top: 12px; height: 40px; background: radial-gradient(ellipse at 50% 0, rgba(255,230,170,.35), transparent 70%); }
+.zoomwrap { margin-top: 6px; box-shadow: 0 0 0 2px #1a1207, 0 34px 50px rgba(0,0,0,.75), 0 70px 120px rgba(0,0,0,.5); }
+.frame img { max-height: calc(97.5vh - 70px); max-width: calc(58vw - 40px); }
+/* 最左：細黃銅掛畫軌＋小點，章名滑鼠移上去才出現 */
+#timeline { left: 10px; top: 9vh; bottom: 6vh; width: 36px; padding: 0; background: none !important; box-shadow: none !important; border-radius: 0; display: block; }
+#yearLabel { position: absolute; left: -10px; top: -40px; width: 56px; font-size: 14px; text-align: center; }
+#yearLabel small { display: none; }
+.slider-wrap { position: absolute; inset: 0; height: auto; }
+.ticks { display: none; }
+#year { left: 5px; width: 26px; }
+#year::-webkit-slider-runnable-track { width: 2px; background: linear-gradient(90deg, #8a6422, #f1d98f, #8a6422); box-shadow: 1px 2px 3px rgba(0,0,0,.5); }
+#year::-moz-range-track { width: 2px; background: linear-gradient(90deg, #8a6422, #f1d98f, #8a6422); }
+#year::-webkit-slider-thumb { width: 18px; height: 18px; margin-left: -8px; border: 2px solid #f1d98f; background: rgba(20,14,8,.6); box-shadow: 0 2px 4px rgba(0,0,0,.7); }
+#year::-moz-range-thumb { width: 14px; height: 14px; border: 2px solid #f1d98f; background: rgba(20,14,8,.6); }
+.chapter-buttons { left: 0; z-index: 2; pointer-events: none; }
+.chapter-buttons button { pointer-events: auto; left: 18px; width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; font-size: 0; opacity: 1; transform: translate(-50%, -50%); overflow: visible; background: #8a6422 !important; box-shadow: 0 0 0 2px rgba(0,0,0,.35) !important; }
+.chapter-buttons button::before { content: none; }
+.chapter-buttons button.on { background: #f3dfa6 !important; box-shadow: 0 0 10px rgba(255,210,140,.8) !important; }
+.chapter-buttons .cname { display: block !important; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 13px; letter-spacing: .1em; white-space: nowrap; color: #f3dfa6; background: rgba(20,14,8,.9); padding: 3px 9px; border: 1px solid rgba(201,162,77,.5); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.chapter-buttons button:hover .cname, .chapter-buttons button:focus-visible .cname { opacity: 1; }
+/* 左上：小的黃銅電燈開關＋工具 */
+#lever { left: 64px; top: 18px; gap: 8px; }
+#lever .label { font-size: 12.5px; white-space: nowrap; }
+#lever .plate { width: 72px; height: 36px; border-radius: 7px; }
+#lever .screw.top { left: 8px; } #lever .screw.bottom { right: 8px; }
+#lever .slot { width: 26px; height: 13px; margin: -6.5px 0 0 -13px; }
+#lever .bat { height: 22px; width: 10px; margin-left: -5px; }
+#lever .bat::after { width: 14px; height: 10px; top: -4px; }
+#tools { left: auto; right: calc(60vw + 18px); top: 26px; }
+#toolsBtn { background: none; border: 0; box-shadow: none; font-family: var(--fell-sc); letter-spacing: .2em; font-size: 12px; color: #a8936c; padding: 2px 0; }
+#toolsBtn::before { content: none; }
+#toolsMenu .chip { background: rgba(20,14,8,.9); border: 1px solid rgba(201,162,77,.45); box-shadow: 0 4px 10px rgba(0,0,0,.6); font-size: 13px; color: #e6dcc4; }
+#toolsMenu .chip::before { content: none; }
+/* 左欄：牆上的文字（沒有框）＋右下角展籤 */
+.intro { left: 64px; top: 72px; bottom: 2vh; width: calc(40vw - 84px); padding: 0; border-radius: 0; background: none !important; box-shadow: none !important; outline: none !important; display: flex; flex-direction: column; gap: 1.5vh; overflow: hidden; }
+.walltext { flex: 1; min-height: 0; overflow: auto; padding-right: 10px; }
+.wt-head { display: flex; align-items: flex-end; gap: 22px; }
+.intro .no { font-family: var(--fell); font-size: 64px; line-height: .8; color: rgba(216,204,178,.2); letter-spacing: .05em; }
+.intro .sc { font-family: var(--fell-sc); letter-spacing: .3em; font-size: 12px; color: #a8936c; margin: 12px 0 8px; }
+.intro h2 { font-size: 32px; letter-spacing: .12em; margin: 0 0 12px; color: var(--ink); text-shadow: 0 1px 0 rgba(0,0,0,.6); }
+.intro .rule { width: 48px; height: 1px; background: #a8936c; margin: 0 0 14px; }
+.intro p { font-size: 16px; line-height: 2; text-shadow: 0 1px 1px rgba(0,0,0,.5); }
+.intro .style-tag { border: 0; padding: 0; font-family: var(--fell-sc); letter-spacing: .12em; font-size: 12.5px; color: #8f7b58; }
+.intro .hint { border-top: 0; padding-top: 0; font-style: italic; }
+.intro .thumbs { position: static; display: flex; flex-direction: row; gap: 12px; margin: 0; transform: none; max-width: none; }
+.intro .thumbs button { padding: 4px; border: 0; background: linear-gradient(135deg, #6b4a14, #d9b863 40%, #7a5a1e 70%, #c9a24d); box-shadow: 0 6px 10px rgba(0,0,0,.6); opacity: .8; }
+.intro .thumbs button.on { opacity: 1; outline: 1px solid rgba(255,220,150,.6); outline-offset: 3px; }
+.intro .thumbs img { height: 44px; width: auto; }
+.museum-label {
+  align-self: flex-end; flex: none; width: 210px; padding: 10px 12px 9px; position: relative;
+  color: #2c2116; transform: rotate(-.8deg);
+  background: radial-gradient(ellipse at 80% 20%, rgba(120,90,40,.18), transparent 60%), linear-gradient(170deg, #ece2c9, #d9cba7);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 6px 12px rgba(0,0,0,.55);
+  transition: filter .6s;
+}
+body[data-view="dark"] .museum-label { filter: grayscale(.7) brightness(.85); }
+.museum-label::before, .museum-label::after { content: ''; position: absolute; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #f6e3a1, #8a6422 60%, #3a2808); box-shadow: 0 1px 2px rgba(0,0,0,.6); }
+.museum-label::before { left: 8px; } .museum-label::after { right: 8px; }
+.museum-label .inv { font-family: 'Courier New', monospace; font-size: 9.5px; letter-spacing: .1em; color: #6b5536; border-bottom: 1px solid rgba(60,40,20,.35); padding-bottom: 5px; margin-bottom: 7px; }
+.museum-label .t { font-size: 14px; font-weight: bold; }
+.museum-label .l { font-family: var(--fell); font-style: italic; font-size: 11.5px; color: #5a4630; }
+.museum-label .m { font-size: 11px; margin-top: 4px; line-height: 1.55; }
+.museum-label .pencil { font-style: italic; font-size: 10.5px; color: #6e6e72; transform: rotate(-3deg); display: inline-block; margin-top: 4px; }
+@media (max-width: 800px) {
+  .gallery, .gallery.empty { width: 100vw; left: 0; top: 0; bottom: auto; height: 56vh; padding-left: 50px; }
+  .frame img { max-height: calc(56vh - 70px); max-width: calc(100vw - 90px); }
+  .intro { left: 56px; top: calc(56vh + 8px); width: calc(100vw - 64px); }
+  #tools { right: 8px; top: 8px; }
+  #lever { top: auto; bottom: 8px; left: 56px; transform: scale(.85); transform-origin: left bottom; }
+}
 </style>
 </head>
 <body data-view="surface">
@@ -587,6 +668,8 @@ body[data-view="dark"] #lever .bat { transform: rotate(90deg); }
   <span class="plate"><span class="screw top"></span><span class="slot"><span class="bat"></span></span><span class="screw bottom"></span></span>
   <span class="label" id="leverBottom">暗巷真實</span>
 </button>
+
+<div class="wallfx peel"></div><div class="wallfx stain"></div><div class="wallfx drip"></div>
 
 <main id="stage"><section class="chapter" id="chapter"></section></main>
 
@@ -895,25 +978,28 @@ function goToChapter(index) {
   if (state.tour === 0) endTourStep();
 }
 
-function introHtml(top) {
+function introHtml(extra) {
   const chapter = CHAPTERS[state.chapter];
-  let html = `<div class="intro" id="intro">${top}
-    <div class="head"><span class="num">CAPITOLO ${chapter.roman}</span><button class="toggle" id="introToggle">收起 ◂</button></div>
+  const next = CHAPTERS[state.chapter + 1];
+  const endYear = next ? next.start : 1610;
+  let html = `<div class="intro" id="intro"><div class="walltext">
+    <div class="wt-head"><div class="no">${chapter.roman}</div>${extra.thumbs}</div>
+    <div class="sc">${toRoman(chapter.start)} – ${toRoman(endYear)}　·　${chapter.place}</div>
     <h2>${chapter.name}</h2>
-    <div class="body-wrap">
-      <div class="meta">${chapter.years}｜${chapter.place}</div>
-      <p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
-      <span class="style-tag">畫風：${chapter.style}</span>`;
+    <div class="rule"></div>
+    <p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
+    <div class="style-tag">畫風：${chapter.style}</div>`;
   if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
   if (chapter.extra === 'exile') html += bandoHtml() + mapHtml();
   if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
-  return html + `</div><div class="site-title">卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></div></div>`;
+  return html + `</div>${extra.label}</div>`;
 }
 
 function renderChapter() {
   const chapter = CHAPTERS[state.chapter];
   const section = $('chapter');
-  let right = '', top = '';
+  let right = '';
+  const extra = { thumbs: '', label: '' };
   if (!chapter.paintings.length) {
     right = `<div class="gallery empty"><div class="candle"></div>
       <p style="color:var(--ink-soft);font-style:italic;font-family:var(--fell);margin-top:30px">Nessuna opera certa</p></div>`;
@@ -923,19 +1009,28 @@ function renderChapter() {
     const painting = PAINTINGS[key];
     const spots = HOTSPOTS.map((spot, i) => ({ spot, i })).filter(item => item.spot.painting === key);
     right = `<div class="gallery">
+        <div class="lamp"></div>
         <div class="zoomwrap"><div class="frame" id="frame">
           <img src="${painting.src}" alt="${painting.title}" draggable="false">
           <div class="mask"></div>
           ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"></button>`).join('')}
         </div></div>
       </div>`;
-    top = `<div class="caption"><div class="t">《${painting.title}》${painting.year}</div><div class="s">${painting.latin} · ${painting.where}</div></div>
-      ${chapter.paintings.length > 1 ? `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>` : ''}`;
+    if (chapter.paintings.length > 1) {
+      extra.thumbs = `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>`;
+    }
+    // 展籤：館藏編號＝年份－章－第幾幅
+    const yearNumber = (painting.year.match(/\d{4}/) || [''])[0];
+    extra.label = `<div class="museum-label">
+      <div class="inv">INV. ${yearNumber} — ${chapter.roman} / 0${current + 1}</div>
+      <div class="t">${painting.title}</div>
+      <div class="l">${painting.latin}</div>
+      <div class="m">油彩、畫布　${painting.year}<br>${painting.where}</div>
+      <span class="pencil">在畫上找找發光的點 →</span>
+    </div>`;
   }
-  section.innerHTML = introHtml(top) + right;
-  updateLeftWidth();
+  section.innerHTML = introHtml(extra) + right;
   bindFrame();
-  $('introToggle').addEventListener('click', () => { document.body.classList.remove('drawer-open'); Sound.click(); });
   section.querySelectorAll('[data-thumb]').forEach(button => button.addEventListener('click', () => {
     state.paintingIndex[state.chapter] = Number(button.dataset.thumb);
     Sound.click();
@@ -1193,7 +1288,7 @@ function credits() {
 
 // ================= 啟動 =================
 function buildTimeline() {
-  $('chapterButtons').innerHTML = CHAPTERS.map((chapter, i) => `<button data-chapter="${i}" aria-label="${chapter.name}">${chapter.roman}<span class="cname">　${chapter.name}</span></button>`).join('');
+  $('chapterButtons').innerHTML = CHAPTERS.map((chapter, i) => `<button data-chapter="${i}" aria-label="${chapter.name}">${chapter.roman}<span class="cname">${chapter.roman}　${chapter.name}</span></button>`).join('');
   const at = (year) => `calc(9px + (100% - 18px) * ${(year - 1571) / 39})`;
   $('ticks').innerHTML = CHAPTERS.slice(1).map(chapter => `<span style="top:${at(chapter.start)}"></span>`).join('');
   document.querySelectorAll('#chapterButtons button').forEach((button, i) => { button.style.top = at(CHAPTERS[i].start); });
