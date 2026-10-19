@@ -851,43 +851,45 @@ const PAINTINGS = {
 
 // 熱點：x、y 是畫面上的百分比位置；surface＝展間，dark＝卷宗
 const HOTSPOTS = [
-  { painting: 'basket', x: 48, y: 32, title: '回頭看你的少年', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
+  { painting: 'basket', x: 48, y: 32, title: '回頭看你的少年', titleDark: '打工練出來的功夫', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
     surface: '少年回過頭，望向畫外，光從側面斜斜打來，臉一半亮、一半沉在陰影裡。他找的是街上的真人當模特兒，所以畫裡的人有溫度、有血肉，不是畫冊裡那種飄在雲上的天使。',
     dark: '據說他初到羅馬時，就靠替別人畫水果和花餬口。看這個少年和他懷裡那籃水果，大概就是打工打出來的功夫。' },
-  { painting: 'basket', x: 56, y: 63, title: '連枯葉都照畫', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
+  { painting: 'basket', x: 56, y: 63, title: '連枯葉都照畫', titleDark: '不完美的引路人', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
     surface: '葡萄、桃子、蘋果、石榴，一顆顆真實得像剛摘下來。右下角那片葉子已經枯黃，他沒有替它補妝，連腐敗的地方也一起畫了進去。',
     dark: '在羅馬討生活的日子，讓他比起華麗好看的東西，更愛畫不完美卻真實的模樣。後來歐洲的畫家漸漸也開始畫有缺陷的日常，他算是替大家開了路。' },
-  { painting: 'bacchus', x: 50, y: 28, title: '有點喝茫的酒神', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
+  { painting: 'bacchus', x: 50, y: 28, title: '有點喝茫的酒神', titleDark: '指縫裡的黑泥', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
     surface: '少年扮成酒神，頭戴葡萄葉，半靠著把酒杯遞向你。臉頰泛紅，眼神微醺，像在說：來，喝一杯。',
     dark: '據說這位模特兒家境並不富裕，因為他的指縫裡還有黑泥。所以這位酒神一點也不像神，比較像隔壁喝多了的朋友。' },
-  { painting: 'bacchus', x: 73, y: 54, title: '酒壺裡的反光', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
+  { painting: 'bacchus', x: 73, y: 54, title: '那一杯紅酒', titleDark: '酒壺裡的人', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
     surface: '杯裡的酒面還在輕輕晃動，玻璃透明到連反光都畫了出來。',
     dark: '有一說，仔細看酒壺上的反光，裡面藏著畫家本人的臉。' },
-  { painting: 'calling', x: 65, y: 41, title: '一道光，點名了一個人', dateline: 'Roma · Anno MDC', tag: '有說法',
+  { painting: 'calling', x: 65, y: 41, title: '一道光，點名了一個人', titleDark: '沒人說得準的馬太', dateline: 'Roma · Anno MDC', tag: '有說法',
     surface: '照理說，耶穌在畫裡該是絕對的中心，所有的光都該打在祂身上。這幅偏偏把祂藏進陰影，光順著祂伸出的手，落到馬太身上。',
     dark: '畫裡到底哪一位是馬太，至今沒有定論。他成名後也沒收斂，據記載同年 11 月，就用棍棒打了貴族 Girolamo Stampa。' },
-  { painting: 'martyrdom', x: 34, y: 29, title: '人群裡有個人回頭', dateline: 'Roma · Anno MDC', tag: '有說法',
+  { painting: 'martyrdom', x: 34, y: 29, title: '重心是殺手', titleDark: '回頭的那個人', dateline: 'Roma · Anno MDC', tag: '有說法',
     surface: '這幅畫的重心不是馬太，是殺他的殺手（據說是國王不高興，派人動手）。馬太倒在地上，旁邊的人嚇得四散。',
     dark: '有一說，左後方回頭看的那個男人，就是畫家自己。他把自己畫進了殺人現場，比自己真的殺人，早了六年。' },
-  { painting: 'inspiration', x: 40, y: 16, title: '被退貨的第一版', dateline: 'Roma · Anno MDCII', tag: '有說法',
+  { painting: 'inspiration', x: 40, y: 16, title: '被老師點名的學生', titleDark: '被退貨的第一版', dateline: 'Roma · Anno MDCII', tag: '有說法',
     surface: '天使掰著手指，一條一條教馬太寫福音，馬太抬頭望著祂，像被老師點到名的學生。',
     dark: '你現在看到的是第二版。據說第一版被退了貨，因為天使和馬太靠得太近，近到讓人想歪。退畫的原因有好幾種說法。' },
-  { painting: 'seven', x: 80, y: 58, title: '窗邊的那位女子', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
+  { painting: 'seven', x: 80, y: 58, title: '七件善事，擠在一條街', titleDark: '通緝犯畫慈悲', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
     surface: '這幅畫把基督教的七件善事，全擠進同一條那不勒斯的街頭。比起他以前一張畫只講一件事，這次更擁擠，也更淒美。',
     dark: '畫這幅畫時，他是被判了死刑的逃犯，畫的卻是「慈悲」。這個諷刺，他自己大概也感覺得到。' },
-  { painting: 'seven', x: 33, y: 22, title: '倒著俯衝的天使', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
+  { painting: 'seven', x: 33, y: 22, title: '天堂和街頭，沒有隔', titleDark: '通緝犯的職涯往上爬', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
     surface: '兩位天使往下俯衝，聖母在更高的地方俯看。上面是天堂，下面是髒兮兮的街頭，中間什麼也沒隔。',
     dark: '他在羅馬常被退畫，逃到那不勒斯卻很快成了當地最有名的畫家。通緝犯的職涯，意外往上爬了一段。' },
-  { painting: 'goliath', x: 43, y: 31, title: '大衛沒有笑', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
+  { painting: 'goliath', x: 43, y: 31, title: '大衛沒有笑', titleDark: '沒有贏家', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
     surface: '大衛看著手裡的頭，眼裡沒有打贏的得意，是不忍，是悲憫，好幾種情緒糊在一起。',
     dark: '這是他最後一年的畫，那時他躲在那不勒斯，等著赦免。畫裡沒有一個人，露出贏家的表情。' },
-  { painting: 'goliath', x: 22, y: 80, title: '那把劍', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
+  { painting: 'goliath', x: 22, y: 80, title: '那把劍', titleDark: '越畫越暗', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
     surface: '劍從畫面左下角斜斜地伸出來，幾乎要刺出畫框。光只照亮大衛的上半身，其他地方全部沉進黑暗。',
     dark: '據說他晚期的畫越來越暗，筆觸也越來越快。有人說這是風格的轉變，也有人說他已經沒時間、沒心情慢慢畫了，這件事沒有答案。' },
-  { painting: 'goliath', x: 80, y: 70, title: '那顆頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
+  { painting: 'goliath', x: 80, y: 70, title: '那顆頭，是他自己', titleDark: '交出去的頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
     surface: '一般認為，被大衛提在手裡的歌利亞，畫的就是卡拉瓦喬自己的臉。',
     dark: '有一說，這幅畫是他送給樞機主教 Scipione Borghese 的禮物，想靠它向教宗求情、討一個赦免。一個被判「任何人都能拿你的頭領賞」的人，把自己的頭畫了出來，親手交上去。有人把它叫作他的「認罪書」，但這是後人的詮釋，不是定論。' }
 ];
+
+const spotTitle = (spot) => (state.view === 'dark' && spot.titleDark) ? spot.titleDark : spot.title;
 
 const FINALE = {
   title: '最後一眼', dateline: 'Neapoli · Anno MDCX', tag: '通行看法＋有說法',
@@ -1226,7 +1228,7 @@ function renderChapter() {
         <div class="hangwrap"><div class="zoomwrap"><div class="frame" id="frame">
           <img src="${painting.src}" alt="${painting.title}" draggable="false">
           <div class="mask"></div><div class="gloss"></div>
-          ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"><span class="tip">${spot.title}</span></button>`).join('')}
+          ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spotTitle(spot)}"><span class="tip">${spotTitle(spot)}</span></button>`).join('')}
         </div></div>LABEL_SLOT</div>
       </div>`;
     if (chapter.paintings.length > 1) {
@@ -1391,7 +1393,7 @@ function renderNote() {
   $('paper').innerHTML = `
     <button class="close" aria-label="關閉">×</button>
     <div class="dateline"><span>${data.dateline}</span><span class="kind">${kind}</span></div>
-    <h3>${data.title}</h3>
+    <h3>${note.kind === 'finale' ? data.title : spotTitle(data)}</h3>
     <div class="body">${dark ? data.dark : data.surface}</div>
     <div class="where">《${painting.title}》${painting.year}｜${painting.where}</div>
     ${dark ? `<div class="stamp">${data.tag}</div>` : ''}
@@ -1442,6 +1444,12 @@ function setView(view) {
   const introText = $('introText');
   if (introText) introText.textContent = view === 'dark' ? CHAPTERS[state.chapter].dark : CHAPTERS[state.chapter].surface;
   renderNote();
+  document.querySelectorAll('.hotspot').forEach(button => {
+    const label = spotTitle(HOTSPOTS[Number(button.dataset.spot)]);
+    button.setAttribute('aria-label', label);
+    const tip = button.querySelector('.tip');
+    if (tip) tip.textContent = label;
+  });
   Sound.lever();
   Sound.updateMusic();
 }
