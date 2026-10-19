@@ -1132,7 +1132,10 @@ function showTourStep(index) {
   document.querySelectorAll('.tour-target, .tour-focus').forEach(el => el.classList.remove('tour-target', 'tour-focus'));
   target.classList.add(target.classList.contains('hotspot') ? 'tour-focus' : 'tour-target');
   const bubble = $('tour');
-  bubble.innerHTML = `<div class="step">${index + 1} / ${TOUR_STEPS.length}</div>${step.text}
+  // 同一步已經在顯示時不要重畫，否則按到一半按鈕被換掉，點擊會失效
+  const already = bubble.classList.contains('open') && bubble.dataset.step === String(index);
+  bubble.dataset.step = String(index);
+  if (!already) bubble.innerHTML = `<div class="step">${index + 1} / ${TOUR_STEPS.length}</div>${step.text}
     <div class="row"><button class="skip" id="tourSkip">略過導覽</button><button class="next" id="tourNext">${index === TOUR_STEPS.length - 1 ? '開始看' : '知道了'}</button></div>`;
   const rect = target.getBoundingClientRect();
   let left = rect.left, top = rect.bottom + 12;
@@ -1142,8 +1145,6 @@ function showTourStep(index) {
   bubble.style.left = Math.max(12, Math.min(left, window.innerWidth - 302)) + 'px';
   bubble.style.top = Math.max(12, top) + 'px';
   bubble.classList.add('open');
-  $('tourNext').addEventListener('click', endTourStep);
-  $('tourSkip').addEventListener('click', endTour);
 }
 function endTourStep() {
   const index = state.tour;
@@ -1254,6 +1255,12 @@ $('flashBtn').addEventListener('click', () => {
   Sound.click();
 });
 $('soundBtn').addEventListener('click', () => { Sound.setOn(!Sound.on); updateSoundButton(); });
+// 導覽按鈕：事件掛在泡泡本身、按下就算，不怕按鈕被重畫
+$('tour').addEventListener('pointerdown', (event) => {
+  if (event.button !== undefined && event.button !== 0) return;
+  if (event.target.closest('#tourNext')) { event.preventDefault(); endTourStep(); }
+  else if (event.target.closest('#tourSkip')) { event.preventDefault(); endTour(); }
+});
 $('storyBtn').addEventListener('click', () => { document.body.classList.toggle('drawer-open'); Sound.click(); });
 $('toolsBtn').addEventListener('click', (event) => {
   event.stopPropagation();
