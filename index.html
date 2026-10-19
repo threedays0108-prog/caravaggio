@@ -509,6 +509,47 @@ body.drawer-open #stage { z-index: 26; }
   #lever { left: 62px; bottom: 6px; transform: scale(.65); transform-origin: left bottom; }
   .finale-float { left: auto; right: 8px; bottom: 120px; }
 }
+
+/* ===== 版面 C3：最左細滑桿；左上橫式開關＋工具；章節故事直接攤開在左欄 ===== */
+:root { --slider-w: 64px; --panel-left: calc(var(--slider-w) + 22px); --panel-w: calc(var(--left-w) - var(--slider-w) - 40px); }
+#storyBtn { display: none; }
+#timeline { left: 10px; top: 12px; bottom: 12px; width: var(--slider-w); padding: 12px 4px 14px; border-radius: 20px; gap: 6px; }
+#yearLabel { font-size: 17px; }
+#yearLabel small { font-size: 9px; letter-spacing: 0; }
+.chapter-buttons { left: 32px; }
+.chapter-buttons .cname { display: none; }
+.chapter-buttons button { padding: 2px 5px; font-size: 11.5px; }
+.ticks, #year { left: 4px; }
+/* 橫式電燈開關 */
+#lever { left: var(--panel-left); top: 12px; bottom: auto; transform: none; flex-direction: row; gap: 10px; width: auto; }
+#lever .label { writing-mode: horizontal-tb; letter-spacing: .1em; }
+#lever .plate { width: 96px; height: 48px; }
+#lever .screw.top { top: 50%; left: 10px; margin: -4.5px 0 0; }
+#lever .screw.bottom { top: 50%; bottom: auto; left: auto; right: 10px; margin: -4.5px 0 0; }
+#lever .slot { width: 32px; height: 16px; margin: -8px 0 0 -16px; }
+#lever .bat { transform: rotate(-90deg); }
+body[data-view="dark"] #lever .bat { transform: rotate(90deg); }
+#tools { left: auto; right: calc(100vw - var(--left-w) + 18px); top: 18px; align-items: flex-end; }
+#toolsMenu { align-items: flex-end; }
+/* 左欄：章節故事常駐 */
+.intro {
+  left: var(--panel-left); top: 76px; bottom: 12px; width: var(--panel-w);
+  transform: none; transition: none; padding: 20px 22px 24px; border-radius: 6px; z-index: 5;
+}
+.intro .toggle { display: none; }
+.intro .caption { position: static; text-align: left; max-width: none; text-shadow: none; pointer-events: auto; margin-bottom: 10px; }
+.intro .thumbs { position: static; transform: none; flex-direction: row; flex-wrap: wrap; max-width: none; margin: 0 0 16px; }
+.intro .thumbs img { width: 64px; }
+.intro .site-title { border-top: 1px dashed rgba(201,162,77,.3); padding-top: 10px; margin: 18px 0 0; }
+.intro .finale-btn { margin: 12px 0 4px; }
+@media (max-width: 800px) {
+  :root { --slider-w: 50px; }
+  .gallery { left: var(--panel-left); right: 0; top: 64px; bottom: auto; height: 55vh; align-items: center; }
+  .frame img { max-height: calc(55vh - 40px); max-width: calc(100vw - var(--panel-left) - 40px); }
+  .intro { top: calc(55vh + 72px); width: calc(100vw - var(--panel-left) - 8px); }
+  #tools { right: 8px; }
+  #lever { transform: scale(.8); transform-origin: left top; }
+}
 </style>
 </head>
 <body data-view="surface">
@@ -657,7 +698,7 @@ const HOTSPOTS = [
     dark: '據說他晚期的畫越來越暗，筆觸也越來越快。有人說這是風格的轉變，也有人說他已經沒時間、沒心情慢慢畫了，這件事沒有答案。' },
   { painting: 'goliath', x: 80, y: 70, title: '那顆頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
     surface: '歌利亞的頭被大衛抓著頭髮提起來，嘴巴微微張開，眼睛半睜，脖子還在滴血。',
-    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點右下角的「最後一眼」，看清楚一點。' }
+    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點左邊的「最後一眼」，看清楚一點。' }
 ];
 
 const FINALE = {
@@ -668,9 +709,9 @@ const FINALE = {
 
 const TOUR_STEPS = [
   { target: '#timeline', reveal: ['#timeline'], text: '這條線是他的一生。往下拖，人生往前走，畫面也會一路變暗。', place: 'right' },
-  { target: '#tools', reveal: ['#tools', '#storyBtn'], text: '他的畫都藏在黑暗裡，移動滑鼠，你就是那盞燈。手電筒、聲音和出處收在右上角的「工具」；故事文字收在左上角的「章節故事」，平常畫面只留給畫。', place: 'below' },
+  { target: '#tools', reveal: ['#tools'], text: '他的畫都藏在黑暗裡，移動滑鼠，你就是那盞燈。想看清整幅畫，可以在「工具」裡關掉手電筒，聲音和出處也在這裡。', place: 'below' },
   { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
-  { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。扳下這個開關，換一面看。', place: 'right' }
+  { target: '#lever', reveal: ['#lever'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。把這個開關扳到右邊，換一面看。', place: 'below' }
 ];
 
 const CREDITS = [
@@ -854,10 +895,9 @@ function goToChapter(index) {
   if (state.tour === 0) endTourStep();
 }
 
-function introHtml() {
+function introHtml(top) {
   const chapter = CHAPTERS[state.chapter];
-  let html = `<div class="intro" id="intro">
-    <div class="site-title">卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></div>
+  let html = `<div class="intro" id="intro">${top}
     <div class="head"><span class="num">CAPITOLO ${chapter.roman}</span><button class="toggle" id="introToggle">收起 ◂</button></div>
     <h2>${chapter.name}</h2>
     <div class="body-wrap">
@@ -866,14 +906,14 @@ function introHtml() {
       <span class="style-tag">畫風：${chapter.style}</span>`;
   if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
   if (chapter.extra === 'exile') html += bandoHtml() + mapHtml();
-  if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按右下角的「最後一眼」。</div>`;
-  return html + `</div></div>`;
+  if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
+  return html + `</div><div class="site-title">卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></div></div>`;
 }
 
 function renderChapter() {
   const chapter = CHAPTERS[state.chapter];
   const section = $('chapter');
-  let right = '';
+  let right = '', top = '';
   if (!chapter.paintings.length) {
     right = `<div class="gallery empty"><div class="candle"></div>
       <p style="color:var(--ink-soft);font-style:italic;font-family:var(--fell);margin-top:30px">Nessuna opera certa</p></div>`;
@@ -888,12 +928,11 @@ function renderChapter() {
           <div class="mask"></div>
           ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"></button>`).join('')}
         </div></div>
-        <div class="caption"><div class="t">《${painting.title}》${painting.year}</div><div class="s">${painting.latin} · ${painting.where}</div></div>
-      </div>
-      ${chapter.paintings.length > 1 ? `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>` : ''}
-      ${chapter.extra === 'finale' ? '<button class="btn-light finale-float" id="finaleBtn">最後一眼</button>' : ''}`;
+      </div>`;
+    top = `<div class="caption"><div class="t">《${painting.title}》${painting.year}</div><div class="s">${painting.latin} · ${painting.where}</div></div>
+      ${chapter.paintings.length > 1 ? `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>` : ''}`;
   }
-  section.innerHTML = introHtml() + right;
+  section.innerHTML = introHtml(top) + right;
   updateLeftWidth();
   bindFrame();
   $('introToggle').addEventListener('click', () => { document.body.classList.remove('drawer-open'); Sound.click(); });
@@ -1032,7 +1071,7 @@ function renderNote() {
     <div class="body">${dark ? data.dark : data.surface}</div>
     <div class="where">《${painting.title}》${painting.year}｜${painting.where}</div>
     ${dark ? `<div class="stamp">${data.tag}</div>` : ''}
-    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '扳下左邊的開關切到「暗巷真實」，看這幅畫背後的事。'}</div>
+    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '把左上角的開關扳到「暗巷真實」，看這幅畫背後的事。'}</div>
     <div class="inkblot"></div><div class="seal">G</div>`;
   $('paper').querySelector('.close').addEventListener('click', closeNote);
 }
