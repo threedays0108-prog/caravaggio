@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卡拉瓦喬：天才，也是通緝犯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+@property --r { syntax: '<length>'; inherits: true; initial-value: 90px; }
+
+:root {
+  --bg: #14100b;
+  --ink: #e9dcc0;
+  --ink-soft: #b9a888;
+  --gold: #c9a24d;
+  --red: #7a1f1f;
+  --panel: rgba(20, 16, 11, 0.86);
+  --mask: 0.8;
+  --gallery-left: 400px;
+  --fell: 'IM Fell English', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --fell-sc: 'IM Fell English SC', 'IM Fell English', 'Palatino Linotype', Georgia, serif;
+  --serif: 'IM Fell English', 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', 'MingLiU', serif;
+}
+body[data-view="dark"] {
+  --ink: #d6d0cc;
+  --ink-soft: #9a8f8a;
+  --gold: #a8322e;
+  --panel: rgba(8, 6, 6, 0.9);
+}
+body.intro-closed { --gallery-left: 90px; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  overflow: hidden;
+  transition: color .4s;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+.tour-hide { opacity: 0 !important; pointer-events: none !important; }
+.reveal { transition: opacity .9s; }
+
+/* ===== 序幕 ===== */
+#prelude {
+  position: fixed; inset: 0; z-index: 60;
+  background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 24px;
+  transition: opacity 1.6s;
+}
+#prelude.gone { opacity: 0; pointer-events: none; }
+.candle {
+  width: 14px; height: 30px; border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff6d8 0 25%, #ffc35a 45%, rgba(255,140,40,0) 72%);
+  box-shadow: 0 0 40px 18px rgba(255,170,70,.28), 0 0 120px 60px rgba(255,140,40,.12);
+  animation: flicker 2.2s infinite alternate ease-in-out;
+}
+#prelude .candle { opacity: 0; transform: scale(.3); transition: opacity 2.5s, transform 2.5s; margin-bottom: 40px; }
+#prelude .candle.lit { opacity: 1; transform: none; }
+@keyframes flicker {
+  0% { transform: scale(1) translateX(0); opacity: .92; }
+  40% { transform: scale(1.06, .96) translateX(1px); opacity: 1; }
+  70% { transform: scale(.97, 1.04) translateX(-1px); opacity: .88; }
+  100% { transform: scale(1.03) translateX(0); opacity: .97; }
+}
+#prelude .line {
+  font-size: clamp(18px, 2.3vw, 26px); line-height: 1.9; margin: 0;
+  opacity: 0; transform: translateY(8px); filter: blur(4px);
+  transition: opacity 1.8s, transform 1.8s, filter 1.8s;
+  color: #d9c9a6; max-width: 680px; position: absolute;
+}
+#prelude .line.show { opacity: 1; transform: none; filter: none; }
+#prelude .line.out { opacity: 0; filter: blur(4px); transform: translateY(-6px); }
+#prelude .stagebox { position: relative; height: 4em; width: 100%; display: flex; align-items: center; justify-content: center; }
+#prelude .latin { font-family: var(--fell); font-style: italic; color: #8e7c5c; font-size: 15px; letter-spacing: .08em; margin-bottom: 18px; opacity: 0; transition: opacity 2s; }
+#prelude .latin.show { opacity: 1; }
+.prelude-buttons { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; opacity: 0; transition: opacity 1.2s; pointer-events: none; }
+.prelude-buttons.show { opacity: 1; pointer-events: auto; }
+#skipPrelude { position: absolute; right: 20px; bottom: 18px; background: none; border: 0; color: #5c4e36; font-size: 13px; }
+.btn-light {
+  background: transparent; border: 1px solid #c9a24d; color: #e9dcc0;
+  padding: 10px 26px; border-radius: 2px; letter-spacing: .1em; font-size: 16px;
+  transition: background .3s, box-shadow .3s;
+}
+.btn-light:hover { background: rgba(201,162,77,.14); box-shadow: 0 0 24px rgba(201,162,77,.35); }
+.btn-light.quiet { border-color: #5c4e36; color: #a8987a; }
+
+/* ===== 上方列 ===== */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 0 20px;
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,0));
+}
+#topbar h1 { font-size: 18px; margin: 0; font-weight: normal; letter-spacing: .06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#topbar h1 small { font-family: var(--fell); font-style: italic; color: var(--ink-soft); font-size: 13px; margin-left: 8px; }
+.controls { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.chip {
+  background: var(--panel); border: 1px solid rgba(201,162,77,.45); color: var(--ink);
+  padding: 6px 12px; border-radius: 2px; font-size: 14px;
+  transition: border-color .4s, background .4s, opacity .9s;
+}
+body[data-view="dark"] .chip { border-color: rgba(168,50,46,.7); }
+
+/* ===== 視角拉桿（左側） ===== */
+#lever {
+  position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 22;
+  width: 48px; height: 300px; padding: 0; border: 0; background: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+}
+#lever .label { writing-mode: vertical-rl; font-size: 14px; letter-spacing: .3em; color: var(--ink-soft); transition: color .4s; }
+#lever .label.on { color: var(--ink); text-shadow: 0 0 10px var(--gold); }
+#lever .track {
+  position: relative; flex: 1; width: 10px; margin: 10px 0; border-radius: 5px;
+  background: linear-gradient(#e2c27a, #6b5332 45%, #3b1010 55%, #7a1f1f);
+  box-shadow: inset 0 0 4px rgba(0,0,0,.8), 0 0 0 1px rgba(201,162,77,.35);
+}
+#lever .knob {
+  position: absolute; left: 50%; top: 4%; width: 32px; height: 32px; margin-left: -16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff3cf, #c9a24d 55%, #6b5332);
+  box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 18px rgba(255,190,90,.45);
+  transition: top .6s cubic-bezier(.5,1.6,.5,1), background .6s, box-shadow .6s;
+}
+body[data-view="dark"] #lever .knob { top: calc(96% - 32px); background: radial-gradient(circle at 35% 30%, #e0857d, #8c1d18 55%, #3b0808); box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 18px rgba(192,70,60,.6); }
+#lever:hover .knob { box-shadow: 0 3px 8px rgba(0,0,0,.7), 0 0 26px rgba(255,190,90,.8); }
+
+/* ===== 舞台 ===== */
+#stage { position: fixed; top: 52px; bottom: 96px; left: 0; right: 0; overflow: hidden; }
+.chapter { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; }
+.chapter.show { opacity: 1; }
+
+.intro {
+  position: absolute; left: 84px; top: 8px; width: 300px; max-height: calc(100% - 16px); overflow: auto; z-index: 3;
+  background: var(--panel); padding: 18px 20px; border-left: 2px solid var(--gold);
+  transition: background .4s, border-color .4s;
+}
+.intro .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.intro .num { font-family: var(--fell-sc); letter-spacing: .2em; color: var(--gold); font-size: 13px; }
+.intro .toggle { background: none; border: 0; color: var(--ink-soft); font-size: 13px; padding: 0; }
+.intro h2 { margin: 4px 0 2px; font-size: 24px; font-weight: normal; }
+.intro .meta { color: var(--ink-soft); font-size: 13.5px; margin-bottom: 10px; }
+.intro p { line-height: 1.85; font-size: 15px; margin: 0 0 10px; }
+.intro .hint { color: var(--ink-soft); font-size: 13px; border-top: 1px dashed rgba(201,162,77,.3); padding-top: 8px; margin-top: 10px; }
+.intro .style-tag { display: inline-block; font-size: 12.5px; border: 1px solid rgba(201,162,77,.4); padding: 2px 8px; color: var(--ink-soft); }
+body.intro-closed .intro { width: auto; padding: 10px 14px; }
+body.intro-closed .intro .body-wrap { display: none; }
+body.intro-closed .intro h2 { font-size: 17px; margin: 2px 0 0; }
+
+.gallery {
+  position: absolute; top: 0; bottom: 0; right: var(--gallery-right, 16px); left: var(--gallery-left);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  transition: left .5s;
+}
+.zoomwrap { overflow: hidden; line-height: 0; box-shadow: 0 10px 50px rgba(0,0,0,.65); border: 1px solid rgba(201,162,77,.5); }
+.frame { position: relative; display: inline-block; line-height: 0; touch-action: none; transition: transform 3.2s cubic-bezier(.4,0,.2,1); }
+.frame img {
+  display: block; width: auto; height: auto;
+  max-height: calc(100vh - 52px - 96px - 52px);
+  max-width: calc(100vw - var(--gallery-left) - var(--gallery-right, 16px) - 24px);
+  user-select: none; -webkit-user-drag: none; transition: filter .6s;
+}
+body[data-view="dark"] .frame img { filter: grayscale(1) contrast(1.15) brightness(.92); }
+.mask {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 45%),
+    rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(6,4,3,var(--mask)) 100%);
+  transition: --r .45s;
+}
+body.flash-off .mask { display: none; }
+.caption { text-align: center; line-height: 1.4; }
+.caption .t { font-size: 16px; }
+.caption .s { font-family: var(--fell); font-style: italic; color: var(--ink-soft); font-size: 13px; }
+.thumbs { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 3; }
+.thumbs button { padding: 0; border: 1px solid rgba(201,162,77,.3); background: none; opacity: .5; line-height: 0; transition: opacity .3s, border-color .3s; }
+.thumbs button.on { opacity: 1; border-color: var(--gold); }
+.thumbs img { width: 60px; height: auto; display: block; }
+
+.hotspot {
+  position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px;
+  border-radius: 50%; border: 0; padding: 0; background: transparent;
+  opacity: .3; transition: opacity .2s, transform .2s;
+}
+.hotspot::before, .hotspot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; }
+.hotspot::before { inset: 9px; background: var(--gold); box-shadow: 0 0 12px 4px var(--gold); }
+.hotspot::after { border: 1.5px solid var(--gold); animation: pulse 2.2s infinite; }
+.hotspot.seen::before { background: transparent; border: 2px solid var(--gold); }
+@keyframes pulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+body.flash-off .hotspot, .hotspot.tour-focus { opacity: 1 !important; }
+
+/* ===== 下方時間軸 ===== */
+#timeline {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 96px; z-index: 20;
+  padding: 10px 28px 12px;
+  background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7) 35%);
+  display: grid; grid-template-columns: 120px 1fr; gap: 6px 22px; align-items: center;
+}
+#yearLabel { grid-row: span 2; font-family: var(--fell); font-size: 42px; line-height: 1; color: var(--gold); text-align: right; transition: color .4s; }
+#yearLabel small { display: block; font-size: 12px; font-style: italic; color: var(--ink-soft); letter-spacing: .1em; margin-top: 4px; }
+.chapter-buttons { display: flex; gap: 6px; }
+.chapter-buttons button {
+  flex: 1; min-width: 0; background: var(--panel); border: 1px solid rgba(201,162,77,.3); padding: 5px 4px; font-size: 13.5px; color: var(--ink-soft);
+  transition: all .3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.chapter-buttons button.on { color: var(--ink); border-color: var(--gold); background: rgba(201,162,77,.2); }
+body[data-view="dark"] .chapter-buttons button.on { background: rgba(168,50,46,.35); }
+.slider-wrap { position: relative; height: 26px; }
+.ticks { position: absolute; left: 0; right: 0; top: 0; height: 26px; pointer-events: none; }
+.ticks span { position: absolute; top: 3px; width: 1px; height: 20px; background: rgba(201,162,77,.55); }
+#year { -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: transparent; position: relative; }
+#year::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(90deg, #3a2f20, var(--gold) 30%, #6e5a3a 60%, #2a1e1e); }
+#year::-moz-range-track { height: 3px; background: linear-gradient(90deg, #3a2f20, var(--gold) 30%, #6e5a3a 60%, #2a1e1e); }
+#year::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%; background: #fff3cf; box-shadow: 0 0 14px 4px rgba(255,190,90,.6); }
+#year::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: #fff3cf; box-shadow: 0 0 14px 4px rgba(255,190,90,.6); }
+
+/* ===== 導覽泡泡 ===== */
+#tour {
+  position: fixed; z-index: 55; width: 290px; padding: 16px 18px 14px;
+  background: #1b150e; border: 1px solid var(--gold); color: #e9dcc0;
+  box-shadow: 0 10px 30px rgba(0,0,0,.7), 0 0 24px rgba(201,162,77,.35);
+  font-size: 15px; line-height: 1.75;
+  opacity: 0; pointer-events: none; transition: opacity .4s;
+}
+#tour.open { opacity: 1; pointer-events: auto; }
+#tour .step { font-family: var(--fell-sc); color: var(--gold); font-size: 12px; letter-spacing: .2em; margin-bottom: 4px; }
+#tour .row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+#tour .skip { background: none; border: 0; color: #8e7c5c; font-size: 13px; padding: 0; }
+#tour .next { background: transparent; border: 1px solid #c9a24d; padding: 4px 16px; font-size: 14px; }
+.tour-target { outline: 2px solid rgba(255,200,110,.95); outline-offset: 4px; box-shadow: 0 0 34px rgba(255,190,90,.65) !important; animation: tourGlow 1.6s infinite alternate; }
+@keyframes tourGlow { from { outline-color: rgba(255,200,110,.95); } to { outline-color: rgba(255,200,110,.3); } }
+
+/* ===== 卷宗紙條（粗糙羊皮紙） ===== */
+#noteLayer {
+  position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.55); padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity .35s;
+}
+#noteLayer.open { opacity: 1; pointer-events: auto; }
+.paper-wrap { filter: drop-shadow(0 18px 40px rgba(0,0,0,.7)); transform: rotate(-1.2deg) scale(.95); transition: transform .4s; width: min(500px, 100%); }
+#noteLayer.open .paper-wrap { transform: rotate(-1.2deg) scale(1); }
+.paper {
+  position: relative; max-height: 86vh; overflow: auto;
+  padding: 40px 44px 36px;
+  color: #3a2410;
+  clip-path: var(--torn, none);
+  background:
+    radial-gradient(ellipse 30% 22% at 82% 18%, rgba(110,65,20,.22), transparent 70%),
+    radial-gradient(ellipse 18% 14% at 14% 78%, rgba(100,60,20,.2), transparent 70%),
+    radial-gradient(circle at 70% 82%, rgba(120,70,25,.14) 0 6%, transparent 7%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .38' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .27  0 0 0 0 .1  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><filter id='b'><feTurbulence type='fractalNoise' baseFrequency='.035' numOctaves='4' seed='9'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .5 -.12'/></filter><rect width='100%' height='100%' filter='url(%23b)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .08  0 0 0 .38 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    linear-gradient(165deg, #ead8ac, #dcc394 45%, #cfb07a);
+  box-shadow: inset 0 0 70px rgba(85,45,12,.55), inset 0 0 16px rgba(60,30,8,.6);
+}
+.paper::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(70,40,15,.2) 50%, rgba(255,248,225,.28) 50.5%, transparent 51.2%),
+    linear-gradient(0deg, transparent 33%, rgba(70,40,15,.16) 33.4%, rgba(255,248,225,.22) 33.8%, transparent 34.4%);
+}
+.paper .dateline { font-family: var(--fell); font-style: italic; font-size: 15px; color: #5e3e1c; letter-spacing: .04em; border-bottom: 1px solid rgba(90,55,25,.4); padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; position: relative; }
+.paper .kind { font-family: var(--fell-sc); letter-spacing: .16em; font-size: 12.5px; color: #7a1f1f; }
+.paper h3 { margin: 0 0 10px; font-size: 21px; color: #2a170a; position: relative; }
+.paper .body { font-size: 16px; line-height: 2; text-shadow: 0 0 .7px rgba(50,28,8,.6); position: relative; }
+.paper .where { font-size: 13px; color: #5e3e1c; margin-top: 12px; position: relative; }
+.stamp {
+  display: inline-block; margin-top: 16px; padding: 3px 12px; position: relative;
+  border: 2.5px solid rgba(130,28,24,.7); color: rgba(130,28,24,.8);
+  font-size: 14px; letter-spacing: .18em; transform: rotate(-5deg);
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><filter id='s'><feTurbulence baseFrequency='.6' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.6'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>");
+}
+.seal {
+  position: absolute; right: 26px; bottom: 22px; width: 58px; height: 58px; border-radius: 47% 53% 50% 48%;
+  background: radial-gradient(circle at 35% 30%, #c5473d, #8c1d18 55%, #560e0b);
+  box-shadow: 0 2px 4px rgba(0,0,0,.45), inset 0 0 7px rgba(0,0,0,.45), 0 0 0 4px rgba(140,30,24,.25);
+  display: none; align-items: center; justify-content: center;
+  font-family: var(--fell); font-size: 24px; color: rgba(255,210,190,.5);
+}
+.inkblot { position: absolute; left: 30px; bottom: 26px; width: 34px; height: 26px; border-radius: 50% 40% 55% 45%; background: radial-gradient(circle at 40% 40%, rgba(30,15,5,.55), rgba(30,15,5,.25) 60%, transparent 72%); display: none; }
+.paper .close { position: absolute; top: 12px; right: 18px; background: none; border: 0; font-size: 22px; color: #5e3e1c; z-index: 2; }
+.paper .fake { font-size: 11.5px; color: #7d5c35; margin-top: 16px; position: relative; }
+body[data-view="surface"] .paper { padding-bottom: 32px; }
+body[data-view="surface"] .paper::after { content: ''; position: absolute; inset: 16px; border: 1px solid rgba(130,90,35,.45); outline: 1px solid rgba(130,90,35,.25); outline-offset: 3px; pointer-events: none; }
+body[data-view="dark"] .paper {
+  padding-bottom: 92px; color: #2e1a0a;
+  box-shadow: inset 0 0 95px rgba(45,22,5,.85), inset 0 0 22px rgba(40,18,4,.75);
+}
+body[data-view="dark"] .seal, body[data-view="dark"] .inkblot { display: flex; }
+
+.finale-btn { margin-top: 10px; }
+
+/* ===== 第四章：通緝令與路線 ===== */
+.bando {
+  margin-top: 14px; padding: 16px 18px 14px; color: #2c1d0e; text-align: center;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .22  0 0 0 0 .1  0 0 0 .3 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    linear-gradient(#e6d4a8, #d2b985);
+  box-shadow: inset 0 0 34px rgba(80,45,15,.5);
+  transform: rotate(.8deg);
+}
+.bando .arms { width: 40px; height: 46px; margin: 0 auto 6px; }
+.bando .title { font-family: var(--fell-sc); font-size: 27px; letter-spacing: .1em; line-height: 1.1; color: #1e1208; }
+.bando .sub { font-family: var(--fell); font-style: italic; font-size: 13.5px; margin: 4px 0 8px; color: #5a3e1e; }
+.bando p { margin: 5px 0; font-size: 14px; line-height: 1.7; }
+.bando .rule { height: 1px; background: rgba(60,40,20,.45); margin: 8px 18%; }
+.bando .fake { font-size: 11px; color: #7a5c3a; margin-top: 6px; }
+.map-box { position: absolute; right: 16px; top: 8px; width: 330px; background: var(--panel); padding: 8px 10px; z-index: 3; }
+.map-box svg { width: 100%; height: auto; display: block; }
+.map-box .note { font-size: 11.5px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
+.route { fill: none; stroke: #c0463c; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw 1.1s forwards ease-in-out; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.city { opacity: 0; animation: appear .5s forwards; }
+@keyframes appear { to { opacity: 1; } }
+
+/* ===== 出處 ===== */
+#creditLayer { position: fixed; inset: 0; z-index: 45; background: rgba(0,0,0,.7); display: none; align-items: center; justify-content: center; padding: 20px; }
+#creditLayer.open { display: flex; }
+#creditLayer .box { background: #1b150e; border: 1px solid rgba(201,162,77,.5); padding: 22px 26px; max-width: 660px; max-height: 84vh; overflow: auto; font-size: 14px; line-height: 1.8; color: #e9dcc0; }
+#creditLayer a { color: #d9b866; }
+#creditLayer h3 { margin: 0 0 8px; font-weight: normal; }
+
+/* ===== 材質（v3）：灰泥牆、鍍金畫框、畫布、皮革、木頭、黃銅、鐵 ===== */
+/* 灰泥牆：斑駁＋細顆粒＋四角暗角，疊在背景色上 */
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='4' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 -.35'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .08  0 0 0 0 .05  0 0 0 .45 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+}
+/* 鍍金雕花框：多段金色漸層做出凹凸，外圈深色木頭、內圈暗唇 */
+.zoomwrap {
+  border: 16px solid transparent;
+  border-image: linear-gradient(135deg, #4d360f, #e9cd7a 14%, #8a6422 26%, #f6e3a1 40%, #9c7426 52%, #e2c06a 66%, #6e4f17 80%, #d9b863 90%, #3f2c0c) 1;
+  box-shadow: 0 0 0 3px #24190a, 0 0 0 5px #8f6c2c, 0 0 0 7px #1a1207, 0 24px 70px rgba(0,0,0,.75), 0 0 120px rgba(255,190,90,.08);
+}
+body[data-view="dark"] .zoomwrap { border-image: linear-gradient(135deg, #2a2a2a, #8a8a86 16%, #3c3c3a 30%, #b5b2aa 44%, #4a4846 58%, #8f8b84 72%, #262626) 1; box-shadow: 0 0 0 3px #111, 0 0 0 5px #5a1614, 0 0 0 7px #0a0a0a, 0 24px 70px rgba(0,0,0,.8); }
+/* 畫布織紋＋亮光漆反光＋框內陰影 */
+.frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,245,220,.07) 42%, rgba(255,255,255,0) 54%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><rect width='6' height='6' fill='none'/><path d='M0 1.5h6M0 4.5h6' stroke='rgba(0,0,0,.07)' stroke-width='.8'/><path d='M1.5 0v6M4.5 0v6' stroke='rgba(255,240,210,.035)' stroke-width='.8'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='c'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .15  0 0 0 0 .1  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>");
+  box-shadow: inset 0 0 22px rgba(0,0,0,.75), inset 0 0 3px rgba(0,0,0,.9);
+}
+.mask { z-index: 1; }
+.hotspot { z-index: 2; }
+/* 舊皮革：介紹小卡、導覽泡泡 */
+.intro, #tour {
+  background:
+    radial-gradient(ellipse at 25% 15%, rgba(255,220,160,.08), transparent 55%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.06' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 -.12'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .35  0 0 0 0 .2  0 0 0 .12 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    linear-gradient(160deg, #3a2716, #241709 60%, #1a1007);
+  border-left: 0;
+  box-shadow: inset 0 0 0 1px rgba(255,220,160,.12), inset 0 0 30px rgba(0,0,0,.6), 0 10px 30px rgba(0,0,0,.55);
+  outline: 1px dashed rgba(201,162,77,.45); outline-offset: -8px;
+  border-radius: 3px;
+}
+body[data-view="dark"] .intro, body[data-view="dark"] #tour {
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='l'><feTurbulence type='turbulence' baseFrequency='.06' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 -.12'/></filter><rect width='100%' height='100%' filter='url(%23l)'/></svg>"),
+    linear-gradient(160deg, #2a1312, #160a0a 60%, #0d0606);
+  outline-color: rgba(168,50,46,.55);
+}
+/* 時間軸：深色木條＋黃銅銘牌 */
+#timeline {
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='120'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.004 .18' numOctaves='3' seed='2'/><feColorMatrix values='0 0 0 0 .05  0 0 0 0 .03  0 0 0 0 .01  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
+    linear-gradient(#2a1c0e, #1a1108 60%, #120b05);
+  box-shadow: inset 0 1px 0 rgba(255,210,140,.18), inset 0 2px 0 rgba(0,0,0,.6), 0 -10px 30px rgba(0,0,0,.6);
+}
+.chapter-buttons button, .chip {
+  background: linear-gradient(#8a6a2e, #5c4318 45%, #4a3410 55%, #6e5222);
+  border: 1px solid #2a1d08; color: #f3e2b4;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 1px 0 rgba(255,230,170,.15);
+  box-shadow: inset 0 1px 0 rgba(255,235,180,.45), inset 0 -1px 0 rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.6);
+  border-radius: 2px;
+}
+.chapter-buttons button { color: #d8c38e; opacity: .78; }
+.chapter-buttons button.on { opacity: 1; color: #fff1c9; background: linear-gradient(#c9a24d, #8a6422 45%, #74521a 55%, #a07c35); border-color: #3a2a0c; box-shadow: inset 0 1px 0 rgba(255,245,210,.7), 0 0 14px rgba(255,190,90,.35); }
+body[data-view="dark"] .chapter-buttons button, body[data-view="dark"] .chip { background: linear-gradient(#5a5a58, #343432 45%, #262624 55%, #424240); color: #ddd6d0; border-color: #111; }
+body[data-view="dark"] .chapter-buttons button.on { background: linear-gradient(#8c2420, #5a1210 50%, #6e1a16); color: #ffe1dc; }
+#year::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(#f1d98f, #a07c35 50%, #5c4318); box-shadow: inset 0 1px 2px rgba(0,0,0,.6); }
+#year::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(#f1d98f, #a07c35 50%, #5c4318); }
+#year::-webkit-slider-thumb { margin-top: -6px; }
+/* 鐵製拉桿軌道 */
+#lever .track {
+  width: 14px;
+  background: linear-gradient(90deg, #1b1b1b, #6a6a68 35%, #2c2c2b 55%, #4a4a48 80%, #121212);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.9), 0 0 0 2px #2a1d08, 0 0 0 3px rgba(201,162,77,.5);
+}
+#lever .label { text-shadow: 0 1px 2px rgba(0,0,0,.9); }
+
+/* ===== 手機 ===== */
+@media (max-width: 800px) {
+  body { overflow: auto; }
+  #topbar { position: sticky; flex-wrap: wrap; height: auto; padding: 8px 12px; background: rgba(0,0,0,.8); }
+  #topbar h1 { font-size: 15px; }
+  #stage { position: static; overflow: visible; padding-bottom: 130px; }
+  .chapter { position: static; }
+  .intro { position: static; width: auto; margin: 10px 12px 10px 64px; }
+  body.intro-closed .intro { width: auto; }
+  .gallery { position: static; padding: 0 12px 0 64px; }
+  .frame img { max-width: calc(100vw - 80px); max-height: none; }
+  .thumbs { position: static; transform: none; flex-direction: row; }
+  .map-box { position: static; width: auto; margin: 10px 12px 0 64px; }
+  #lever { left: 8px; height: 220px; width: 40px; top: 45%; }
+  #timeline { grid-template-columns: 70px 1fr; padding: 8px 12px 10px; height: auto; }
+  #yearLabel { font-size: 28px; }
+  .chapter-buttons button { font-size: 13px; }
+  .chapter-buttons .cname { display: none; }
+  #yearLabel small { font-size: 9px; letter-spacing: 0; }
+  #tour { width: min(290px, calc(100vw - 24px)); }
+}
+</style>
+</head>
+<body data-view="surface">
+
+<div id="prelude">
+  <div class="candle" id="preludeCandle"></div>
+  <p class="latin" id="preludeLatin">Mediolani · Anno Domini MDLXXI</p>
+  <div class="stagebox">
+    <p class="line">1571 年，米蘭，一個窮人家的孩子出生了。</p>
+    <p class="line">長大後，他畫的光亮得像有人在黑暗裡點了一盞燈。</p>
+    <p class="line">他的人生卻越走越暗，羅馬的法庭卷宗一頁一頁記下他的名字。</p>
+    <p class="line">最後，他成了一個任何人都可以殺掉的通緝犯。</p>
+    <p class="line">點亮這盞燈，一起翻開他的卷宗。</p>
+  </div>
+  <div class="prelude-buttons" id="preludeButtons">
+    <button class="btn-light" id="startSound">點燈，開聲音</button>
+    <button class="btn-light quiet" id="startQuiet">點燈，安靜看</button>
+  </div>
+  <button id="skipPrelude">跳過開場 ›</button>
+</div>
+
+<header id="topbar">
+  <h1>卡拉瓦喬：天才，也是通緝犯<small>Michelangelo Merisi da Caravaggio, 1571–1610</small></h1>
+  <div class="controls">
+    <button class="chip reveal tour-hide" id="flashBtn" aria-pressed="true">手電筒：開</button>
+    <button class="chip reveal tour-hide" id="soundBtn" aria-pressed="false">開聲音</button>
+    <button class="chip reveal tour-hide" id="creditBtn">出處</button>
+  </div>
+</header>
+
+<button id="lever" class="reveal tour-hide" aria-label="切換視角：教廷表面／暗巷真實">
+  <span class="label on" id="leverTop">教廷表面</span>
+  <span class="track"><span class="knob"></span></span>
+  <span class="label" id="leverBottom">暗巷真實</span>
+</button>
+
+<main id="stage"><section class="chapter" id="chapter"></section></main>
+
+<footer id="timeline" class="reveal tour-hide">
+  <div id="yearLabel">1571<small>Anno</small></div>
+  <div class="chapter-buttons" id="chapterButtons"></div>
+  <div class="slider-wrap">
+    <div class="ticks" id="ticks"></div>
+    <input type="range" id="year" min="1571" max="1610" step="1" value="1571" aria-label="年份">
+  </div>
+</footer>
+
+<div id="tour" role="dialog" aria-live="polite"></div>
+
+<div id="noteLayer" aria-hidden="true">
+  <div class="paper-wrap"><article class="paper" id="paper" role="dialog" aria-modal="true"></article></div>
+</div>
+
+<div id="creditLayer"><div class="box" id="creditBox"></div></div>
+
+<audio id="musicSurface" src="assets/audio/choir.mp3" loop preload="none"></audio>
+<audio id="musicDark" src="assets/audio/lute.mp3" loop preload="none"></audio>
+
+<script>
+// ================= 資料 =================
+// 亮度：每章起始年份對應的亮度（0–100），中間用年份做線性插值
+const LIGHT_POINTS = [[1571, 12], [1592, 90], [1599, 65], [1606, 38], [1609, 10], [1610, 6]];
+
+const CHAPTERS = [
+  {
+    start: 1571, name: '米蘭學徒', years: '1571–約1592', place: '米蘭、卡拉瓦喬鎮', roman: 'I', style: '倫巴底寫實',
+    surface: '他 1571 年生在米蘭（也有一說是卡拉瓦喬鎮，外號就是這樣來的）。1577 年爸爸和祖父同一天過世，1584 年媽媽也走了，同年 13 歲的他去跟畫家 Simone Peterzano 當了四年學徒。這段時期沒有確定是他畫的作品留下來。',
+    dark: '約 1592 年他離開米蘭，原因說法不一：有一說是吵架時傷了一名警察，傳記作者 Bellori 甚至寫他是犯了殺人案才跑的。真假沒人說得準，但他的人生從這裡開始，就和「逃」分不開了。',
+    hint: '往右拖動下方的年份，進入下一章。',
+    paintings: []
+  },
+  {
+    start: 1592, name: '羅馬打拚', years: '約1592–1599', place: '羅馬', roman: 'II', style: '小幅生活題材，明暗法萌芽',
+    surface: '約 1592 年他到了羅馬。約 1595 年，樞機主教 del Monte 買了他的畫，乾脆把他接進家裡住。這時的畫小小的、亮亮的，畫的是少年、水果、酒杯，是他一生裡最亮的一段。',
+    dark: '剛到羅馬時他很窮，借住別人家，三年內搬了大約十次家。他替前輩畫水果和花，據說還被要求一天畫三顆頭。大病一場後他離開雇主，直到 del Monte 出現，才終於有地方住。',
+    paintings: ['basket', 'bacchus']
+  },
+  {
+    start: 1599, name: '羅馬成名', years: '1599–1606', place: '羅馬', roman: 'III', style: '強烈明暗，一道光束打進黑暗',
+    surface: '1599 年他接下聖路易堂一座禮拜堂的委託，1600 年聖馬太的畫一掛出來就轟動全城。他的招牌是在一片黑暗裡打進一道光，聖人的模特兒直接找街上的人。有人愛死了，也有教會把畫退回來。',
+    dark: '成名的同時，羅馬法庭的卷宗也越寫越厚：1600 年用棍棒打貴族，1603 年因為誹謗畫家 Baglione 被捕，據檔案記載還把一盤朝鮮薊砸向酒館侍者、朝房東的窗戶丟石頭。這些紀錄，羅馬國立檔案館到今天都還留著。',
+    paintings: ['calling', 'martyrdom', 'inspiration']
+  },
+  {
+    start: 1606, name: '亡命天涯', years: '1606–1609', place: '那不勒斯、馬爾他、西西里', roman: 'IV', style: '大型祭壇畫，孤單的人物站在巨大的黑暗裡',
+    surface: '1606 年他離開羅馬，先到西班牙管的那不勒斯，再到馬爾他、西西里。他走到哪裡都有人找他畫畫：那不勒斯的大祭壇畫、馬爾他騎士團的委託，畫越畫越大，畫裡的人卻越來越孤單。',
+    dark: '1606 年 5 月底，他在羅馬殺了 Ranuccio Tomassoni（日期和經過都有不同說法），從此成了任何人都可以殺的人。在馬爾他他當上騎士，沒多久又跟騎士打架被關，從聖安傑洛堡逃出去，被騎士團開除，罵他是「腐臭的肢體」。',
+    paintings: ['seven'],
+    extra: 'exile'
+  },
+  {
+    start: 1609, name: '最後一年', years: '1609–1610', place: '那不勒斯、Porto Ercole', roman: 'V', style: '筆觸更快更自由，畫面幾乎全黑',
+    surface: '1609 年秋天他回到那不勒斯，等教宗赦免。1610 年 7 月，他坐船北上要回羅馬，卻在托斯卡尼海岸的 Porto Ercole 過世，大約 38 歲。他是怎麼死的，到今天都沒有定論。',
+    dark: '1609 年 10 月底，有人在那不勒斯的一家酒館襲擊他，把他的臉砍傷，一度傳出他已經死了，主使者是誰到今天沒有定論。他帶著要去求情的畫上船，人死在半路，畫卻跟著船回到了那不勒斯。事後的報導說：赦免其實已經下來了。',
+    paintings: ['goliath'],
+    extra: 'finale'
+  }
+];
+
+const PAINTINGS = {
+  basket: { src: 'assets/basket-fruit.jpg', title: '捧果籃的男孩', latin: 'Fanciullo con canestro di frutta', year: '約 1593', where: '羅馬，Borghese 美術館' },
+  bacchus: { src: 'assets/bacchus.jpg', title: '酒神巴克斯', latin: 'Bacco', year: '約 1596', where: '佛羅倫斯，烏菲茲美術館' },
+  calling: { src: 'assets/calling-matthew.jpg', title: '聖馬太的召喚', latin: 'Vocazione di san Matteo', year: '約 1600', where: '羅馬，聖路易堂 Contarelli 禮拜堂' },
+  martyrdom: { src: 'assets/martyrdom-matthew.jpg', title: '聖馬太殉教', latin: 'Martirio di san Matteo', year: '約 1600', where: '羅馬，聖路易堂 Contarelli 禮拜堂' },
+  inspiration: { src: 'assets/inspiration-matthew.jpg', title: '聖馬太的靈感', latin: 'San Matteo e l\'angelo', year: '1602', where: '羅馬，聖路易堂 Contarelli 禮拜堂' },
+  seven: { src: 'assets/seven-works.jpg', title: '七善事', latin: 'Sette opere di Misericordia', year: '1606–07', where: '那不勒斯，Pio Monte della Misericordia' },
+  goliath: { src: 'assets/david-goliath.jpg', title: '大衛提著歌利亞的頭', latin: 'Davide con la testa di Golia', year: '1610', where: '羅馬，Borghese 美術館' }
+};
+
+// 熱點：x、y 是畫面上的百分比位置；surface＝教廷表面，dark＝暗巷真實
+const HOTSPOTS = [
+  { painting: 'basket', x: 48, y: 32, title: '回頭看你的少年', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
+    surface: '少年扭頭看向畫外，肩膀露在外面，光從側面打過來，臉一半亮、一半落在陰影裡。他直接找真人當模特兒，所以畫出來的人有血有肉，不像畫冊裡的天使。',
+    dark: '據說他剛到羅馬時窮到借住別人家，靠替別的畫家畫水果和花賺錢，後來大病一場才離開。這位少年和他手上那籃水果，看起來就是那段打工日子練出來的功力。' },
+  { painting: 'basket', x: 56, y: 63, title: '連枯葉都照畫', dateline: 'Roma · Anno MDXCIII', tag: '有說法',
+    surface: '葡萄、桃子、蘋果、石榴，一顆一顆畫得像標本。右下角那片葉子已經枯黃了，他也沒有把它畫得好看一點。',
+    dark: '據說他畫畫不先打草稿，直接對著眼前的東西畫。水果不會抱怨，但他的模特兒大概要很有耐心。' },
+  { painting: 'bacchus', x: 50, y: 28, title: '有點喝茫的酒神', dateline: 'Roma · Anno MDXCVI', tag: '有說法',
+    surface: '少年扮成酒神，頭上戴著葡萄葉，半躺著把酒杯遞向你，臉頰泛紅，眼神有點茫，好像在說：來，喝一杯。',
+    dark: '據說他畫神話人物也不畫理想化的臉，而是找街上的真人來當模特兒。所以他的酒神看起來不像神，比較像隔壁那個喝多了的朋友。' },
+  { painting: 'bacchus', x: 73, y: 54, title: '那一杯紅酒', dateline: 'Roma · Anno MDXCVI', tag: '有紀錄',
+    surface: '酒杯舉在畫面中央，杯裡的酒面還在晃，玻璃透明到連反光都畫了出來。前面的水果有的熟透，有的石榴已經裂開。',
+    dark: '這段時間，樞機主教 del Monte 買了他的畫，後來乾脆讓他住進自己家裡。窮畫家有了貴人，羅馬的上流圈子從此知道了他的名字。' },
+  { painting: 'calling', x: 65, y: 41, title: '一道光，點名了一個人', dateline: 'Roma · Anno MDC', tag: '有說法',
+    surface: '右上方的窗口打進一道斜光，順著那隻伸出的手，照到桌邊正在數錢的人。收稅官馬太就這樣被點名：「跟我來」。這幅畫裡，光不是背景，是主角。',
+    dark: '這幅畫一掛出來就轟動，他一夕成名。成名後他也沒有收斂：據記載，同一年 11 月他就用棍棒打了一位貴族 Girolamo Stampa。' },
+  { painting: 'martyrdom', x: 34, y: 29, title: '人群裡有個人回頭', dateline: 'Roma · Anno MDC', tag: '有說法',
+    surface: '殺手站在畫面中央，聖馬太倒在地上，旁邊的人嚇得四散逃開。一片混亂裡，左後方有個留鬍子的男人回過頭來，看著畫外的我們。',
+    dark: '有一說，這個回頭的男人就是畫家自己，他把自己畫進了殺人現場。要是真的，這比他自己真的成為殺人犯，早了六年。' },
+  { painting: 'inspiration', x: 40, y: 16, title: '被退貨的第一版', dateline: 'Roma · Anno MDCII', tag: '有說法',
+    surface: '天使從上方飛下來，掰著手指一條一條教馬太寫福音。馬太抬頭看著天使，表情像被老師點到名的學生。',
+    dark: '據說你現在看到的是第二版：他第一次畫的《聖馬太與天使》被退了回來，只好重畫，退畫的原因有好幾種說法。換成今天的說法，就是客戶回信：「麻煩重做。」' },
+  { painting: 'seven', x: 80, y: 58, title: '窗邊的那位女子', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
+    surface: '畫面右邊，一位年輕女子在牢房的窗口邊餵一位被關的老人，旁邊有人舉著火把。這幅畫把基督教的七件善事，像是探望囚犯、給飢餓的人食物，全部擠在同一條那不勒斯街頭上演。',
+    dark: '畫這幅畫時，他剛被判了死刑，在羅馬是任何人都可以殺的人。一個逃犯畫的卻是「慈悲」，這個諷刺，他自己大概也感覺得到。' },
+  { painting: 'seven', x: 33, y: 22, title: '倒著俯衝的天使', dateline: 'Neapoli · Anno MDCVII', tag: '有說法',
+    surface: '最上方兩位天使張開翅膀往下俯衝，聖母抱著孩子在更高處往下看。上面是天堂，下面是髒兮兮的街頭，中間沒有任何隔開的東西。',
+    dark: '他在羅馬常被退畫，逃到那不勒斯之後，卻很快成了當地最有名的畫家。通緝犯的職涯，在這裡意外地往上爬了一段。' },
+  { painting: 'goliath', x: 43, y: 31, title: '大衛沒有笑', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
+    surface: '大衛提著歌利亞的頭，眉頭微微皺著，眼神裡沒有打贏的得意，反而有點不忍心。',
+    dark: '這是他生命最後那一年的畫。當時他躲在那不勒斯，等教宗赦免他的死刑。畫裡沒有一個人是贏家的表情。' },
+  { painting: 'goliath', x: 22, y: 80, title: '那把劍', dateline: 'Neapoli · Anno MDCX', tag: '有說法',
+    surface: '劍從畫面左下角斜斜地伸出來，幾乎要刺出畫框。光只照亮大衛的上半身，其他地方全部沉進黑暗。',
+    dark: '據說他晚期的畫越來越暗，筆觸也越來越快。有人說這是風格的轉變，也有人說他已經沒時間、沒心情慢慢畫了，這件事沒有答案。' },
+  { painting: 'goliath', x: 80, y: 70, title: '那顆頭', dateline: 'Neapoli · Anno MDCX', tag: '通行看法',
+    surface: '歌利亞的頭被大衛抓著頭髮提起來，嘴巴微微張開，眼睛半睜，脖子還在滴血。',
+    dark: '通行的看法是：歌利亞的這張臉，是畫家自己的臉。點左邊的「最後一眼」，看清楚一點。' }
+];
+
+const FINALE = {
+  title: '最後一眼', dateline: 'Neapoli · Anno MDCX', tag: '通行看法＋有說法',
+  surface: '一般認為，被砍下的歌利亞，畫的是卡拉瓦喬自己的臉。有一說，這幅畫是他送給樞機主教 Scipione Borghese 的禮物，希望對方幫忙向教宗求情、赦免他的死刑。',
+  dark: '一個被判「任何人都可以拿你的頭領賞」的人，把自己的頭畫了出來，交了出去。有人把這幅畫叫作他的「認罪書」，但這是後人的詮釋，不是定論。'
+};
+
+const TOUR_STEPS = [
+  { target: '#timeline', reveal: ['#timeline', '#soundBtn'], text: '這條線是他的一生。往右拖，人生往前走，畫面也會一路變暗。', place: 'above' },
+  { target: '#flashBtn', reveal: ['#flashBtn'], text: '他的畫都藏在黑暗裡。移動滑鼠，你就是那盞燈；想看清整幅畫，可以在這裡關掉手電筒。', place: 'below' },
+  { target: '.hotspot', reveal: [], text: '畫上會發光的點，是他留下的線索。點下去，打開卷宗。', place: 'right' },
+  { target: '#lever', reveal: ['#lever', '#creditBtn'], text: '同一幅畫，有教廷看見的樣子，也有暗巷裡發生的事。拉下這根桿子，換一面看。', place: 'right' }
+];
+
+const CREDITS = [
+  ['捧果籃的男孩', 'File:Boy with a Basket of Fruit-Caravaggio (1593).jpg'],
+  ['酒神巴克斯', 'File:Bacchus-Caravaggio (1598).jpg'],
+  ['聖馬太的召喚', 'File:The Calling of Saint Matthew-Caravaggo (1599-1600).jpg'],
+  ['聖馬太殉教', 'File:The Martyrdom of Saint Matthew-Caravaggio (c. 1599-1600).jpg'],
+  ['聖馬太的靈感', 'File:The Inspiration of Saint Matthew-Caravaggio (1602).jpg'],
+  ['七善事', 'File:The Seven Works of Mercy-Caravaggio (1607).jpg'],
+  ['大衛提著歌利亞的頭', 'File:David with the Head of Goliath-Caravaggio (1610).jpg']
+];
+
+// ================= 聲音 =================
+// 音效：Web Audio 即時合成；音樂：兩首公開授權的真人錄音，隨視角交叉淡入淡出
+const Sound = {
+  ctx: null, master: null, on: false, fadeTimer: null,
+  init() {
+    if (this.ctx) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    this.ctx = new AudioCtx();
+    this.master = this.ctx.createGain();
+    this.master.gain.value = 0.8;
+    this.master.connect(this.ctx.destination);
+    const length = this.ctx.sampleRate * 0.2;
+    this.noise = this.ctx.createBuffer(1, length, this.ctx.sampleRate);
+    const data = this.noise.getChannelData(0);
+    for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1;
+  },
+  setOn(flag) {
+    this.on = flag;
+    if (flag) { this.init(); if (this.ctx) this.ctx.resume(); }
+    this.updateMusic();
+  },
+  updateMusic() {
+    const tracks = { surface: $('musicSurface'), dark: $('musicDark') };
+    const targets = { surface: this.on && state.view === 'surface' ? 0.55 : 0, dark: this.on && state.view === 'dark' ? 0.6 : 0 };
+    Object.entries(tracks).forEach(([view, audio]) => {
+      if (targets[view] > 0 && audio.paused) { audio.volume = 0; audio.play().catch(() => {}); }
+    });
+    clearInterval(this.fadeTimer);
+    this.fadeTimer = setInterval(() => {
+      let done = true;
+      Object.entries(tracks).forEach(([view, audio]) => {
+        const diff = targets[view] - audio.volume;
+        if (Math.abs(diff) > 0.02) { audio.volume = Math.min(1, Math.max(0, audio.volume + Math.sign(diff) * 0.02)); done = false; }
+        else { audio.volume = targets[view]; if (targets[view] === 0 && !audio.paused) audio.pause(); }
+      });
+      if (done) clearInterval(this.fadeTimer);
+    }, 50);
+  },
+  envelope(node, peak, attack, decay) {
+    const t = this.ctx.currentTime;
+    node.gain.setValueAtTime(0.0001, t);
+    node.gain.exponentialRampToValueAtTime(peak, t + attack);
+    node.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+  },
+  ready() { return this.on && this.ctx; },
+  ping() {
+    if (!this.ready()) return;
+    [880, 1760].forEach((frequency, index) => {
+      const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+      osc.frequency.value = frequency;
+      this.envelope(gain, index ? 0.04 : 0.15, 0.005, 0.9);
+      osc.connect(gain).connect(this.master);
+      osc.start(); osc.stop(this.ctx.currentTime + 1);
+    });
+  },
+  swell() {
+    if (!this.ready()) return;
+    const osc = this.ctx.createOscillator(), filter = this.ctx.createBiquadFilter(), gain = this.ctx.createGain();
+    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(70, this.ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(52, this.ctx.currentTime + 1.4);
+    filter.type = 'lowpass'; filter.frequency.value = 240;
+    this.envelope(gain, 0.18, 0.35, 1.1);
+    osc.connect(filter).connect(gain).connect(this.master);
+    osc.start(); osc.stop(this.ctx.currentTime + 1.6);
+  },
+  click() {
+    if (!this.ready()) return;
+    const source = this.ctx.createBufferSource(), filter = this.ctx.createBiquadFilter(), gain = this.ctx.createGain();
+    source.buffer = this.noise;
+    filter.type = 'highpass'; filter.frequency.value = 1800;
+    this.envelope(gain, 0.3, 0.002, 0.03);
+    source.connect(filter).connect(gain).connect(this.master);
+    source.start(); source.stop(this.ctx.currentTime + 0.06);
+  },
+  lever() {
+    if (!this.ready()) return;
+    const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(state.view === 'dark' ? 330 : 165, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(state.view === 'dark' ? 110 : 330, this.ctx.currentTime + 0.5);
+    this.envelope(gain, 0.12, 0.02, 0.6);
+    osc.connect(gain).connect(this.master);
+    osc.start(); osc.stop(this.ctx.currentTime + 0.7);
+  }
+};
+
+// ================= 狀態 =================
+const state = { year: 1571, chapter: 0, view: 'surface', flash: true, paintingIndex: {}, note: null, tweening: false, tour: -1 };
+const seen = new Set();
+const $ = (id) => document.getElementById(id);
+const chapterOf = (year) => {
+  for (let i = CHAPTERS.length - 1; i >= 0; i--) if (year >= CHAPTERS[i].start) return i;
+  return 0;
+};
+const lightAt = (year) => {
+  for (let i = 0; i < LIGHT_POINTS.length - 1; i++) {
+    const [y0, l0] = LIGHT_POINTS[i], [y1, l1] = LIGHT_POINTS[i + 1];
+    if (year <= y1) return l0 + (l1 - l0) * (year - y0) / (y1 - y0);
+  }
+  return LIGHT_POINTS[LIGHT_POINTS.length - 1][1];
+};
+const toRoman = (number) => {
+  const table = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+  let result = '';
+  for (const [value, letters] of table) while (number >= value) { result += letters; number -= value; }
+  return result;
+};
+
+// ================= 明暗 =================
+function applyLight(year) {
+  const light = lightAt(year) / 100;
+  const dark = [10, 7, 5], bright = [118, 92, 58];
+  let rgb = dark.map((value, i) => Math.round(value + (bright[i] - value) * light));
+  if (state.view === 'dark') {
+    const gray = (rgb[0] + rgb[1] + rgb[2]) / 3 * 0.55;
+    rgb = [Math.round(gray + 8), Math.round(gray * 0.8), Math.round(gray * 0.8)];
+  }
+  document.body.style.setProperty('--bg', `rgb(${rgb.join(',')})`);
+  document.body.style.setProperty('--mask', (0.95 - light * 0.5).toFixed(3));
+}
+
+function setYear(year) {
+  state.year = year;
+  $('year').value = year;
+  $('yearLabel').innerHTML = `${year}<small>Anno ${toRoman(year)}</small>`;
+  applyLight(year);
+  const chapter = chapterOf(year);
+  document.querySelectorAll('.chapter-buttons button').forEach((button, i) => button.classList.toggle('on', i === chapter));
+  if (chapter !== state.chapter && !state.tweening) goToChapter(chapter);
+}
+
+function tweenTo(targetYear, done) {
+  const from = state.year, start = performance.now(), duration = 700;
+  state.tweening = true;
+  // 用計時器而不是 requestAnimationFrame：分頁不在前景時 rAF 會停，滑桿會卡住
+  const step = () => {
+    const t = Math.min(1, (performance.now() - start) / duration);
+    const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    setYear(Math.round(from + (targetYear - from) * eased));
+    if (t < 1) setTimeout(step, 16);
+    else { state.tweening = false; done && done(); }
+  };
+  step();
+}
+
+// ================= 章節畫面 =================
+function goToChapter(index) {
+  state.chapter = index;
+  const section = $('chapter');
+  section.classList.remove('show');
+  setTimeout(() => { renderChapter(); section.classList.add('show'); }, 220);
+  Sound.swell();
+  if (state.tour === 0) endTourStep();
+}
+
+function introHtml() {
+  const chapter = CHAPTERS[state.chapter];
+  const closed = document.body.classList.contains('intro-closed');
+  let html = `<div class="intro" id="intro">
+    <div class="head"><span class="num">CAPITOLO ${chapter.roman}</span><button class="toggle" id="introToggle">${closed ? '展開 ▸' : '收起 ◂'}</button></div>
+    <h2>${chapter.name}</h2>
+    <div class="body-wrap">
+      <div class="meta">${chapter.years}｜${chapter.place}</div>
+      <p id="introText">${state.view === 'dark' ? chapter.dark : chapter.surface}</p>
+      <span class="style-tag">畫風：${chapter.style}</span>`;
+  if (chapter.hint) html += `<div class="hint">${chapter.hint}</div>`;
+  if (chapter.extra === 'exile') html += bandoHtml();
+  if (chapter.extra === 'finale') html += `<div class="hint">在畫上找到三個光點後，按下面的按鈕。</div><button class="btn-light finale-btn" id="finaleBtn">最後一眼</button>`;
+  return html + `</div></div>`;
+}
+
+function renderChapter() {
+  const chapter = CHAPTERS[state.chapter];
+  const section = $('chapter');
+  let right = '';
+  if (!chapter.paintings.length) {
+    right = `<div class="gallery"><div class="candle"></div>
+      <p style="color:var(--ink-soft);font-style:italic;font-family:var(--fell);margin-top:30px">Nessuna opera certa</p></div>`;
+  } else {
+    const current = state.paintingIndex[state.chapter] || 0;
+    const key = chapter.paintings[current];
+    const painting = PAINTINGS[key];
+    const spots = HOTSPOTS.map((spot, i) => ({ spot, i })).filter(item => item.spot.painting === key);
+    const rightSpace = chapter.extra === 'exile' ? '362px' : (chapter.paintings.length > 1 ? '96px' : '16px');
+    right = `<div class="gallery" style="--gallery-right:${rightSpace}">
+        <div class="zoomwrap"><div class="frame" id="frame">
+          <img src="${painting.src}" alt="${painting.title}" draggable="false">
+          <div class="mask"></div>
+          ${spots.map(({ spot, i }) => `<button class="hotspot${seen.has(i) ? ' seen' : ''}" data-spot="${i}" style="left:${spot.x}%;top:${spot.y}%" aria-label="${spot.title}"></button>`).join('')}
+        </div></div>
+        <div class="caption"><div class="t">《${painting.title}》${painting.year}</div><div class="s">${painting.latin} · ${painting.where}</div></div>
+      </div>
+      ${chapter.paintings.length > 1 ? `<div class="thumbs">${chapter.paintings.map((k, i) => `<button data-thumb="${i}" class="${i === current ? 'on' : ''}" aria-label="${PAINTINGS[k].title}"><img src="${PAINTINGS[k].src}" alt=""></button>`).join('')}</div>` : ''}
+      ${chapter.extra === 'exile' ? mapHtml() : ''}`;
+  }
+  section.innerHTML = introHtml() + right;
+  bindFrame();
+  $('introToggle').addEventListener('click', () => {
+    document.body.classList.toggle('intro-closed');
+    $('introToggle').textContent = document.body.classList.contains('intro-closed') ? '展開 ▸' : '收起 ◂';
+    Sound.click();
+  });
+  section.querySelectorAll('[data-thumb]').forEach(button => button.addEventListener('click', () => {
+    state.paintingIndex[state.chapter] = Number(button.dataset.thumb);
+    Sound.click();
+    renderChapter();
+  }));
+  const finaleButton = $('finaleBtn');
+  if (finaleButton) finaleButton.addEventListener('click', playFinale);
+  if (state.tour === 1 && chapter.paintings.length) setTimeout(() => showTourStep(1), 700);
+}
+
+function bandoHtml() {
+  return `<div class="bando">
+    <svg class="arms" viewBox="0 0 42 48" aria-hidden="true"><path d="M3 4h36v20c0 12-9 19-18 22C12 43 3 36 3 24z" fill="none" stroke="#3a2614" stroke-width="2"/><path d="M21 10v28M11 20h20" stroke="#7a1f1f" stroke-width="3"/></svg>
+    <div class="title">BANDO CAPITALE</div>
+    <div class="sub">Roma · Anno Domini MDCVI</div>
+    <div class="rule"></div>
+    <p><b>被告</b>：Michelangelo Merisi，人稱卡拉瓦喬，畫家</p>
+    <p><b>罪名</b>：殺害 Ranuccio Tomassoni</p>
+    <p><b>判決</b>：缺席判處死刑。據說任何人都可以殺他，以他的頭作為證明領賞。</p>
+    <div class="rule"></div>
+    <div class="fake">仿製示意，非原件；原文格式未能查證</div>
+  </div>`;
+}
+
+function mapHtml() {
+  const project = ([lon, lat]) => [((lon - 9.5) * 52 + 14).toFixed(1), ((44.4 - lat) * 52 + 14).toFixed(1)];
+  const shape = (points) => 'M' + points.map(p => project(p).join(',')).join('L') + 'Z';
+  const italy = [[9.5,44.3],[10.3,43.9],[10.5,43.0],[11.1,42.4],[11.8,42.0],[12.4,41.5],[13.1,41.2],[13.9,40.8],[14.5,40.6],[15.0,40.2],[15.7,39.9],[16.0,39.2],[15.7,38.6],[15.7,38.0],[16.1,37.95],[16.6,38.5],[17.0,39.1],[16.6,39.7],[17.3,40.4],[18.5,40.1],[18.4,40.6],[17.2,41.0],[16.0,41.5],[15.9,41.9],[14.5,42.2],[13.8,42.7],[13.4,43.5],[12.5,44.1],[12.3,44.8],[9.5,44.8]];
+  const sicily = [[12.4,38.0],[13.0,38.2],[13.7,38.1],[14.5,38.0],[15.2,38.25],[15.65,38.25],[15.5,37.5],[15.1,36.7],[14.5,36.75],[14.0,37.1],[13.3,37.5],[12.6,37.6]];
+  const stops = [
+    ['羅馬', 1606, [12.5, 41.9], 'end'],
+    ['那不勒斯', '1606–07', [14.27, 40.85], 'start'],
+    ['馬爾他', '1607–08', [14.51, 35.9], 'start'],
+    ['敘拉古', 1608, [15.29, 37.07], 'start'],
+    ['墨西拿', '1608–09', [15.55, 38.19], 'start'],
+    ['巴勒摩', 1609, [13.36, 38.12], 'end'],
+    ['回那不勒斯', 1609, [14.27, 40.85], 'start'],
+    ['Porto Ercole（逝世）', 1610, [11.2, 42.4], 'end']
+  ];
+  let paths = '', cities = '';
+  stops.forEach((stop, i) => {
+    const [x, y] = project(stop[2]);
+    const dy = i === 6 ? -12 : (i === 1 ? 14 : 4);
+    const dx = stop[3] === 'end' ? -8 : 8;
+    cities += `<g class="city" style="animation-delay:${i * 1.1}s"><circle cx="${x}" cy="${y}" r="${i === 7 ? 5 : 3.5}" fill="${i === 7 ? '#c0463c' : '#e9dcc0'}"/>
+      <text x="${Number(x) + dx}" y="${Number(y) + dy}" text-anchor="${stop[3]}" font-size="12" fill="#e9dcc0">${stop[0]} ${stop[1]}</text></g>`;
+    if (i > 0) {
+      const [px, py] = project(stops[i - 1][2]);
+      const mx = ((Number(px) + Number(x)) / 2 + (i % 2 ? 18 : -18)).toFixed(1), my = ((Number(py) + Number(y)) / 2).toFixed(1);
+      paths += `<path class="route" pathLength="100" style="animation-delay:${(i - 1) * 1.1 + 0.3}s" d="M${px},${py} Q${mx},${my} ${x},${y}"/>`;
+    }
+  });
+  return `<div class="map-box">
+    <svg viewBox="0 0 440 480" role="img" aria-label="卡拉瓦喬的逃亡路線圖">
+      <rect width="440" height="480" fill="#0e1418"/>
+      <path d="${shape(italy)}" fill="#3a3126" stroke="#6e5a3a"/>
+      <path d="${shape(sicily)}" fill="#3a3126" stroke="#6e5a3a"/>
+      <ellipse cx="${project([14.45, 35.9])[0]}" cy="${project([14.45, 35.9])[1]}" rx="5" ry="3" fill="#3a3126" stroke="#6e5a3a"/>
+      <text x="300" y="40" font-size="13" fill="#8e7c5c" font-style="italic" font-family="IM Fell English, serif">Itinerarium fugae</text>
+      ${paths}${cities}
+    </svg>
+    <div class="note">逃亡路線示意圖（不是精確地圖）。順序依維基百科〈Exile of Caravaggio〉；馬爾他期間是否曾回那不勒斯、離開西西里的原因都有不同說法。</div>
+  </div>`;
+}
+
+// ================= 手電筒與熱點 =================
+function bindFrame() {
+  const frame = $('frame');
+  if (!frame) return;
+  const spots = [...frame.querySelectorAll('.hotspot')];
+  const idle = () => {
+    if (frame.classList.contains('zoomed')) return;
+    frame.style.setProperty('--mx', '50%'); frame.style.setProperty('--my', '42%');
+    frame.style.setProperty('--r', Math.round(frame.offsetWidth * 0.16) + 'px');
+    spots.forEach(spot => { spot.style.opacity = ''; spot.style.transform = ''; });
+  };
+  const move = (event) => {
+    if (frame.classList.contains('zoomed')) return;
+    const rect = frame.getBoundingClientRect();
+    const x = event.clientX - rect.left, y = event.clientY - rect.top;
+    const radius = Math.max(120, rect.width * 0.2);
+    frame.style.setProperty('--mx', x + 'px'); frame.style.setProperty('--my', y + 'px');
+    frame.style.setProperty('--r', radius + 'px');
+    spots.forEach(spot => {
+      const sx = rect.width * parseFloat(spot.style.left) / 100, sy = rect.height * parseFloat(spot.style.top) / 100;
+      const near = Math.max(0, Math.min(1, 1 - (Math.hypot(sx - x, sy - y) - radius * 0.4) / (radius * 0.7)));
+      spot.style.opacity = (0.3 + near * 0.7).toFixed(2);
+      spot.style.transform = `scale(${(1 + near * 0.35).toFixed(2)})`;
+    });
+  };
+  frame.addEventListener('pointermove', move);
+  frame.addEventListener('pointerdown', move);
+  frame.addEventListener('pointerleave', idle);
+  frame.querySelector('img').addEventListener('load', idle);
+  idle();
+  spots.forEach(spot => spot.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const index = Number(spot.dataset.spot);
+    seen.add(index); spot.classList.add('seen');
+    if (state.tour === 2) endTourStep();
+    openNote({ kind: 'spot', index });
+  }));
+}
+
+// ================= 卷宗紙條 =================
+function tornEdge() {
+  // 隨機產生撕裂的紙邊，每次打開都不一樣
+  const points = [], jag = () => (Math.random() * 1.6).toFixed(2);
+  for (let x = 0; x <= 100; x += 2 + Math.random() * 3) points.push(`${x.toFixed(1)}% ${jag()}%`);
+  for (let y = 0; y <= 100; y += 2 + Math.random() * 3) points.push(`${(100 - jag()).toFixed(2)}% ${y.toFixed(1)}%`);
+  for (let x = 100; x >= 0; x -= 2 + Math.random() * 3) points.push(`${x.toFixed(1)}% ${(100 - jag()).toFixed(2)}%`);
+  for (let y = 100; y >= 0; y -= 2 + Math.random() * 3) points.push(`${jag()}% ${y.toFixed(1)}%`);
+  return `polygon(${points.join(',')})`;
+}
+function renderNote() {
+  const note = state.note;
+  if (!note) return;
+  const data = note.kind === 'finale' ? FINALE : HOTSPOTS[note.index];
+  const painting = note.kind === 'finale' ? PAINTINGS.goliath : PAINTINGS[data.painting];
+  const dark = state.view === 'dark';
+  const kind = dark ? 'ATTI CRIMINALI · 暗巷卷宗' : 'DESCRIPTIO · 作品說明';
+  $('paper').innerHTML = `
+    <button class="close" aria-label="關閉">×</button>
+    <div class="dateline"><span>${data.dateline}</span><span class="kind">${kind}</span></div>
+    <h3>${data.title}</h3>
+    <div class="body">${dark ? data.dark : data.surface}</div>
+    <div class="where">《${painting.title}》${painting.year}｜${painting.where}</div>
+    ${dark ? `<div class="stamp">${data.tag}</div>` : ''}
+    <div class="fake">${dark ? '紙條樣式為仿製，非原件。「據說」「有一說」表示來源只有二手記載或彼此有出入。' : '拉下左邊的桿子切到「暗巷真實」，看這幅畫背後的事。'}</div>
+    <div class="inkblot"></div><div class="seal">G</div>`;
+  $('paper').querySelector('.close').addEventListener('click', closeNote);
+}
+function openNote(note) {
+  state.note = note;
+  $('paper').style.setProperty('--torn', tornEdge());
+  renderNote();
+  $('noteLayer').classList.add('open');
+  $('noteLayer').setAttribute('aria-hidden', 'false');
+  Sound.ping();
+}
+function closeNote() {
+  if (!state.note) return;
+  const wasFinale = state.note.kind === 'finale';
+  state.note = null;
+  $('noteLayer').classList.remove('open');
+  $('noteLayer').setAttribute('aria-hidden', 'true');
+  if (wasFinale) {
+    const frame = $('frame');
+    if (frame) { frame.style.transform = ''; setTimeout(() => frame.classList.remove('zoomed'), 3200); }
+  }
+  if (state.tour === 3) setTimeout(() => showTourStep(3), 400);
+}
+
+function playFinale() {
+  const frame = $('frame');
+  if (!frame) return;
+  frame.classList.add('zoomed');
+  frame.style.transformOrigin = '80% 70%';
+  frame.style.transform = 'scale(2.6)';
+  frame.style.setProperty('--mx', '80%'); frame.style.setProperty('--my', '70%');
+  frame.style.setProperty('--r', Math.round(frame.offsetWidth * 0.22) + 'px');
+  Sound.swell();
+  setTimeout(() => openNote({ kind: 'finale' }), 3300);
+}
+
+// ================= 視角 =================
+function setView(view) {
+  state.view = view;
+  document.body.dataset.view = view;
+  $('leverTop').classList.toggle('on', view === 'surface');
+  $('leverBottom').classList.toggle('on', view === 'dark');
+  applyLight(state.year);
+  const introText = $('introText');
+  if (introText) introText.textContent = view === 'dark' ? CHAPTERS[state.chapter].dark : CHAPTERS[state.chapter].surface;
+  renderNote();
+  Sound.lever();
+  Sound.updateMusic();
+}
+
+// ================= 導覽 =================
+function showTourStep(index) {
+  const step = TOUR_STEPS[index];
+  state.tour = index;
+  step.reveal.forEach(selector => document.querySelector(selector).classList.remove('tour-hide'));
+  const target = document.querySelector(step.target);
+  if (!target) return;
+  document.querySelectorAll('.tour-target, .tour-focus').forEach(el => el.classList.remove('tour-target', 'tour-focus'));
+  target.classList.add(target.classList.contains('hotspot') ? 'tour-focus' : 'tour-target');
+  const bubble = $('tour');
+  bubble.innerHTML = `<div class="step">${index + 1} / ${TOUR_STEPS.length}</div>${step.text}
+    <div class="row"><button class="skip" id="tourSkip">略過導覽</button><button class="next" id="tourNext">${index === TOUR_STEPS.length - 1 ? '開始看' : '知道了'}</button></div>`;
+  const rect = target.getBoundingClientRect();
+  let left = rect.left, top = rect.bottom + 12;
+  if (step.place === 'above') { left = Math.max(12, rect.left + 150); top = rect.top - 150; }
+  if (step.place === 'right') { left = rect.right + 18; top = Math.max(12, rect.top + rect.height / 2 - 70); }
+  if (step.place === 'below') left = Math.min(rect.right - 290, window.innerWidth - 302);
+  bubble.style.left = Math.max(12, Math.min(left, window.innerWidth - 302)) + 'px';
+  bubble.style.top = Math.max(12, top) + 'px';
+  bubble.classList.add('open');
+  $('tourNext').addEventListener('click', endTourStep);
+  $('tourSkip').addEventListener('click', endTour);
+}
+function endTourStep() {
+  const index = state.tour;
+  $('tour').classList.remove('open');
+  document.querySelectorAll('.tour-target, .tour-focus').forEach(el => el.classList.remove('tour-target', 'tour-focus'));
+  if (index < 0) return;
+  if (index === 0) {
+    state.tour = 1;
+    // 第一章沒有畫，直接帶到第二章，示範時間軸怎麼動
+    if (CHAPTERS[state.chapter].paintings.length) setTimeout(() => showTourStep(1), 300);
+    else tweenTo(CHAPTERS[1].start, () => goToChapter(1));
+  }
+  else if (index === 1) setTimeout(() => showTourStep(2), 300);
+  else if (index === 2) state.tour = 3; // 等使用者點開並關上一張紙條，再介紹拉桿
+  else endTour();
+}
+function endTour() {
+  state.tour = -1;
+  state.tourDone = true;
+  $('tour').classList.remove('open');
+  document.querySelectorAll('.tour-target, .tour-focus').forEach(el => el.classList.remove('tour-target', 'tour-focus'));
+  document.querySelectorAll('.tour-hide').forEach(el => el.classList.remove('tour-hide'));
+}
+
+// ================= 出處 =================
+function credits() {
+  const link = (title) => 'https://commons.wikimedia.org/wiki/' + encodeURI(title.replace(/ /g, '_'));
+  $('creditBox').innerHTML = `<h3>圖片出處</h3>
+    <p>畫作圖檔皆來自維基共享資源（Wikimedia Commons），標示為公有領域（Public domain）：</p>
+    <ul>${CREDITS.map(([name, title]) => `<li>《${name}》：<a href="${link(title)}" target="_blank" rel="noopener">${title.replace('File:', '')}</a></li>`).join('')}</ul>
+    <h3>音樂出處</h3>
+    <ul>
+      <li>教廷表面：Palestrina〈Agnus Dei〉（Missa Sicut lilium inter spinas），The Tudor Consort 演唱，<a href="${link('File:The Tudor Consort - 06 - Palestrina - Agnus dei - Missa Sicut lilium inter spinas.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY 3.0</li>
+      <li>暗巷真實：Kapsberger〈Capona〉（1640 年出版），Y. Nagai、K. Mieno 以長頸魯特琴與管風琴演奏，<a href="${link('File:Capona.ogg')}" target="_blank" rel="noopener">維基共享資源</a>，CC BY-SA 3.0。作曲家 Kapsberger 1605 年前後就在羅馬活動，曲子本身比卡拉瓦喬晚出版</li>
+    </ul>
+    <h3>資料來源</h3>
+    <ul>
+      <li>英文維基百科〈Caravaggio〉、〈Exile of Caravaggio〉、〈List of paintings by Caravaggio〉</li>
+      <li>倫敦國家美術館（National Gallery）卡拉瓦喬人物頁</li>
+      <li>羅馬國立檔案館（Archivio di Stato di Roma）2011 年展覽「Caravaggio a Roma. Una vita dal vero」相關報導</li>
+    </ul>
+    <p>文字為原創。日期有爭議處寫「約」或「有說法」。卷宗紙條與通緝令是仿製的樣式，不是原件。音效在瀏覽器裡即時合成。</p>
+    <button class="btn-light" id="creditClose">關閉</button>`;
+  $('creditClose').addEventListener('click', () => $('creditLayer').classList.remove('open'));
+}
+
+// ================= 啟動 =================
+function buildTimeline() {
+  $('chapterButtons').innerHTML = CHAPTERS.map((chapter, i) => `<button data-chapter="${i}" aria-label="${chapter.name}">${chapter.roman}<span class="cname">　${chapter.name}</span></button>`).join('');
+  $('ticks').innerHTML = CHAPTERS.slice(1).map(chapter => `<span style="left:calc(9px + (100% - 18px) * ${(chapter.start - 1571) / 39})"></span>`).join('');
+  document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click', () => {
+    const index = Number(button.dataset.chapter);
+    tweenTo(CHAPTERS[index].start, () => { if (index !== state.chapter) goToChapter(index); });
+  }));
+  $('year').addEventListener('input', (event) => setYear(Number(event.target.value)));
+}
+
+function startPrelude() {
+  const lines = [...document.querySelectorAll('#prelude .line')];
+  const timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  at(800, () => $('preludeCandle').classList.add('lit'));
+  at(2600, () => $('preludeLatin').classList.add('show'));
+  lines.forEach((line, i) => {
+    at(3600 + i * 3200, () => line.classList.add('show'));
+    if (i < lines.length - 1) at(3600 + i * 3200 + 2600, () => { line.classList.remove('show'); line.classList.add('out'); });
+  });
+  const buttonsAt = 3600 + (lines.length - 1) * 3200 + 1800;
+  at(buttonsAt, () => $('preludeButtons').classList.add('show'));
+  let entered = false;
+  const enter = (withSound) => {
+    if (entered) return;
+    entered = true;
+    timers.forEach(clearTimeout);
+    $('prelude').classList.add('gone');
+    if (withSound) { Sound.setOn(true); updateSoundButton(); }
+    setTimeout(() => { if (!state.tourDone) showTourStep(0); }, 1500);
+  };
+  $('startSound').addEventListener('click', () => enter(true));
+  $('startQuiet').addEventListener('click', () => enter(false));
+  $('skipPrelude').addEventListener('click', () => {
+    timers.forEach(clearTimeout);
+    lines.forEach(line => line.classList.remove('show', 'out'));
+    lines[lines.length - 1].classList.add('show');
+    $('preludeCandle').classList.add('lit');
+    $('preludeLatin').classList.add('show');
+    $('preludeButtons').classList.add('show');
+    $('skipPrelude').style.display = 'none';
+  });
+}
+
+function updateSoundButton() {
+  $('soundBtn').textContent = Sound.on ? '關聲音' : '開聲音';
+  $('soundBtn').setAttribute('aria-pressed', String(Sound.on));
+}
+
+$('lever').addEventListener('click', () => {
+  setView(state.view === 'surface' ? 'dark' : 'surface');
+  if (state.tour === 3) endTour();
+});
+$('flashBtn').addEventListener('click', () => {
+  state.flash = !state.flash;
+  document.body.classList.toggle('flash-off', !state.flash);
+  $('flashBtn').textContent = state.flash ? '手電筒：開' : '手電筒：關';
+  $('flashBtn').setAttribute('aria-pressed', String(state.flash));
+  Sound.click();
+});
+$('soundBtn').addEventListener('click', () => { Sound.setOn(!Sound.on); updateSoundButton(); });
+$('noteLayer').addEventListener('click', (event) => { if (event.target === $('noteLayer')) closeNote(); });
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') { closeNote(); $('creditLayer').classList.remove('open'); }
+});
+$('creditBtn').addEventListener('click', () => { credits(); $('creditLayer').classList.add('open'); });
+$('creditLayer').addEventListener('click', (event) => { if (event.target === $('creditLayer')) $('creditLayer').classList.remove('open'); });
+
+buildTimeline();
+setYear(1571);
+renderChapter();
+$('chapter').classList.add('show');
+startPrelude();
+</script>
+</body>
+</html>
